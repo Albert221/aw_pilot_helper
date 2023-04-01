@@ -1,4 +1,6 @@
 include: package:leancode_lint/analysis_options.yaml
 
-linter:
-  rules:
+analyzer:
+  exclude:
+    - '**/*.freezed.dart'
+    - '**/*.g.dart'

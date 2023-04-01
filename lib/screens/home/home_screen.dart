@@ -40,7 +40,6 @@ class HomeScreen extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
           ...planesState.when(
-            initial: () => [],
             loadInProgress: () => [
               const SliverFillRemaining(
                 hasScrollBody: false,

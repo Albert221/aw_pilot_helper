@@ -14,44 +14,57 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {}
     },
     "type": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {}
     },
     "oilMin": {
       "type": "decimal",
       "required": true,
-      "min": 0
+      "min": 0,
+      "pluginOptions": {}
     },
     "oilMax": {
       "type": "decimal",
       "min": 0,
-      "required": true
+      "required": true,
+      "pluginOptions": {}
     },
     "planeWeight": {
       "type": "decimal",
       "required": true,
-      "min": 0
+      "min": 0,
+      "pluginOptions": {}
     },
     "planeMoment": {
       "type": "decimal",
       "min": 0,
-      "required": true
+      "required": true,
+      "pluginOptions": {}
     },
     "drawbarWeight": {
       "type": "decimal",
-      "min": 0
+      "min": 0,
+      "pluginOptions": {}
     },
     "drawbarArm": {
       "type": "decimal",
-      "min": 0
+      "min": 0,
+      "pluginOptions": {}
     },
-    "fuel_tanks": {
+    "fuelTanks": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::fuel-tank-specification.fuel-tank-specification"
+    },
+    "weights": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::weight.weight"
     }
   }
 }

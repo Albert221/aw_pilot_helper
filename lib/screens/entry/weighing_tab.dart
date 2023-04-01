@@ -1,5 +1,6 @@
 import 'package:aw_pilot_helper/models/entry.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
+import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
 import 'package:aw_pilot_helper/utils/did_init_mixin.dart';
 import 'package:collection/collection.dart';
@@ -64,6 +65,7 @@ class _WeighingTabState extends State<WeighingTab>
     final numberFormat = NumberFormat.decimalPattern()
       ..maximumFractionDigits = 3;
 
+    final locked = context.watch<EditLockCubit>().state;
     final planeSpecs = context.select<EntryCubit, PlaneSpecification>(
       (cubit) => cubit.state.planeSpecification,
     );
@@ -105,6 +107,7 @@ class _WeighingTabState extends State<WeighingTab>
 
                       return TextField(
                         controller: _weightControllers[i],
+                        readOnly: locked,
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.monitor_weight_outlined),
                           labelText: weightSpecs.name,
