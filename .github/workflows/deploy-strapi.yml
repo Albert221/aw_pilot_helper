@@ -1,0 +1,27 @@
+name: Deploy Strapi
+
+on:
+  push:
+    branches: [main]
+    paths: [strapi]
+  
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Remove package-lock.json
+        run: rm strapi/package-lock.json
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.13
+        with:
+          appdir: strapi
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_app_name: ${{ vars.HEROKU_APP_NAME }}

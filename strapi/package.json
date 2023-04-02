@@ -12,7 +12,8 @@
   "dependencies": {
     "@strapi/plugin-users-permissions": "4.9.0",
     "@strapi/strapi": "4.9.0",
-    "better-sqlite3": "8.0.1"
+    "better-sqlite3": "8.0.1",
+    "mysql": "^2.18.1"
   },
   "author": {
     "name": "A Strapi developer"
@@ -21,8 +22,8 @@
     "uuid": "ef75ae89-c1dc-4ba1-bbe0-6ffea908dfd8"
   },
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
-    "npm": ">=6.0.0"
+    "node": "18.x",
+    "npm": "8.x"
   },
   "license": "MIT"
 }
