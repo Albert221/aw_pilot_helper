@@ -1,0 +1,9 @@
+{
+  "name": "strapi",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "heroku-prebuild": "npm ci --prefix strapi",
+    "start": "npm start --prefix strapi"
+  }
+}
