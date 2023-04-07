@@ -81,6 +81,7 @@ class _WeighingTabState extends State<WeighingTab>
         Expanded(
           child: ListView(
             padding: const EdgeInsets.all(24),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: [
               TextField(
                 controller: _planeWeightController,
@@ -108,6 +109,7 @@ class _WeighingTabState extends State<WeighingTab>
                       return TextField(
                         controller: _weightControllers[i],
                         readOnly: locked,
+                        onTapOutside: (_) => FocusScope.of(context).unfocus(),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.monitor_weight_outlined),
                           labelText: weightSpecs.name,
@@ -136,6 +138,7 @@ class _WeighingTabState extends State<WeighingTab>
                       return TextField(
                         controller: _fuelWeightControllers[i],
                         readOnly: true,
+                        onTapOutside: (_) => FocusScope.of(context).unfocus(),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.local_gas_station),
                           labelText: 'Paliwo (${fuelTankSpecs.name})',

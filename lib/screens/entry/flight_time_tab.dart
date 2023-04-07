@@ -64,6 +64,7 @@ class _FlightTimeTabState extends State<FlightTimeTab>
 
     return ListView(
       padding: const EdgeInsets.all(24),
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
         StreamBuilder<void>(
           stream: Stream<void>.periodic(const Duration(milliseconds: 100)),

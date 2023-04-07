@@ -93,6 +93,7 @@ class _EntryScreenState extends State<EntryScreen>
     final title = widget.target.isCreate ? 'Nowy wpis' : 'Edytuj wpis';
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: false,
         title: Column(

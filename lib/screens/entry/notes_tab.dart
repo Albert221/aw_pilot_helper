@@ -34,6 +34,7 @@ class _NotesTabState extends State<NotesTab> with DidInitMixin<NotesTab> {
       readOnly: locked,
       maxLines: null,
       autofocus: true,
+      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       decoration: const InputDecoration(
         border: InputBorder.none,
         hintText: 'Wpisz tutaj notatki...',

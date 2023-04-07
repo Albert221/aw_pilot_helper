@@ -73,10 +73,12 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
 
     return ListView(
       padding: const EdgeInsets.all(24),
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
         TextField(
           controller: _nameController,
           readOnly: locked,
+          onTapOutside: (_) => FocusScope.of(context).unfocus(),
           decoration: const InputDecoration(
             prefixIcon: Icon(Icons.abc),
             labelText: 'Nazwa wpisu',
@@ -90,6 +92,7 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
               child: TextField(
                 controller: _mthController,
                 readOnly: locked,
+                onTapOutside: (_) => FocusScope.of(context).unfocus(),
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.schedule),
                   labelText: 'mth',
@@ -104,6 +107,7 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
               child: TextField(
                 controller: _oilController,
                 readOnly: locked,
+                onTapOutside: (_) => FocusScope.of(context).unfocus(),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.oil_barrel),
                   labelText: 'Olej',
@@ -125,6 +129,7 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
               child: TextField(
                 controller: _fuelControllers[i],
                 readOnly: locked,
+                onTapOutside: (_) => FocusScope.of(context).unfocus(),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.local_gas_station),
                   labelText: 'Paliwo (${fuelTankSpecs.name})',
