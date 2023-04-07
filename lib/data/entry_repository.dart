@@ -25,10 +25,7 @@ class EntryRepository {
   }
 
   Future<void> upsertEntry(Entry entry) async {
-    final entries = await _storage.getAll();
-    if (entries == null) {
-      return;
-    }
+    final entries = await _storage.getAll() ?? [];
 
     final index = entries.indexWhere((anEntry) => anEntry.id == entry.id);
     if (index == -1) {
