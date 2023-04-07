@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_en.dart';
 import 'app_localizations_pl.dart';
 
 /// Callers can lookup localized strings with an instance of L10n
@@ -88,6 +89,7 @@ abstract class L10n {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
     Locale('pl')
   ];
 
@@ -155,7 +157,7 @@ abstract class L10n {
   ///
   /// In pl, this message translates to:
   /// **'Poprzednie wpisy ({count})'**
-  String previousEntriesTile_title(int count);
+  String previousEntriesTile_title(Object count);
 
   /// No description provided for @previousEntries_title.
   ///
@@ -185,7 +187,7 @@ abstract class L10n {
   ///
   /// In pl, this message translates to:
   /// **'{name} • {type}'**
-  String entry_subtitle(String name, String type);
+  String entry_subtitle(Object name, Object type);
 
   /// No description provided for @entry_beforeFlight.
   ///
@@ -227,19 +229,19 @@ abstract class L10n {
   ///
   /// In pl, this message translates to:
   /// **'Min {min} l • Max {max} l'**
-  String entry_oilCalculations(String min, String max);
+  String entry_oilCalculations(Object max, Object min);
 
   /// No description provided for @entry_fuelTankName.
   ///
   /// In pl, this message translates to:
   /// **'Paliwo ({tankName})'**
-  String entry_fuelTankName(String tankName);
+  String entry_fuelTankName(Object tankName);
 
   /// No description provided for @entry_fuelTankCapacity.
   ///
   /// In pl, this message translates to:
   /// **'Pojemność {capacity} l'**
-  String entry_fuelTankCapacity(String capacity);
+  String entry_fuelTankCapacity(Object capacity);
 
   /// No description provided for @entry_emptyPlane.
   ///
@@ -251,31 +253,31 @@ abstract class L10n {
   ///
   /// In pl, this message translates to:
   /// **'Moment {planeMoment} kgm'**
-  String entry_planeCalculations(String planeMoment);
+  String entry_planeCalculations(Object planeMoment);
 
   /// No description provided for @entry_weightCalculations.
   ///
   /// In pl, this message translates to:
   /// **'Ramię {arm} • Moment {moment} kgm'**
-  String entry_weightCalculations(String arm, String moment);
+  String entry_weightCalculations(Object arm, Object moment);
 
   /// No description provided for @entry_drawbar.
   ///
   /// In pl, this message translates to:
   /// **'Dyszel ({weight} kg)'**
-  String entry_drawbar(String weight);
+  String entry_drawbar(Object weight);
 
   /// No description provided for @entry_summary.
   ///
   /// In pl, this message translates to:
   /// **'Ciężar {weight} kg • Moment {moment} kgm'**
-  String entry_summary(String weight, String moment);
+  String entry_summary(Object moment, Object weight);
 
   /// No description provided for @entry_timeZulu.
   ///
   /// In pl, this message translates to:
   /// **'Czas ZULU: {time}'**
-  String entry_timeZulu(DateTime time);
+  String entry_timeZulu(Object time);
 
   /// No description provided for @entry_timeNow.
   ///
@@ -323,7 +325,7 @@ class _L10nDelegate extends LocalizationsDelegate<L10n> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['pl'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'pl'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_L10nDelegate old) => false;
@@ -334,6 +336,7 @@ L10n lookupL10n(Locale locale) {
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'en': return L10nEn();
     case 'pl': return L10nPl();
   }
 

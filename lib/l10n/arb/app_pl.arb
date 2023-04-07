@@ -11,29 +11,11 @@
     "about_title": "O aplikacji",
     "about_licenses": "Licencje",
     "previousEntriesTile_title": "Poprzednie wpisy ({count})",
-    "@previousEntriesTile_title": {
-        "placeholders": {
-            "count": {
-                "type": "int",
-                "format": "decimalPattern"
-            }
-        }
-    },
     "previousEntries_title": "Poprzednie wpisy",
     "previousEntries_noEntries": "Nie masz żadnego wpisu.",
     "entry_titleCreate": "Nowy wpis",
     "entry_titleEdit": "Edytuj wpis",
     "entry_subtitle": "{name} • {type}",
-    "@entry_subtitle": {
-        "placeholders": {
-            "name": {
-                "type": "String"
-            },
-            "type": {
-                "type": "String"
-            }
-        }
-    },
     "entry_beforeFlight": "Przed lotem",
     "entry_weighting": "Wyważenie",
     "entry_flightTime": "Czas lotu",
@@ -41,80 +23,14 @@
     "entry_name": "Nazwa wpisu",
     "entry_oil": "Olej",
     "entry_oilCalculations": "Min {min} l • Max {max} l",
-    "@entry_oilCalculations": {
-        "placeholders": {
-            "min": {
-                "type": "String"
-            },
-            "max": {
-                "type": "String"
-            }
-        }
-    },
     "entry_fuelTankName": "Paliwo ({tankName})",
-    "@entry_fuelTankName": {
-        "placeholders": {
-            "tankName": {
-                "type": "String"
-            }
-        }
-    },
     "entry_fuelTankCapacity": "Pojemność {capacity} l",
-    "@entry_fuelTankCapacity": {
-        "placeholders": {
-            "capacity": {
-                "type": "String"
-            }
-        }
-    },
     "entry_emptyPlane": "Pusty samolot",
     "entry_planeCalculations": "Moment {planeMoment} kgm",
-    "@entry_planeCalculations": {
-        "placeholders": {
-            "planeMoment": {
-                "type": "String"
-            }
-        }
-    },
     "entry_weightCalculations": "Ramię {arm} • Moment {moment} kgm",
-    "@entry_weightCalculations": {
-        "placeholders": {
-            "arm": {
-                "type": "String"
-            },
-            "moment": {
-                "type": "String"
-            }
-        }
-    },
     "entry_drawbar": "Dyszel ({weight} kg)",
-    "@entry_drawbar": {
-        "placeholders": {
-            "weight": {
-                "type": "String"
-            }
-        }
-    },
     "entry_summary": "Ciężar {weight} kg • Moment {moment} kgm",
-    "@entry_summary": {
-        "placeholders": {
-            "weight": {
-                "type": "String"
-            },
-            "moment": {
-                "type": "String"
-            }
-        }
-    },
     "entry_timeZulu": "Czas ZULU: {time}",
-    "@entry_timeZulu": {
-        "placeholders": {
-            "time": {
-                "type": "DateTime",
-                "format": "Hms"
-            }
-        }
-    },
     "entry_timeNow": "Teraz",
     "entry_startTime": "Godzina\u00A0uruchomienia",
     "entry_takeoffTime": "Godzina\u00A0startu",

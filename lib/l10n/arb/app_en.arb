@@ -1,0 +1,124 @@
+{
+    "@@locale": "en",
+    "appName": "AW Pilot Helper",
+    "kilogramsShort": "kg",
+    "literesShort": "l",
+    "motohoursShort": "mth",
+    "home_aboutApp": "About app",
+    "home_newEntry": "New entry",
+    "home_planeSpecsNoInternet": "No internet or no server connection.",
+    "home_planeSpecsOtherError": "An error occurred.",
+    "about_title": "About app",
+    "about_licenses": "Licenses",
+    "previousEntriesTile_title": "Previous entries ({count})",
+    "@previousEntriesTile_title": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "previousEntries_title": "Previous entries",
+    "previousEntries_noEntries": "You have no entries.",
+    "entry_titleCreate": "New entry",
+    "entry_titleEdit": "Edit entry",
+    "entry_subtitle": "{name} • {type}",
+    "@entry_subtitle": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            },
+            "type": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_beforeFlight": "Before flight",
+    "entry_weighting": "Weighting",
+    "entry_flightTime": "Flight time",
+    "entry_notes": "Notes",
+    "entry_name": "Entry name",
+    "entry_oil": "Oil",
+    "entry_oilCalculations": "Min {min} l • Max {max} l",
+    "@entry_oilCalculations": {
+        "placeholders": {
+            "min": {
+                "type": "String"
+            },
+            "max": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_fuelTankName": "Fuel ({tankName})",
+    "@entry_fuelTankName": {
+        "placeholders": {
+            "tankName": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_fuelTankCapacity": "Capacity {capacity} l",
+    "@entry_fuelTankCapacity": {
+        "placeholders": {
+            "capacity": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_emptyPlane": "Empty plane",
+    "entry_planeCalculations": "Moment {planeMoment} kgm",
+    "@entry_planeCalculations": {
+        "placeholders": {
+            "planeMoment": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_weightCalculations": "Arm {arm} • Moment {moment} kgm",
+    "@entry_weightCalculations": {
+        "placeholders": {
+            "arm": {
+                "type": "String"
+            },
+            "moment": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_drawbar": "Drawbar ({weight} kg)",
+    "@entry_drawbar": {
+        "placeholders": {
+            "weight": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_summary": "Weight {weight} kg • Moment {moment} kgm",
+    "@entry_summary": {
+        "placeholders": {
+            "weight": {
+                "type": "String"
+            },
+            "moment": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_timeZulu": "ZULU time: {time}",
+    "@entry_timeZulu": {
+        "placeholders": {
+            "time": {
+                "type": "DateTime",
+                "format": "Hms"
+            }
+        }
+    },
+    "entry_timeNow": "Now",
+    "entry_startTime": "Start\u00A0time",
+    "entry_takeoffTime": "Take-off\u00A0time",
+    "entry_landTime": "Landing\u00A0time",
+    "entry_stopTime": "Stop\u00A0time",
+    "entry_notesHint": "Write your notes here..."
+}

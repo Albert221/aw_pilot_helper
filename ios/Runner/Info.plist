@@ -48,6 +48,7 @@
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>pl</string>
+		<string>en</string>
 	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>

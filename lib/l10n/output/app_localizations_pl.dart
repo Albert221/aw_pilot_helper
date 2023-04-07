@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 /// The translations for Polish (`pl`).
@@ -37,11 +35,8 @@ class L10nPl extends L10n {
   String get about_licenses => 'Licencje';
 
   @override
-  String previousEntriesTile_title(int count) {
-    final intl.NumberFormat countNumberFormat = intl.NumberFormat.decimalPattern(localeName);
-    final String countString = countNumberFormat.format(count);
-
-    return 'Poprzednie wpisy ($countString)';
+  String previousEntriesTile_title(Object count) {
+    return 'Poprzednie wpisy ($count)';
   }
 
   @override
@@ -57,7 +52,7 @@ class L10nPl extends L10n {
   String get entry_titleEdit => 'Edytuj wpis';
 
   @override
-  String entry_subtitle(String name, String type) {
+  String entry_subtitle(Object name, Object type) {
     return '$name • $type';
   }
 
@@ -80,17 +75,17 @@ class L10nPl extends L10n {
   String get entry_oil => 'Olej';
 
   @override
-  String entry_oilCalculations(String min, String max) {
+  String entry_oilCalculations(Object max, Object min) {
     return 'Min $min l • Max $max l';
   }
 
   @override
-  String entry_fuelTankName(String tankName) {
+  String entry_fuelTankName(Object tankName) {
     return 'Paliwo ($tankName)';
   }
 
   @override
-  String entry_fuelTankCapacity(String capacity) {
+  String entry_fuelTankCapacity(Object capacity) {
     return 'Pojemność $capacity l';
   }
 
@@ -98,31 +93,28 @@ class L10nPl extends L10n {
   String get entry_emptyPlane => 'Pusty samolot';
 
   @override
-  String entry_planeCalculations(String planeMoment) {
+  String entry_planeCalculations(Object planeMoment) {
     return 'Moment $planeMoment kgm';
   }
 
   @override
-  String entry_weightCalculations(String arm, String moment) {
+  String entry_weightCalculations(Object arm, Object moment) {
     return 'Ramię $arm • Moment $moment kgm';
   }
 
   @override
-  String entry_drawbar(String weight) {
+  String entry_drawbar(Object weight) {
     return 'Dyszel ($weight kg)';
   }
 
   @override
-  String entry_summary(String weight, String moment) {
+  String entry_summary(Object moment, Object weight) {
     return 'Ciężar $weight kg • Moment $moment kgm';
   }
 
   @override
-  String entry_timeZulu(DateTime time) {
-    final intl.DateFormat timeDateFormat = intl.DateFormat.Hms(localeName);
-    final String timeString = timeDateFormat.format(time);
-
-    return 'Czas ZULU: $timeString';
+  String entry_timeZulu(Object time) {
+    return 'Czas ZULU: $time';
   }
 
   @override
