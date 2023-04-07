@@ -3,18 +3,16 @@ import 'dart:async';
 import 'package:aw_pilot_helper/data/api/api_client.dart';
 import 'package:aw_pilot_helper/data/api/response_model.dart' as api;
 import 'package:aw_pilot_helper/data/planes.dart';
+import 'package:aw_pilot_helper/data/storage/plane_specification_storage.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
 import 'package:either_dart/either.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PlaneSpecificationRepository {
-  PlaneSpecificationRepository(this._apiClient) {
-    _streamController.add(Right(List.unmodifiable(_planes)));
-  }
+  PlaneSpecificationRepository(this._apiClient, this._storage);
 
   final ApiClient _apiClient;
-
-  final _planes = [spTpe];
+  final PlaneSpecificationStorage _storage;
 
   final _streamController =
       BehaviorSubject<Either<Object, List<PlaneSpecification>>>();
@@ -24,6 +22,11 @@ class PlaneSpecificationRepository {
   }
 
   Stream<Either<Object, List<PlaneSpecification>>> getAll() {
+    _storage
+        .getAll()
+        .then(Right<Object, List<PlaneSpecification>>.new)
+        .then(_streamController.add);
+
     return _streamController.stream;
   }
 
@@ -44,6 +47,8 @@ class PlaneSpecificationRepository {
 
         planeSpecs.addAll(_mapPlaneSpecificationsResponse(response));
       } while (planeSpecs.length < count);
+
+      await _storage.save(planeSpecs);
 
       _streamController.add(Right(List.unmodifiable(planeSpecs)));
     } catch (e) {

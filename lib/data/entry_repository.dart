@@ -8,8 +8,9 @@ import 'package:rxdart/rxdart.dart';
 class EntryRepository {
   EntryRepository(this._storage);
 
-  final _streamController = BehaviorSubject<List<Entry>>();
   final EntryStorage _storage;
+
+  final _streamController = BehaviorSubject<List<Entry>>();
 
   Future<void> dispose() async {
     await _streamController.close();
