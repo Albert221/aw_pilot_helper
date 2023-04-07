@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+PlaneSpecification _$PlaneSpecificationFromJson(Map<String, dynamic> json) {
+  return _PlaneSpecification.fromJson(json);
+}
+
 /// @nodoc
 mixin _$PlaneSpecification {
   String get name => throw _privateConstructorUsedError;
@@ -31,6 +35,7 @@ mixin _$PlaneSpecification {
       throw _privateConstructorUsedError; // in kilogramometer
   List<WeightSpecification> get weights => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PlaneSpecificationCopyWith<PlaneSpecification> get copyWith =>
       throw _privateConstructorUsedError;
@@ -213,7 +218,7 @@ class __$$_PlaneSpecificationCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_PlaneSpecification extends _PlaneSpecification {
   const _$_PlaneSpecification(
       {required this.name,
@@ -229,6 +234,9 @@ class _$_PlaneSpecification extends _PlaneSpecification {
       : _fuelTanks = fuelTanks,
         _weights = weights,
         super._();
+
+  factory _$_PlaneSpecification.fromJson(Map<String, dynamic> json) =>
+      _$$_PlaneSpecificationFromJson(json);
 
   @override
   final String name;
@@ -297,6 +305,7 @@ class _$_PlaneSpecification extends _PlaneSpecification {
             const DeepCollectionEquality().equals(other._weights, _weights));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -317,6 +326,13 @@ class _$_PlaneSpecification extends _PlaneSpecification {
   _$$_PlaneSpecificationCopyWith<_$_PlaneSpecification> get copyWith =>
       __$$_PlaneSpecificationCopyWithImpl<_$_PlaneSpecification>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PlaneSpecificationToJson(
+      this,
+    );
+  }
 }
 
 abstract class _PlaneSpecification extends PlaneSpecification {
@@ -333,6 +349,9 @@ abstract class _PlaneSpecification extends PlaneSpecification {
           required final List<WeightSpecification> weights}) =
       _$_PlaneSpecification;
   const _PlaneSpecification._() : super._();
+
+  factory _PlaneSpecification.fromJson(Map<String, dynamic> json) =
+      _$_PlaneSpecification.fromJson;
 
   @override
   String get name;
@@ -360,12 +379,18 @@ abstract class _PlaneSpecification extends PlaneSpecification {
       throw _privateConstructorUsedError;
 }
 
+FuelTankSpecification _$FuelTankSpecificationFromJson(
+    Map<String, dynamic> json) {
+  return _FuelTankSpecification.fromJson(json);
+}
+
 /// @nodoc
 mixin _$FuelTankSpecification {
   String get name => throw _privateConstructorUsedError;
   double get capacity => throw _privateConstructorUsedError; // in litres
   double get arm => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FuelTankSpecificationCopyWith<FuelTankSpecification> get copyWith =>
       throw _privateConstructorUsedError;
@@ -459,10 +484,13 @@ class __$$_FuelTankSpecificationCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_FuelTankSpecification implements _FuelTankSpecification {
   const _$_FuelTankSpecification(
       {required this.name, required this.capacity, required this.arm});
+
+  factory _$_FuelTankSpecification.fromJson(Map<String, dynamic> json) =>
+      _$$_FuelTankSpecificationFromJson(json);
 
   @override
   final String name;
@@ -488,6 +516,7 @@ class _$_FuelTankSpecification implements _FuelTankSpecification {
             (identical(other.arm, arm) || other.arm == arm));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, capacity, arm);
 
@@ -497,6 +526,13 @@ class _$_FuelTankSpecification implements _FuelTankSpecification {
   _$$_FuelTankSpecificationCopyWith<_$_FuelTankSpecification> get copyWith =>
       __$$_FuelTankSpecificationCopyWithImpl<_$_FuelTankSpecification>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_FuelTankSpecificationToJson(
+      this,
+    );
+  }
 }
 
 abstract class _FuelTankSpecification implements FuelTankSpecification {
@@ -504,6 +540,9 @@ abstract class _FuelTankSpecification implements FuelTankSpecification {
       {required final String name,
       required final double capacity,
       required final double arm}) = _$_FuelTankSpecification;
+
+  factory _FuelTankSpecification.fromJson(Map<String, dynamic> json) =
+      _$_FuelTankSpecification.fromJson;
 
   @override
   String get name;
@@ -517,11 +556,16 @@ abstract class _FuelTankSpecification implements FuelTankSpecification {
       throw _privateConstructorUsedError;
 }
 
+WeightSpecification _$WeightSpecificationFromJson(Map<String, dynamic> json) {
+  return _WeightSpecification.fromJson(json);
+}
+
 /// @nodoc
 mixin _$WeightSpecification {
   String get name => throw _privateConstructorUsedError;
   double get arm => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $WeightSpecificationCopyWith<WeightSpecification> get copyWith =>
       throw _privateConstructorUsedError;
@@ -604,9 +648,12 @@ class __$$_WeightSpecificationCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_WeightSpecification implements _WeightSpecification {
   const _$_WeightSpecification({required this.name, required this.arm});
+
+  factory _$_WeightSpecification.fromJson(Map<String, dynamic> json) =>
+      _$$_WeightSpecificationFromJson(json);
 
   @override
   final String name;
@@ -627,6 +674,7 @@ class _$_WeightSpecification implements _WeightSpecification {
             (identical(other.arm, arm) || other.arm == arm));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, arm);
 
@@ -636,12 +684,22 @@ class _$_WeightSpecification implements _WeightSpecification {
   _$$_WeightSpecificationCopyWith<_$_WeightSpecification> get copyWith =>
       __$$_WeightSpecificationCopyWithImpl<_$_WeightSpecification>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_WeightSpecificationToJson(
+      this,
+    );
+  }
 }
 
 abstract class _WeightSpecification implements WeightSpecification {
   const factory _WeightSpecification(
       {required final String name,
       required final double arm}) = _$_WeightSpecification;
+
+  factory _WeightSpecification.fromJson(Map<String, dynamic> json) =
+      _$_WeightSpecification.fromJson;
 
   @override
   String get name;

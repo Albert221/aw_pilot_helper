@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'plane_specification.freezed.dart';
+part 'plane_specification.g.dart';
 
 @freezed
 class PlaneSpecification with _$PlaneSpecification {
@@ -19,6 +20,9 @@ class PlaneSpecification with _$PlaneSpecification {
 
   const PlaneSpecification._();
 
+  factory PlaneSpecification.fromJson(Map<String, dynamic> json) =>
+      _$PlaneSpecificationFromJson(json);
+
   double? get drawbarMoment => drawbarWeight != null && drawbarArm != null
       ? drawbarWeight! * drawbarArm!
       : null;
@@ -31,6 +35,9 @@ class FuelTankSpecification with _$FuelTankSpecification {
     required double capacity, // in litres
     required double arm, // in meters
   }) = _FuelTankSpecification;
+
+  factory FuelTankSpecification.fromJson(Map<String, dynamic> json) =>
+      _$FuelTankSpecificationFromJson(json);
 }
 
 @freezed
@@ -39,4 +46,7 @@ class WeightSpecification with _$WeightSpecification {
     required String name,
     required double arm, // in meters
   }) = _WeightSpecification;
+
+  factory WeightSpecification.fromJson(Map<String, dynamic> json) =>
+      _$WeightSpecificationFromJson(json);
 }

@@ -2,6 +2,7 @@ import 'package:aw_pilot_helper/app.dart';
 import 'package:aw_pilot_helper/data/api/api_client.dart';
 import 'package:aw_pilot_helper/data/entry_repository.dart';
 import 'package:aw_pilot_helper/data/plane_specification_repository.dart';
+import 'package:aw_pilot_helper/data/storage/entry_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +30,9 @@ void main() {
             baseUrl: _apiUrl,
           ),
         ),
+        Provider<EntryStorage>(create: (context) => EntryStorage()),
         Provider<EntryRepository>(
-          create: (context) => EntryRepository(),
+          create: (context) => EntryRepository(context.read()),
           dispose: (context, repository) => repository.dispose(),
         ),
         Provider<PlaneSpecificationRepository>(

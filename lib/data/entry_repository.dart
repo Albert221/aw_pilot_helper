@@ -1,50 +1,43 @@
 import 'dart:async';
 
-import 'package:aw_pilot_helper/data/planes.dart';
+import 'package:aw_pilot_helper/data/storage/entry_storage.dart';
 import 'package:aw_pilot_helper/models/entry.dart';
+import 'package:aw_pilot_helper/utils/list_read_only.dart';
 import 'package:rxdart/rxdart.dart';
 
 class EntryRepository {
-  EntryRepository() {
-    _broadcastChanges();
-  }
-
-  final _entries = <String, Entry>{
-    '5156f765-7a00-4913-8d9b-ee4e4a2ed009': const Entry(
-      id: '5156f765-7a00-4913-8d9b-ee4e4a2ed009',
-      planeSpecification: spTpe,
-      content: EntryContent(
-        name: 'test',
-        motohours: 2393.6,
-        oil: 3.3,
-        fuelBefore: [35, 35],
-        weight: [145, 2],
-        notes: 'Hey! :)',
-      ),
-    ),
-  };
+  EntryRepository(this._storage);
 
   final _streamController = BehaviorSubject<List<Entry>>();
+  final EntryStorage _storage;
 
   Future<void> dispose() async {
     await _streamController.close();
   }
 
-  void _broadcastChanges() {
-    _streamController.add(List.unmodifiable(_entries.values));
-  }
-
   Stream<List<Entry>> getAll() {
+    _storage.getAll().then(_streamController.add);
     return _streamController.stream;
   }
 
   Future<void> upsertEntry(Entry entry) async {
-    _entries[entry.id] = entry;
-    _broadcastChanges();
+    final entries = await _storage.getAll();
+    final index = entries.indexWhere((anEntry) => anEntry.id == entry.id);
+    if (index == -1) {
+      entries.add(entry);
+    } else {
+      entries[index] = entry;
+    }
+
+    await _storage.save(entries);
+    _streamController.add(entries.readOnly);
   }
 
   Future<void> removeEntry(String entryId) async {
-    _entries.remove(entryId);
-    _broadcastChanges();
+    final entries = await _storage.getAll()
+      ..removeWhere((entry) => entry.id == entryId);
+
+    await _storage.save(entries);
+    _streamController.add(entries);
   }
 }

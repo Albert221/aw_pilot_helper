@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Entry _$EntryFromJson(Map<String, dynamic> json) {
+  return _Entry.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Entry {
   String get id => throw _privateConstructorUsedError;
@@ -21,6 +25,7 @@ mixin _$Entry {
       throw _privateConstructorUsedError;
   EntryContent get content => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $EntryCopyWith<Entry> get copyWith => throw _privateConstructorUsedError;
 }
@@ -134,13 +139,16 @@ class __$$_EntryCopyWithImpl<$Res> extends _$EntryCopyWithImpl<$Res, _$_Entry>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_Entry extends _Entry {
   const _$_Entry(
       {required this.id,
       required this.planeSpecification,
       required this.content})
       : super._();
+
+  factory _$_Entry.fromJson(Map<String, dynamic> json) =>
+      _$$_EntryFromJson(json);
 
   @override
   final String id;
@@ -165,6 +173,7 @@ class _$_Entry extends _Entry {
             (identical(other.content, content) || other.content == content));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, planeSpecification, content);
 
@@ -173,6 +182,13 @@ class _$_Entry extends _Entry {
   @pragma('vm:prefer-inline')
   _$$_EntryCopyWith<_$_Entry> get copyWith =>
       __$$_EntryCopyWithImpl<_$_Entry>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EntryToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Entry extends Entry {
@@ -181,6 +197,8 @@ abstract class _Entry extends Entry {
       required final PlaneSpecification planeSpecification,
       required final EntryContent content}) = _$_Entry;
   const _Entry._() : super._();
+
+  factory _Entry.fromJson(Map<String, dynamic> json) = _$_Entry.fromJson;
 
   @override
   String get id;
@@ -192,6 +210,10 @@ abstract class _Entry extends Entry {
   @JsonKey(ignore: true)
   _$$_EntryCopyWith<_$_Entry> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+EntryContent _$EntryContentFromJson(Map<String, dynamic> json) {
+  return _EntryContent.fromJson(json);
 }
 
 /// @nodoc
@@ -210,6 +232,7 @@ mixin _$EntryContent {
   DateTime? get stopTime => throw _privateConstructorUsedError; // Notes
   String get notes => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $EntryContentCopyWith<EntryContent> get copyWith =>
       throw _privateConstructorUsedError;
@@ -404,7 +427,7 @@ class __$$_EntryContentCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_EntryContent implements _EntryContent {
   const _$_EntryContent(
       {required this.name,
@@ -420,6 +443,9 @@ class _$_EntryContent implements _EntryContent {
       this.notes = ''})
       : _fuelBefore = fuelBefore,
         _weight = weight;
+
+  factory _$_EntryContent.fromJson(Map<String, dynamic> json) =>
+      _$$_EntryContentFromJson(json);
 
   @override
   final String name;
@@ -494,6 +520,7 @@ class _$_EntryContent implements _EntryContent {
             (identical(other.notes, notes) || other.notes == notes));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -514,6 +541,13 @@ class _$_EntryContent implements _EntryContent {
   @pragma('vm:prefer-inline')
   _$$_EntryContentCopyWith<_$_EntryContent> get copyWith =>
       __$$_EntryContentCopyWithImpl<_$_EntryContent>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EntryContentToJson(
+      this,
+    );
+  }
 }
 
 abstract class _EntryContent implements EntryContent {
@@ -529,6 +563,9 @@ abstract class _EntryContent implements EntryContent {
       final DateTime? landingTime,
       final DateTime? stopTime,
       final String notes}) = _$_EntryContent;
+
+  factory _EntryContent.fromJson(Map<String, dynamic> json) =
+      _$_EntryContent.fromJson;
 
   @override
   String get name;

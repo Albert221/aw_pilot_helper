@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 part 'entry.freezed.dart';
+part 'entry.g.dart';
 
 const fuelDensity = 0.72; // UL91 & AVGAS 100LL
 
@@ -32,6 +33,8 @@ class Entry with _$Entry {
       ),
     );
   }
+
+  factory Entry.fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);
 
   double get weight {
     var weight = planeSpecification.planeWeight;
@@ -109,4 +112,7 @@ class EntryContent with _$EntryContent {
     // Notes
     @Default('') String notes,
   }) = _EntryContent;
+
+  factory EntryContent.fromJson(Map<String, dynamic> json) =>
+      _$EntryContentFromJson(json);
 }
