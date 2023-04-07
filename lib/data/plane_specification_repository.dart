@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:aw_pilot_helper/data/api/api_client.dart';
 import 'package:aw_pilot_helper/data/api/response_model.dart' as api;
-import 'package:aw_pilot_helper/data/planes.dart';
 import 'package:aw_pilot_helper/data/storage/plane_specification_storage.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
+import 'package:aw_pilot_helper/utils/list_read_only.dart';
 import 'package:either_dart/either.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -22,10 +22,13 @@ class PlaneSpecificationRepository {
   }
 
   Stream<Either<Object, List<PlaneSpecification>>> getAll() {
-    _storage
-        .getAll()
-        .then(Right<Object, List<PlaneSpecification>>.new)
-        .then(_streamController.add);
+    _storage.getAll().then((planes) {
+      if (planes == null) {
+        return;
+      }
+
+      _streamController.add(Right(planes.readOnly));
+    });
 
     return _streamController.stream;
   }

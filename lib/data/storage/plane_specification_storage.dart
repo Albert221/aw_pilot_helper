@@ -10,10 +10,10 @@ class PlaneSpecificationStorage {
 
   static const _planeSpecificationsKey = 'plane-specs-v1';
 
-  Future<List<PlaneSpecification>> getAll() async {
+  Future<List<PlaneSpecification>?> getAll() async {
     final json = (await _prefs).getString(_planeSpecificationsKey);
     if (json == null) {
-      return [];
+      return null;
     }
 
     return List<Map<String, dynamic>>.from(jsonDecode(json) as List)

@@ -17,12 +17,19 @@ class EntryRepository {
   }
 
   Stream<List<Entry>> getAll() {
-    _storage.getAll().then(_streamController.add);
+    _storage
+        .getAll()
+        .then((value) => value ?? <Entry>[])
+        .then(_streamController.add);
     return _streamController.stream;
   }
 
   Future<void> upsertEntry(Entry entry) async {
     final entries = await _storage.getAll();
+    if (entries == null) {
+      return;
+    }
+
     final index = entries.indexWhere((anEntry) => anEntry.id == entry.id);
     if (index == -1) {
       entries.add(entry);
@@ -35,8 +42,12 @@ class EntryRepository {
   }
 
   Future<void> removeEntry(String entryId) async {
-    final entries = await _storage.getAll()
-      ..removeWhere((entry) => entry.id == entryId);
+    final entries = await _storage.getAll();
+    if (entries == null) {
+      return;
+    }
+
+    entries.removeWhere((entry) => entry.id == entryId);
 
     await _storage.save(entries);
     _streamController.add(entries);

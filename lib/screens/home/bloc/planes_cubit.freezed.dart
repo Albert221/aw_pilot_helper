@@ -19,21 +19,21 @@ mixin _$PlanesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadInProgress,
-    required TResult Function() loadFailure,
+    required TResult Function(PlanesStateFailure kind) loadFailure,
     required TResult Function(List<PlaneSpecification> planes) loadSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadInProgress,
-    TResult? Function()? loadFailure,
+    TResult? Function(PlanesStateFailure kind)? loadFailure,
     TResult? Function(List<PlaneSpecification> planes)? loadSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadInProgress,
-    TResult Function()? loadFailure,
+    TResult Function(PlanesStateFailure kind)? loadFailure,
     TResult Function(List<PlaneSpecification> planes)? loadSuccess,
     required TResult orElse(),
   }) =>
@@ -127,7 +127,7 @@ class _$_LoadInProgress
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadInProgress,
-    required TResult Function() loadFailure,
+    required TResult Function(PlanesStateFailure kind) loadFailure,
     required TResult Function(List<PlaneSpecification> planes) loadSuccess,
   }) {
     return loadInProgress();
@@ -137,7 +137,7 @@ class _$_LoadInProgress
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadInProgress,
-    TResult? Function()? loadFailure,
+    TResult? Function(PlanesStateFailure kind)? loadFailure,
     TResult? Function(List<PlaneSpecification> planes)? loadSuccess,
   }) {
     return loadInProgress?.call();
@@ -147,7 +147,7 @@ class _$_LoadInProgress
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadInProgress,
-    TResult Function()? loadFailure,
+    TResult Function(PlanesStateFailure kind)? loadFailure,
     TResult Function(List<PlaneSpecification> planes)? loadSuccess,
     required TResult orElse(),
   }) {
@@ -201,6 +201,8 @@ abstract class _$$_LoadFailureCopyWith<$Res> {
   factory _$$_LoadFailureCopyWith(
           _$_LoadFailure value, $Res Function(_$_LoadFailure) then) =
       __$$_LoadFailureCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PlanesStateFailure kind});
 }
 
 /// @nodoc
@@ -210,63 +212,89 @@ class __$$_LoadFailureCopyWithImpl<$Res>
   __$$_LoadFailureCopyWithImpl(
       _$_LoadFailure _value, $Res Function(_$_LoadFailure) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? kind = null,
+  }) {
+    return _then(_$_LoadFailure(
+      null == kind
+          ? _value.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as PlanesStateFailure,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_LoadFailure with DiagnosticableTreeMixin implements _LoadFailure {
-  const _$_LoadFailure();
+  const _$_LoadFailure(this.kind);
+
+  @override
+  final PlanesStateFailure kind;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlanesState.loadFailure()';
+    return 'PlanesState.loadFailure(kind: $kind)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'PlanesState.loadFailure'));
+    properties
+      ..add(DiagnosticsProperty('type', 'PlanesState.loadFailure'))
+      ..add(DiagnosticsProperty('kind', kind));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoadFailure);
+        (other.runtimeType == runtimeType &&
+            other is _$_LoadFailure &&
+            (identical(other.kind, kind) || other.kind == kind));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, kind);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoadFailureCopyWith<_$_LoadFailure> get copyWith =>
+      __$$_LoadFailureCopyWithImpl<_$_LoadFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadInProgress,
-    required TResult Function() loadFailure,
+    required TResult Function(PlanesStateFailure kind) loadFailure,
     required TResult Function(List<PlaneSpecification> planes) loadSuccess,
   }) {
-    return loadFailure();
+    return loadFailure(kind);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadInProgress,
-    TResult? Function()? loadFailure,
+    TResult? Function(PlanesStateFailure kind)? loadFailure,
     TResult? Function(List<PlaneSpecification> planes)? loadSuccess,
   }) {
-    return loadFailure?.call();
+    return loadFailure?.call(kind);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadInProgress,
-    TResult Function()? loadFailure,
+    TResult Function(PlanesStateFailure kind)? loadFailure,
     TResult Function(List<PlaneSpecification> planes)? loadSuccess,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
-      return loadFailure();
+      return loadFailure(kind);
     }
     return orElse();
   }
@@ -307,7 +335,12 @@ class _$_LoadFailure with DiagnosticableTreeMixin implements _LoadFailure {
 }
 
 abstract class _LoadFailure implements PlanesState {
-  const factory _LoadFailure() = _$_LoadFailure;
+  const factory _LoadFailure(final PlanesStateFailure kind) = _$_LoadFailure;
+
+  PlanesStateFailure get kind;
+  @JsonKey(ignore: true)
+  _$$_LoadFailureCopyWith<_$_LoadFailure> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -390,7 +423,7 @@ class _$_LoadSuccess with DiagnosticableTreeMixin implements _LoadSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadInProgress,
-    required TResult Function() loadFailure,
+    required TResult Function(PlanesStateFailure kind) loadFailure,
     required TResult Function(List<PlaneSpecification> planes) loadSuccess,
   }) {
     return loadSuccess(planes);
@@ -400,7 +433,7 @@ class _$_LoadSuccess with DiagnosticableTreeMixin implements _LoadSuccess {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadInProgress,
-    TResult? Function()? loadFailure,
+    TResult? Function(PlanesStateFailure kind)? loadFailure,
     TResult? Function(List<PlaneSpecification> planes)? loadSuccess,
   }) {
     return loadSuccess?.call(planes);
@@ -410,7 +443,7 @@ class _$_LoadSuccess with DiagnosticableTreeMixin implements _LoadSuccess {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadInProgress,
-    TResult Function()? loadFailure,
+    TResult Function(PlanesStateFailure kind)? loadFailure,
     TResult Function(List<PlaneSpecification> planes)? loadSuccess,
     required TResult orElse(),
   }) {

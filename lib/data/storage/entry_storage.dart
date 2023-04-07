@@ -10,10 +10,10 @@ class EntryStorage {
 
   static const _entriesKey = 'entries-v1';
 
-  Future<List<Entry>> getAll() async {
+  Future<List<Entry>?> getAll() async {
     final json = (await _prefs).getString(_entriesKey);
     if (json == null) {
-      return [];
+      return null;
     }
 
     return List<Map<String, dynamic>>.from(jsonDecode(json) as List)

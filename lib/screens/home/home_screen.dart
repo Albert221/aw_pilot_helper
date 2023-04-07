@@ -48,7 +48,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               )
             ],
-            loadFailure: () => [],
+            loadFailure: (kind) => [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(
+                  child: _Failure(kind: kind),
+                ),
+              )
+            ],
             loadSuccess: (planes) => [
               SliverToBoxAdapter(
                 child: Padding(
@@ -82,5 +89,28 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _Failure extends StatelessWidget {
+  const _Failure({required this.kind});
+
+  final PlanesStateFailure kind;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (kind) {
+      case PlanesStateFailure.noInternet:
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.error),
+            const SizedBox(height: 16),
+            const Text('Brak internetu lub połączenia z serwerem.'),
+          ],
+        );
+      case PlanesStateFailure.other:
+        return const Text('Wystąpił błąd');
+    }
   }
 }

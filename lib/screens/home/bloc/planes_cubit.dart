@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aw_pilot_helper/data/plane_specification_repository.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
+import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,8 +17,7 @@ class PlanesCubit extends Cubit<PlanesState> {
 
   final PlaneSpecificationRepository _repository;
 
-  late final StreamSubscription<Either<Object, List<PlaneSpecification>>>
-      _subscription;
+  late final StreamSubscription<dynamic> _subscription;
 
   @override
   Future<void> close() async {
@@ -30,24 +30,39 @@ class PlanesCubit extends Cubit<PlanesState> {
       (error) {
         debugPrint(error.toString());
 
-        state.maybeMap(
-          loadSuccess: (_) {
-            // no-op; keep already loaded stuff.
-            // todo: show snackbar that could not load stuff.
-          },
-          orElse: () => emit(const PlanesState.loadFailure()),
+        final emitError = state.maybeWhen(
+          loadSuccess: (planes) => planes.isEmpty,
+          orElse: () => true,
         );
+
+        if (emitError) {
+          emit(
+            PlanesState.loadFailure(
+              error is DioError &&
+                      error.error.runtimeType.toString() == 'SocketException'
+                  ? PlanesStateFailure.noInternet
+                  : PlanesStateFailure.other,
+            ),
+          );
+        } else {
+          // no-op; keep already loaded stuff.
+          // todo: show snackbar that could not load stuff.
+        }
       },
       (planes) => emit(PlanesState.loadSuccess(planes: planes)),
     );
   }
 }
 
+enum PlanesStateFailure { noInternet, other }
+
 @freezed
 class PlanesState with _$PlanesState {
   const factory PlanesState.loadInProgress() = _LoadInProgress;
 
-  const factory PlanesState.loadFailure() = _LoadFailure;
+  const factory PlanesState.loadFailure(
+    PlanesStateFailure kind,
+  ) = _LoadFailure;
 
   const factory PlanesState.loadSuccess({
     required List<PlaneSpecification> planes,
