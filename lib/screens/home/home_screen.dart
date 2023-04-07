@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:aw_pilot_helper/screens/about/about_screen.dart';
 import 'package:aw_pilot_helper/screens/entry/entry_screen.dart';
 import 'package:aw_pilot_helper/screens/home/bloc/planes_cubit.dart';
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AW Pomocnik Pilota'),
+        title: Text(context.l10n.appName),
       ),
       body: CustomScrollView(
         slivers: [
@@ -34,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: ListTile(
               leading: const Icon(Icons.help_outline),
-              title: const Text('O aplikacji'),
+              title: Text(context.l10n.home_aboutApp),
               onTap: () => Navigator.of(context).push(AboutScreenRoute()),
             ),
           ),
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
-                    'Nowy wpis',
+                    context.l10n.home_newEntry,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
@@ -104,9 +105,9 @@ class _Failure extends StatelessWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error),
+            const Icon(Icons.signal_wifi_bad),
             const SizedBox(height: 16),
-            const Text('Brak internetu lub połączenia z serwerem.'),
+            Text(context.l10n.home_planeSpecsNoInternet),
           ],
         );
       case PlanesStateFailure.other:

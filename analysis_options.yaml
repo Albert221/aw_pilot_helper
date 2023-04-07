@@ -4,3 +4,4 @@ analyzer:
   exclude:
     - '**/*.freezed.dart'
     - '**/*.g.dart'
+    - 'lib/l10n/output/*.dart'

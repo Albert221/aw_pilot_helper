@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:aw_pilot_helper/models/entry.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
@@ -88,9 +89,9 @@ class _WeighingTabState extends State<WeighingTab>
                 readOnly: true,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.flight),
-                  labelText: 'Pusty samolot',
-                  suffixText: 'kg',
-                  helperText: 'Moment $planeMoment kgm',
+                  labelText: context.l10n.entry_emptyPlane,
+                  suffixText: context.l10n.kilogramsShort,
+                  helperText: context.l10n.entry_planeCalculations(planeMoment),
                 ),
                 textAlign: TextAlign.end,
               ),
@@ -113,8 +114,9 @@ class _WeighingTabState extends State<WeighingTab>
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.monitor_weight_outlined),
                           labelText: weightSpecs.name,
-                          suffixText: 'kg',
-                          helperText: 'Ramię $arm m • Moment $moment kgm',
+                          suffixText: context.l10n.kilogramsShort,
+                          helperText: context.l10n
+                              .entry_weightCalculations(arm, moment),
                         ),
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.end,
@@ -141,9 +143,11 @@ class _WeighingTabState extends State<WeighingTab>
                         onTapOutside: (_) => FocusScope.of(context).unfocus(),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.local_gas_station),
-                          labelText: 'Paliwo (${fuelTankSpecs.name})',
-                          suffixText: 'kg',
-                          helperText: 'Ramię $arm m • Moment $moment kgm',
+                          labelText: context.l10n
+                              .entry_fuelTankName(fuelTankSpecs.name),
+                          suffixText: context.l10n.kilogramsShort,
+                          helperText: context.l10n
+                              .entry_weightCalculations(arm, moment),
                         ),
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.end,
@@ -162,9 +166,11 @@ class _WeighingTabState extends State<WeighingTab>
                     onChanged: (value) =>
                         context.read<EntryCubit>().updateDrawbar(value!),
                     controlAffinity: ListTileControlAffinity.trailing,
-                    title: Text('Dyszel ($drawbarWeight kg)'),
-                    subtitle:
-                        Text('Ramię $drawbarArm m • Moment $drawbarMoment kgm'),
+                    title: Text(context.l10n.entry_drawbar(drawbarWeight)),
+                    subtitle: Text(
+                      context.l10n
+                          .entry_weightCalculations(drawbarArm, drawbarMoment),
+                    ),
                     contentPadding: EdgeInsets.zero,
                   ),
                 ),
@@ -181,7 +187,7 @@ class _WeighingTabState extends State<WeighingTab>
                 final moment = numberFormat.format(state.moment);
 
                 return Text(
-                  'Ciężar $weight kg • Moment $moment kgm',
+                  context.l10n.entry_summary(weight, moment),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleSmall,
                 );

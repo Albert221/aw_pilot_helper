@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:aw_pilot_helper/models/entry.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
 import 'package:aw_pilot_helper/screens/entry/before_flight_tab.dart';
@@ -90,7 +91,9 @@ class _EntryScreenState extends State<EntryScreen>
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.target.isCreate ? 'Nowy wpis' : 'Edytuj wpis';
+    final title = widget.target.isCreate
+        ? context.l10n.entry_titleCreate
+        : context.l10n.entry_titleEdit;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -106,7 +109,7 @@ class _EntryScreenState extends State<EntryScreen>
                 final plane = state.planeSpecification;
 
                 return Text(
-                  '${plane.name} • ${plane.type}',
+                  context.l10n.entry_subtitle(plane.name, plane.type),
                   style: Theme.of(context).textTheme.labelMedium?.apply(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
@@ -143,22 +146,22 @@ class _EntryScreenState extends State<EntryScreen>
             onTap: _tabController.animateTo,
             type: BottomNavigationBarType.fixed,
             selectedFontSize: 12,
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.flight_takeoff),
-                label: 'Przed lotem',
+                icon: const Icon(Icons.flight_takeoff),
+                label: context.l10n.entry_beforeFlight,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.scale),
-                label: 'Wyważenie',
+                icon: const Icon(Icons.scale),
+                label: context.l10n.entry_weighting,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.timer),
-                label: 'Czas lotu',
+                icon: const Icon(Icons.timer),
+                label: context.l10n.entry_flightTime,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.notes),
-                label: 'Notatki',
+                icon: const Icon(Icons.notes),
+                label: context.l10n.entry_notes,
               ),
             ],
           ),

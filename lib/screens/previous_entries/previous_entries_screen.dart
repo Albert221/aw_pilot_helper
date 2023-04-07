@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:aw_pilot_helper/screens/entry/entry_screen.dart';
 import 'package:aw_pilot_helper/screens/previous_entries/bloc/previous_entries_cubit.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,11 @@ class PreviousEntriesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Poprzednie wpisy'),
+        title: Text(context.l10n.previousEntries_title),
       ),
       body: entries.isEmpty
-          ? const Center(
-              child: Text('Nie masz żadnego wpisu.'),
+          ? Center(
+              child: Text(context.l10n.previousEntries_noEntries),
             )
           : ListView.builder(
               itemCount: entries.length,

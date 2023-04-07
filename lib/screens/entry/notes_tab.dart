@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:aw_pilot_helper/models/entry.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
@@ -35,10 +36,10 @@ class _NotesTabState extends State<NotesTab> with DidInitMixin<NotesTab> {
       maxLines: null,
       autofocus: true,
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: 'Wpisz tutaj notatki...',
-        contentPadding: EdgeInsets.all(24),
+        hintText: context.l10n.entry_notesHint,
+        contentPadding: const EdgeInsets.all(24),
       ),
     );
   }

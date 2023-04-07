@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:aw_pilot_helper/models/entry.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
@@ -79,9 +80,9 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
           controller: _nameController,
           readOnly: locked,
           onTapOutside: (_) => FocusScope.of(context).unfocus(),
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.abc),
-            labelText: 'Nazwa wpisu',
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.abc),
+            labelText: context.l10n.entry_name,
           ),
         ),
         const SizedBox(height: 16),
@@ -93,9 +94,9 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
                 controller: _mthController,
                 readOnly: locked,
                 onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.schedule),
-                  labelText: 'mth',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.schedule),
+                  suffixText: context.l10n.motohoursShort,
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -110,9 +111,10 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
                 onTapOutside: (_) => FocusScope.of(context).unfocus(),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.oil_barrel),
-                  labelText: 'Olej',
-                  suffixText: 'l',
-                  helperText: 'Min $oilMin l • Max $oilMax l',
+                  labelText: context.l10n.entry_oil,
+                  suffixText: context.l10n.literesShort,
+                  helperText:
+                      context.l10n.entry_oilCalculations(oilMin, oilMax),
                 ),
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.end,
@@ -132,9 +134,10 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
                 onTapOutside: (_) => FocusScope.of(context).unfocus(),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.local_gas_station),
-                  labelText: 'Paliwo (${fuelTankSpecs.name})',
-                  suffixText: 'l',
-                  helperText: 'Pojemność $capacity l',
+                  labelText:
+                      context.l10n.entry_fuelTankName(fuelTankSpecs.name),
+                  suffixText: context.l10n.literesShort,
+                  helperText: context.l10n.entry_fuelTankCapacity(capacity),
                 ),
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.end,

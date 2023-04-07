@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:aw_pilot_helper/models/entry.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
@@ -7,7 +8,6 @@ import 'package:aw_pilot_helper/utils/cubit_text_editing_controller.dart';
 import 'package:aw_pilot_helper/utils/did_init_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 typedef _DateTimeController = DateTimeTextEditingController<EntryCubit, Entry>;
 
@@ -58,8 +58,6 @@ class _FlightTimeTabState extends State<FlightTimeTab>
 
   @override
   Widget build(BuildContext context) {
-    final timeFormat = DateFormat.Hms();
-
     final locked = context.watch<EditLockCubit>().state;
 
     return ListView(
@@ -69,10 +67,8 @@ class _FlightTimeTabState extends State<FlightTimeTab>
         StreamBuilder<void>(
           stream: Stream<void>.periodic(const Duration(milliseconds: 100)),
           builder: (context, _) {
-            final time = timeFormat.format(_now);
-
             return Text(
-              'Czas ZULU: $time',
+              context.l10n.entry_timeZulu(_now),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontFeatures: const [FontFeature.tabularFigures()],
@@ -84,64 +80,64 @@ class _FlightTimeTabState extends State<FlightTimeTab>
         _Row(
           input: TextField(
             controller: _startController,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.bolt),
-              labelText: 'Godzina\u00A0uruchomienia',
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.bolt),
+              labelText: context.l10n.entry_startTime,
             ),
           ),
           button: ElevatedButton(
             onPressed: locked
                 ? null
                 : () => context.read<EntryCubit>().updateStartTime(_now),
-            child: const Text('Teraz'),
+            child: Text(context.l10n.entry_timeNow),
           ),
         ),
         const SizedBox(height: 16),
         _Row(
           input: TextField(
             controller: _takeoffController,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.flight_takeoff),
-              labelText: 'Godzina\u00A0startu',
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.flight_takeoff),
+              labelText: context.l10n.entry_takeoffTime,
             ),
           ),
           button: ElevatedButton(
             onPressed: locked
                 ? null
                 : () => context.read<EntryCubit>().updateTakeoffTime(_now),
-            child: const Text('Teraz'),
+            child: Text(context.l10n.entry_timeNow),
           ),
         ),
         const SizedBox(height: 16),
         _Row(
           input: TextField(
             controller: _landingController,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.flight_land),
-              labelText: 'Godzina\u00A0lądowania',
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.flight_land),
+              labelText: context.l10n.entry_landTime,
             ),
           ),
           button: ElevatedButton(
             onPressed: locked
                 ? null
                 : () => context.read<EntryCubit>().updateLandingTime(_now),
-            child: const Text('Teraz'),
+            child: Text(context.l10n.entry_timeNow),
           ),
         ),
         const SizedBox(height: 16),
         _Row(
           input: TextField(
             controller: _stopController,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.power_settings_new),
-              labelText: 'Godzina\u00A0wyłączenia',
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.power_settings_new),
+              labelText: context.l10n.entry_stopTime,
             ),
           ),
           button: ElevatedButton(
             onPressed: locked
                 ? null
                 : () => context.read<EntryCubit>().updateStopTime(_now),
-            child: const Text('Teraz'),
+            child: Text(context.l10n.entry_timeNow),
           ),
         ),
       ],

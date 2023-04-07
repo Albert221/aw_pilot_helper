@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -15,7 +16,7 @@ class AboutScren extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('O aplikacji'),
+        title: Text(context.l10n.about_title),
       ),
       body: ListView(
         padding: EdgeInsets.zero,
@@ -33,7 +34,7 @@ class AboutScren extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.article),
-            title: const Text('Licencje'),
+            title: Text(context.l10n.about_licenses),
             onTap: () => showLicensePage(context: context),
           ),
         ],
