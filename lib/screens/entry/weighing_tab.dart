@@ -95,6 +95,7 @@ class _WeighingTabState extends State<WeighingTab>
             children: [
               AWTextField(
                 controller: _planeWeightController,
+                focusNode: _planeWeightFocusNode,
                 readOnly: true,
                 icon: Icons.flight,
                 label: context.l10n.entry_emptyPlane,
@@ -116,6 +117,7 @@ class _WeighingTabState extends State<WeighingTab>
 
                       return AWTextField(
                         controller: _weightControllers[i],
+                        focusNode: _weightFocusNodes[i],
                         readOnly: locked,
                         icon: Icons.monitor_weight_outlined,
                         label: weightSpecs.name,
@@ -143,6 +145,7 @@ class _WeighingTabState extends State<WeighingTab>
 
                       return AWTextField(
                         controller: _fuelWeightControllers[i],
+                        focusNode: _fuelWeightFocusNodes[i],
                         readOnly: true,
                         icon: Icons.local_gas_station,
                         label:

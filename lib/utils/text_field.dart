@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class AWTextField extends StatelessWidget {
+class AWTextField extends StatefulWidget {
   const AWTextField({
     super.key,
-    this.controller,
-    this.focusNode,
+    required this.controller,
+    required this.focusNode,
     this.readOnly = false,
     this.icon,
     this.label,
@@ -15,8 +15,8 @@ class AWTextField extends StatelessWidget {
     this.textAlign = TextAlign.start,
   });
 
-  final TextEditingController? controller;
-  final FocusNode? focusNode;
+  final TextEditingController controller;
+  final FocusNode focusNode;
   final bool readOnly;
   final IconData? icon;
   final String? label;
@@ -27,21 +27,48 @@ class AWTextField extends StatelessWidget {
   final TextAlign textAlign;
 
   @override
+  State<AWTextField> createState() => _AWTextFieldState();
+}
+
+class _AWTextFieldState extends State<AWTextField> {
+  @override
+  void initState() {
+    super.initState();
+    widget.focusNode.addListener(_onFocus);
+  }
+
+  @override
+  void dispose() {
+    widget.focusNode.removeListener(_onFocus);
+    super.dispose();
+  }
+
+  void _onFocus() {
+    if (!widget.focusNode.hasFocus) {
+      return;
+    }
+
+    widget.controller.selection = TextSelection.collapsed(
+      offset: widget.controller.text.characters.length,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: controller,
-      focusNode: focusNode,
-      readOnly: readOnly,
+      controller: widget.controller,
+      focusNode: widget.focusNode,
+      readOnly: widget.readOnly,
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
-        prefixIcon: icon != null ? Icon(icon) : null,
-        labelText: label,
-        hintText: hintText,
-        helperText: helperText,
-        suffixText: suffixText,
+        prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+        labelText: widget.label,
+        hintText: widget.hintText,
+        helperText: widget.helperText,
+        suffixText: widget.suffixText,
       ),
-      keyboardType: keyboardType,
-      textAlign: textAlign,
+      keyboardType: widget.keyboardType,
+      textAlign: widget.textAlign,
     );
   }
 }
