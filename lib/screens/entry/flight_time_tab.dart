@@ -6,6 +6,7 @@ import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
 import 'package:aw_pilot_helper/utils/cubit_text_editing_controller.dart';
 import 'package:aw_pilot_helper/utils/did_init_mixin.dart';
+import 'package:aw_pilot_helper/utils/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -146,13 +147,11 @@ class _Row extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: TextField(
+            child: AWTextField(
               controller: controller,
               focusNode: focusNode,
-              decoration: InputDecoration(
-                prefixIcon: Icon(icon),
-                labelText: label,
-              ),
+              icon: icon,
+              label: label,
             ),
           ),
           const SizedBox(width: 16),

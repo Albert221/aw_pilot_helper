@@ -5,6 +5,7 @@ import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
 import 'package:aw_pilot_helper/utils/did_init_mixin.dart';
 import 'package:aw_pilot_helper/utils/list_read_only.dart';
+import 'package:aw_pilot_helper/utils/text_field.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,15 +93,13 @@ class _WeighingTabState extends State<WeighingTab>
             padding: const EdgeInsets.all(24),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: [
-              TextField(
+              AWTextField(
                 controller: _planeWeightController,
                 readOnly: true,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.flight),
-                  labelText: context.l10n.entry_emptyPlane,
-                  suffixText: context.l10n.kilogramsShort,
-                  helperText: context.l10n.entry_planeCalculations(planeMoment),
-                ),
+                icon: Icons.flight,
+                label: context.l10n.entry_emptyPlane,
+                suffixText: context.l10n.kilogramsShort,
+                helperText: context.l10n.entry_planeCalculations(planeMoment),
                 textAlign: TextAlign.end,
               ),
               ...planeSpecs.weights.mapIndexed((i, weightSpecs) {
@@ -115,17 +114,14 @@ class _WeighingTabState extends State<WeighingTab>
                       final arm = numberFormat.format(weightSpecs.arm);
                       final moment = numberFormat.format(momentValue ?? 0);
 
-                      return TextField(
+                      return AWTextField(
                         controller: _weightControllers[i],
                         readOnly: locked,
-                        onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.monitor_weight_outlined),
-                          labelText: weightSpecs.name,
-                          suffixText: context.l10n.kilogramsShort,
-                          helperText: context.l10n
-                              .entry_weightCalculations(arm, moment),
-                        ),
+                        icon: Icons.monitor_weight_outlined,
+                        label: weightSpecs.name,
+                        suffixText: context.l10n.kilogramsShort,
+                        helperText:
+                            context.l10n.entry_weightCalculations(arm, moment),
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.end,
                       );
@@ -145,18 +141,15 @@ class _WeighingTabState extends State<WeighingTab>
                       final arm = numberFormat.format(fuelTankSpecs.arm);
                       final moment = numberFormat.format(momentValue ?? 0);
 
-                      return TextField(
+                      return AWTextField(
                         controller: _fuelWeightControllers[i],
                         readOnly: true,
-                        onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.local_gas_station),
-                          labelText: context.l10n
-                              .entry_fuelTankName(fuelTankSpecs.name),
-                          suffixText: context.l10n.kilogramsShort,
-                          helperText: context.l10n
-                              .entry_weightCalculations(arm, moment),
-                        ),
+                        icon: Icons.local_gas_station,
+                        label:
+                            context.l10n.entry_fuelTankName(fuelTankSpecs.name),
+                        suffixText: context.l10n.kilogramsShort,
+                        helperText:
+                            context.l10n.entry_weightCalculations(arm, moment),
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.end,
                       );
