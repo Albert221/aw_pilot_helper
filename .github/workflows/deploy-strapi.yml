@@ -3,7 +3,7 @@ name: Deploy Strapi
 on:
   push:
     branches: [main]
-    paths: [strapi]
+    paths: ['strapi/**']
   
   workflow_dispatch:
 
