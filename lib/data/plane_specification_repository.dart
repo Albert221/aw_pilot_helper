@@ -23,10 +23,7 @@ class PlaneSpecificationRepository {
 
   Stream<Either<Object, List<PlaneSpecification>>> getAll() {
     _storage.getAll().then((planes) {
-      if (planes == null) {
-        return;
-      }
-
+      if (planes == null) return;
       _streamController.add(Right(planes.readOnly));
     });
 

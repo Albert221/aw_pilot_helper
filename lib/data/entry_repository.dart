@@ -40,9 +40,7 @@ class EntryRepository {
 
   Future<void> removeEntry(String entryId) async {
     final entries = await _storage.getAll();
-    if (entries == null) {
-      return;
-    }
+    if (entries == null) return;
 
     entries.removeWhere((entry) => entry.id == entryId);
 

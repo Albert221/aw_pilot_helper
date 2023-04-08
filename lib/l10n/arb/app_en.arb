@@ -76,7 +76,7 @@
             }
         }
     },
-    "entry_weightCalculations": "Arm {arm} • Moment {moment} kgm",
+    "entry_weightCalculations": "Arm {arm} m • Moment {moment} kgm",
     "@entry_weightCalculations": {
         "placeholders": {
             "arm": {

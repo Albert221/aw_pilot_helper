@@ -72,16 +72,10 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
 
   @override
   Widget build(BuildContext context) {
-    final numberFormat = NumberFormat.decimalPattern()
-      ..maximumFractionDigits = 3;
-
     final locked = context.watch<EditLockCubit>().state;
     final planeSpecs = context.select<EntryCubit, PlaneSpecification>(
       (cubit) => cubit.state.planeSpecification,
     );
-
-    final oilMin = numberFormat.format(planeSpecs.oilMin);
-    final oilMax = numberFormat.format(planeSpecs.oilMax);
 
     return ListView(
       padding: const EdgeInsets.all(24),
@@ -104,6 +98,12 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
                 focusNode: _mthFocusNode,
                 readOnly: locked,
                 icon: Icons.schedule,
+                label: context.l10n.motohoursShort,
+                error: (context) => context.select<EntryCubit, bool>((c) {
+                  final mth = c.state.content.motohours;
+                  if (mth == null) return false;
+                  return mth < 0;
+                }),
                 suffixText: context.l10n.motohoursShort,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -118,8 +118,16 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
                 readOnly: locked,
                 icon: Icons.oil_barrel,
                 label: context.l10n.entry_oil,
+                error: (context) => context.select<EntryCubit, bool>((c) {
+                  final oil = c.state.content.oil;
+                  if (oil == null) return false;
+                  return oil < planeSpecs.oilMin || oil > planeSpecs.oilMax;
+                }),
                 suffixText: context.l10n.literesShort,
-                helperText: context.l10n.entry_oilCalculations(oilMin, oilMax),
+                helperText: context.l10n.entry_oilCalculations(
+                  context.l10nFormat.physicalValue(planeSpecs.oilMin),
+                  context.l10nFormat.physicalValue(planeSpecs.oilMax),
+                ),
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.end,
               ),
@@ -127,24 +135,27 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
           ],
         ),
         ...planeSpecs.fuelTanks.mapIndexed(
-          (i, fuelTankSpecs) {
-            final capacity = numberFormat.format(fuelTankSpecs.capacity);
-
-            return Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: AWTextField(
-                controller: _fuelControllers[i],
-                focusNode: _fuelFocusNodes[i],
-                readOnly: locked,
-                icon: Icons.local_gas_station,
-                label: context.l10n.entry_fuelTankName(fuelTankSpecs.name),
-                suffixText: context.l10n.literesShort,
-                helperText: context.l10n.entry_fuelTankCapacity(capacity),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.end,
+          (i, fuelTankSpecs) => Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: AWTextField(
+              controller: _fuelControllers[i],
+              focusNode: _fuelFocusNodes[i],
+              readOnly: locked,
+              icon: Icons.local_gas_station,
+              label: context.l10n.entry_fuelTankName(fuelTankSpecs.name),
+              error: (context) => context.select<EntryCubit, bool>((c) {
+                final fuel = c.state.content.fuelBefore[i];
+                if (fuel == null) return false;
+                return fuel < 0 || fuel > fuelTankSpecs.capacity;
+              }),
+              suffixText: context.l10n.literesShort,
+              helperText: context.l10n.entry_fuelTankCapacity(
+                context.l10nFormat.physicalValue(fuelTankSpecs.capacity),
               ),
-            );
-          },
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.end,
+            ),
+          ),
         ),
       ],
     );

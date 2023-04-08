@@ -258,7 +258,7 @@ abstract class L10n {
   /// No description provided for @entry_weightCalculations.
   ///
   /// In en, this message translates to:
-  /// **'Arm {arm} • Moment {moment} kgm'**
+  /// **'Arm {arm} m • Moment {moment} kgm'**
   String entry_weightCalculations(String arm, String moment);
 
   /// No description provided for @entry_drawbar.

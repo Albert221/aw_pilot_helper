@@ -41,17 +41,13 @@ class Entry with _$Entry {
 
     planeSpecification.fuelTanks.forEachIndexed((i, fuelTankSpecs) {
       final fuel = content.fuelBefore[i];
-      if (fuel == null) {
-        return;
-      }
+      if (fuel == null) return;
       weight += fuel * fuelDensity;
     });
 
     planeSpecification.weights.forEachIndexed((i, weightSpecs) {
       final aWeight = content.weight[i];
-      if (aWeight == null) {
-        return;
-      }
+      if (aWeight == null) return;
       weight += aWeight;
     });
 
@@ -67,17 +63,13 @@ class Entry with _$Entry {
 
     planeSpecification.fuelTanks.forEachIndexed((i, fuelTankSpecs) {
       final fuel = content.fuelBefore[i];
-      if (fuel == null) {
-        return;
-      }
+      if (fuel == null) return;
       moment += fuelTankSpecs.arm * fuel * fuelDensity;
     });
 
     planeSpecification.weights.forEachIndexed((i, weightSpecs) {
       final weight = content.weight[i];
-      if (weight == null) {
-        return;
-      }
+      if (weight == null) return;
       moment += weightSpecs.arm * weight;
     });
 

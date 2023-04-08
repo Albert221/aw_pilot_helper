@@ -5,3 +5,7 @@ analyzer:
     - '**/*.freezed.dart'
     - '**/*.g.dart'
     - 'lib/l10n/output/*.dart'
+
+linter:
+  rules:
+    always_put_control_body_on_new_line: false

@@ -104,7 +104,7 @@ class L10nEn extends L10n {
 
   @override
   String entry_weightCalculations(String arm, String moment) {
-    return 'Arm $arm • Moment $moment kgm';
+    return 'Arm $arm m • Moment $moment kgm';
   }
 
   @override

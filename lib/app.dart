@@ -22,6 +22,7 @@ class AWHelperApp extends StatelessWidget {
         ),
       ),
       onGenerateRoute: (_) => HomeScreenRoute(),
+      builder: (context, child) => L10nFormat(child: child!),
     );
   }
 }

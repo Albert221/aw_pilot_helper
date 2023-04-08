@@ -27,7 +27,7 @@
     "entry_fuelTankCapacity": "Pojemność {capacity} l",
     "entry_emptyPlane": "Pusty samolot",
     "entry_planeCalculations": "Moment {planeMoment} kgm",
-    "entry_weightCalculations": "Ramię {arm} • Moment {moment} kgm",
+    "entry_weightCalculations": "Ramię {arm} m • Moment {moment} kgm",
     "entry_drawbar": "Dyszel ({weight} kg)",
     "entry_summary": "Ciężar {weight} kg • Moment {moment} kgm",
     "entry_timeZulu": "Czas ZULU: {time}",

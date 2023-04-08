@@ -39,22 +39,14 @@ class CubitTextEditingController<T, C extends Cubit<S>, S>
   }
 
   void _onThisChange() {
-    if (_cubitText == text) {
-      return;
-    }
+    if (_cubitText == text) return;
 
     updateValue(cubit, parseText(text));
   }
 
   void _onCubitChange() {
-    if (text == _cubitText) {
-      return;
-    }
-
-    if (focusNode.hasFocus) {
-      // Let user continue editing
-      return;
-    }
+    if (text == _cubitText) return;
+    if (focusNode.hasFocus) return;
 
     text = _cubitText;
   }

@@ -72,18 +72,10 @@ class _WeighingTabState extends State<WeighingTab>
 
   @override
   Widget build(BuildContext context) {
-    final numberFormat = NumberFormat.decimalPattern()
-      ..maximumFractionDigits = 3;
-
     final locked = context.watch<EditLockCubit>().state;
     final planeSpecs = context.select<EntryCubit, PlaneSpecification>(
       (cubit) => cubit.state.planeSpecification,
     );
-
-    final planeMoment = numberFormat.format(planeSpecs.planeMoment);
-    final drawbarWeight = numberFormat.format(planeSpecs.drawbarWeight);
-    final drawbarArm = numberFormat.format(planeSpecs.drawbarArm);
-    final drawbarMoment = numberFormat.format(planeSpecs.drawbarMoment);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -100,66 +92,14 @@ class _WeighingTabState extends State<WeighingTab>
                 icon: Icons.flight,
                 label: context.l10n.entry_emptyPlane,
                 suffixText: context.l10n.kilogramsShort,
-                helperText: context.l10n.entry_planeCalculations(planeMoment),
+                helperText: context.l10n.entry_planeCalculations(
+                  context.l10nFormat.physicalValue(planeSpecs.planeMoment),
+                ),
                 textAlign: TextAlign.end,
               ),
-              ...planeSpecs.weights.mapIndexed((i, weightSpecs) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: BlocBuilder<EntryCubit, Entry>(
-                    builder: (context, state) {
-                      final weight = state.content.weight[i];
-                      final momentValue =
-                          weight != null ? weightSpecs.arm * weight : null;
-
-                      final arm = numberFormat.format(weightSpecs.arm);
-                      final moment = numberFormat.format(momentValue ?? 0);
-
-                      return AWTextField(
-                        controller: _weightControllers[i],
-                        focusNode: _weightFocusNodes[i],
-                        readOnly: locked,
-                        icon: Icons.monitor_weight_outlined,
-                        label: weightSpecs.name,
-                        suffixText: context.l10n.kilogramsShort,
-                        helperText:
-                            context.l10n.entry_weightCalculations(arm, moment),
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.end,
-                      );
-                    },
-                  ),
-                );
-              }),
-              ...planeSpecs.fuelTanks.mapIndexed((i, fuelTankSpecs) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: BlocBuilder<EntryCubit, Entry>(
-                    builder: (context, state) {
-                      final weight = state.content.fuelBefore[i];
-                      final momentValue =
-                          weight != null ? fuelTankSpecs.arm * weight : null;
-
-                      final arm = numberFormat.format(fuelTankSpecs.arm);
-                      final moment = numberFormat.format(momentValue ?? 0);
-
-                      return AWTextField(
-                        controller: _fuelWeightControllers[i],
-                        focusNode: _fuelWeightFocusNodes[i],
-                        readOnly: true,
-                        icon: Icons.local_gas_station,
-                        label:
-                            context.l10n.entry_fuelTankName(fuelTankSpecs.name),
-                        suffixText: context.l10n.kilogramsShort,
-                        helperText:
-                            context.l10n.entry_weightCalculations(arm, moment),
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.end,
-                      );
-                    },
-                  ),
-                );
-              }),
+              ...planeSpecs.weights
+                  .mapIndexed((i, specs) => _mapWeights(i, specs, locked)),
+              ...planeSpecs.fuelTanks.mapIndexed(_mapFuelTanks),
               if (planeSpecs.drawbarMoment != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
@@ -170,10 +110,19 @@ class _WeighingTabState extends State<WeighingTab>
                     onChanged: (value) =>
                         context.read<EntryCubit>().updateDrawbar(value!),
                     controlAffinity: ListTileControlAffinity.trailing,
-                    title: Text(context.l10n.entry_drawbar(drawbarWeight)),
+                    title: Text(
+                      context.l10n.entry_drawbar(
+                        context.l10nFormat
+                            .physicalValue(planeSpecs.drawbarWeight!),
+                      ),
+                    ),
                     subtitle: Text(
-                      context.l10n
-                          .entry_weightCalculations(drawbarArm, drawbarMoment),
+                      context.l10n.entry_weightCalculations(
+                        context.l10nFormat
+                            .physicalValue(planeSpecs.drawbarArm!),
+                        context.l10nFormat
+                            .physicalValue(planeSpecs.drawbarMoment!),
+                      ),
                     ),
                     contentPadding: EdgeInsets.zero,
                   ),
@@ -186,20 +135,78 @@ class _WeighingTabState extends State<WeighingTab>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: BlocBuilder<EntryCubit, Entry>(
-              builder: (context, state) {
-                final weight = numberFormat.format(state.weight);
-                final moment = numberFormat.format(state.moment);
-
-                return Text(
-                  context.l10n.entry_summary(weight, moment),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleSmall,
-                );
-              },
+              builder: (context, state) => Text(
+                context.l10n.entry_summary(
+                  context.l10nFormat.physicalValue(state.weight),
+                  context.l10nFormat.physicalValue(state.moment),
+                ),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _mapWeights(int i, WeightSpecification weightSpecs, bool locked) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: BlocBuilder<EntryCubit, Entry>(
+        builder: (context, state) {
+          final weight = state.content.weight[i];
+          final momentValue = weight != null ? weightSpecs.arm * weight : null;
+
+          return AWTextField(
+            controller: _weightControllers[i],
+            focusNode: _weightFocusNodes[i],
+            readOnly: locked,
+            icon: Icons.monitor_weight_outlined,
+            label: weightSpecs.name,
+            error: (context) => context.select<EntryCubit, bool>((c) {
+              final weight = c.state.content.weight[i];
+              if (weight == null) return false;
+              return weight < 0;
+            }),
+            suffixText: context.l10n.kilogramsShort,
+            helperText: context.l10n.entry_weightCalculations(
+              context.l10nFormat.physicalValue(weightSpecs.arm),
+              context.l10nFormat.physicalValue(momentValue ?? 0),
+            ),
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.end,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _mapFuelTanks(int i, FuelTankSpecification fuelTankSpecs) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: BlocBuilder<EntryCubit, Entry>(
+        builder: (context, state) {
+          final weight = state.content.fuelBefore[i];
+          final momentValue =
+              weight != null ? fuelTankSpecs.arm * weight : null;
+
+          return AWTextField(
+            controller: _fuelWeightControllers[i],
+            focusNode: _fuelWeightFocusNodes[i],
+            readOnly: true,
+            icon: Icons.local_gas_station,
+            label: context.l10n.entry_fuelTankName(fuelTankSpecs.name),
+            suffixText: context.l10n.kilogramsShort,
+            helperText: context.l10n.entry_weightCalculations(
+              context.l10nFormat.physicalValue(fuelTankSpecs.arm),
+              context.l10nFormat.physicalValue(momentValue ?? 0),
+            ),
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.end,
+          );
+        },
+      ),
     );
   }
 }

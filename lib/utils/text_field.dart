@@ -8,6 +8,7 @@ class AWTextField extends StatefulWidget {
     this.readOnly = false,
     this.icon,
     this.label,
+    this.error,
     this.hintText,
     this.helperText,
     this.suffixText,
@@ -20,6 +21,7 @@ class AWTextField extends StatefulWidget {
   final bool readOnly;
   final IconData? icon;
   final String? label;
+  final bool Function(BuildContext)? error;
   final String? hintText;
   final String? helperText;
   final String? suffixText;
@@ -44,9 +46,7 @@ class _AWTextFieldState extends State<AWTextField> {
   }
 
   void _onFocus() {
-    if (!widget.focusNode.hasFocus) {
-      return;
-    }
+    if (!widget.focusNode.hasFocus) return;
 
     widget.controller.selection = TextSelection.collapsed(
       offset: widget.controller.text.characters.length,
@@ -55,20 +55,26 @@ class _AWTextFieldState extends State<AWTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: widget.controller,
-      focusNode: widget.focusNode,
-      readOnly: widget.readOnly,
-      onTapOutside: (_) => FocusScope.of(context).unfocus(),
-      decoration: InputDecoration(
-        prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
-        labelText: widget.label,
-        hintText: widget.hintText,
-        helperText: widget.helperText,
-        suffixText: widget.suffixText,
+    return AnimatedBuilder(
+      animation: widget.controller,
+      builder: (context, _) => TextField(
+        controller: widget.controller,
+        focusNode: widget.focusNode,
+        readOnly: widget.readOnly,
+        onTapOutside: (_) => FocusScope.of(context).unfocus(),
+        decoration: InputDecoration(
+          prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+          labelText: widget.label,
+          hintText: widget.hintText,
+          errorText: widget.error?.call(context) ?? false
+              ? widget.helperText ?? ''
+              : null,
+          helperText: widget.helperText,
+          suffixText: widget.suffixText,
+        ),
+        keyboardType: widget.keyboardType,
+        textAlign: widget.textAlign,
       ),
-      keyboardType: widget.keyboardType,
-      textAlign: widget.textAlign,
     );
   }
 }
