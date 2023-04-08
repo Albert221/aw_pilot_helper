@@ -120,11 +120,13 @@ class _EntryScreenState extends State<EntryScreen>
         ),
         actions: [
           BlocBuilder<EditLockCubit, bool>(
-            builder: (context, locked) => IconButton(
-              icon: Icon(locked ? Icons.lock : Icons.lock_open),
-              onPressed: locked
-                  ? () => context.read<EditLockCubit>().unlock()
-                  : () => context.read<EditLockCubit>().lock(),
+            builder: (context, locked) => TextFieldTapRegion(
+              child: IconButton(
+                icon: Icon(locked ? Icons.lock : Icons.lock_open),
+                onPressed: locked
+                    ? () => context.read<EditLockCubit>().unlock()
+                    : () => context.read<EditLockCubit>().lock(),
+              ),
             ),
           ),
         ],
