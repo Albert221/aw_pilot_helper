@@ -9,7 +9,6 @@ import 'package:aw_pilot_helper/utils/text_field.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class WeighingTab extends StatefulWidget {
   const WeighingTab({super.key});
@@ -21,53 +20,85 @@ class WeighingTab extends StatefulWidget {
 class _WeighingTabState extends State<WeighingTab>
     with DidInitMixin<WeighingTab> {
   final _planeWeightFocusNode = FocusNode(debugLabel: 'planeWeight');
-  late final EntryDoubleController _planeWeightController;
+  EntryDoubleController? _planeWeightController;
   late final List<FocusNode> _weightFocusNodes;
-  late final List<EntryDoubleController> _weightControllers;
+  List<EntryDoubleController>? _weightControllers;
   late final List<FocusNode> _fuelWeightFocusNodes;
-  late final List<EntryDoubleController> _fuelWeightControllers;
+  List<EntryDoubleController>? _fuelWeightControllers;
 
   @override
   void didInitState() {
     final cubit = context.read<EntryCubit>();
 
-    _planeWeightController = EntryDoubleController(
-      focusNode: _planeWeightFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.planeSpecification.planeWeight,
-      updateValue: (_, __) {},
-    );
-
     _weightFocusNodes = cubit.state.planeSpecification.weights
         .mapIndexed<FocusNode>((i, weightSpecification) {
       return FocusNode(debugLabel: 'weight$i');
-    }).readOnly;
-    _weightControllers = cubit.state.planeSpecification.weights
-        .mapIndexed<EntryDoubleController>((i, weightSpecification) {
-      return EntryDoubleController(
-        focusNode: _weightFocusNodes[i],
-        cubit: cubit,
-        mapValue: (state) => state.content.weight[i],
-        updateValue: (cubit, weight) => cubit.updateWeight(i, weight),
-      );
     }).readOnly;
 
     _fuelWeightFocusNodes = cubit.state.planeSpecification.fuelTanks
         .mapIndexed<FocusNode>((i, fuelTankSpecification) {
       return FocusNode(debugLabel: 'fuelWeight$i');
     }).readOnly;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final cubit = context.read<EntryCubit>();
+
+    _planeWeightController?.dispose();
+    _planeWeightController = EntryDoubleController(
+      context: context,
+      focusNode: _planeWeightFocusNode,
+      cubit: cubit,
+      mapValue: (state) => state.planeSpecification.planeWeight,
+      updateValue: (_, __) {},
+    );
+
+    _weightControllers?.forEach((controller) => controller.dispose());
+    _weightControllers = cubit.state.planeSpecification.weights
+        .mapIndexed<EntryDoubleController>(
+          (i, weightSpecification) => EntryDoubleController(
+            context: context,
+            focusNode: _weightFocusNodes[i],
+            cubit: cubit,
+            mapValue: (state) => state.content.weight[i],
+            updateValue: (cubit, weight) => cubit.updateWeight(i, weight),
+          ),
+        )
+        .readOnly;
+
+    _fuelWeightControllers?.forEach((controller) => controller.dispose());
     _fuelWeightControllers = cubit.state.planeSpecification.fuelTanks
-        .mapIndexed<EntryDoubleController>((i, fuelTankSpecification) {
-      return EntryDoubleController(
-        focusNode: _fuelWeightFocusNodes[i],
-        cubit: cubit,
-        mapValue: (state) {
-          final fuel = state.content.fuelBefore[i];
-          return fuel != null ? fuel * fuelDensity : null;
-        },
-        updateValue: (_, __) {},
-      );
-    }).readOnly;
+        .mapIndexed<EntryDoubleController>(
+          (i, fuelTankSpecification) => EntryDoubleController(
+            context: context,
+            focusNode: _fuelWeightFocusNodes[i],
+            cubit: cubit,
+            mapValue: (state) {
+              final fuel = state.content.fuelBefore[i];
+              return fuel != null ? fuel * fuelDensity : null;
+            },
+            updateValue: (_, __) {},
+          ),
+        )
+        .readOnly;
+  }
+
+  @override
+  void dispose() {
+    _fuelWeightControllers?.forEach((controller) => controller.dispose());
+    _weightControllers?.forEach((controller) => controller.dispose());
+    _planeWeightController?.dispose();
+
+    // ignore: avoid_function_literals_in_foreach_calls
+    _fuelWeightFocusNodes.forEach((focusNode) => focusNode.dispose());
+    // ignore: avoid_function_literals_in_foreach_calls
+    _weightFocusNodes.forEach((focusNode) => focusNode.dispose());
+    _planeWeightFocusNode.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -159,7 +190,7 @@ class _WeighingTabState extends State<WeighingTab>
           final momentValue = weight != null ? weightSpecs.arm * weight : null;
 
           return AWTextField(
-            controller: _weightControllers[i],
+            controller: _weightControllers?[i],
             focusNode: _weightFocusNodes[i],
             readOnly: locked,
             icon: Icons.monitor_weight_outlined,
@@ -192,7 +223,7 @@ class _WeighingTabState extends State<WeighingTab>
               weight != null ? fuelTankSpecs.arm * weight : null;
 
           return AWTextField(
-            controller: _fuelWeightControllers[i],
+            controller: _fuelWeightControllers?[i],
             focusNode: _fuelWeightFocusNodes[i],
             readOnly: true,
             icon: Icons.local_gas_station,

@@ -10,7 +10,6 @@ import 'package:aw_pilot_helper/utils/text_field.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class BeforeFlightTab extends StatefulWidget {
   const BeforeFlightTab({super.key});
@@ -22,18 +21,31 @@ class BeforeFlightTab extends StatefulWidget {
 class _BeforeFlightTabState extends State<BeforeFlightTab>
     with DidInitMixin<BeforeFlightTab> {
   final _nameFocusNode = FocusNode(debugLabel: 'name');
-  late final StringTextEditingController<EntryCubit, Entry> _nameController;
+  StringTextEditingController<EntryCubit, Entry>? _nameController;
   final _mthFocusNode = FocusNode(debugLabel: 'mth');
-  late final EntryDoubleController _mthController;
+  EntryDoubleController? _mthController;
   final _oilFocusNode = FocusNode(debugLabel: 'oil');
-  late final EntryDoubleController _oilController;
+  EntryDoubleController? _oilController;
   late final List<FocusNode> _fuelFocusNodes;
-  late final List<EntryDoubleController> _fuelControllers;
+  List<EntryDoubleController>? _fuelControllers;
 
   @override
   void didInitState() {
     final cubit = context.read<EntryCubit>();
 
+    _fuelFocusNodes = List.generate(
+      cubit.state.planeSpecification.weights.length,
+      (i) => FocusNode(debugLabel: 'fuel$i'),
+    ).readOnly;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final cubit = context.read<EntryCubit>();
+
+    _nameController?.dispose();
     _nameController = StringTextEditingController<EntryCubit, Entry>(
       focusNode: _nameFocusNode,
       cubit: cubit,
@@ -41,33 +53,52 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
       updateValue: (cubit, name) => cubit.updateName(name),
     );
 
+    _mthController?.dispose();
     _mthController = EntryDoubleController(
+      context: context,
       focusNode: _mthFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.motohours,
       updateValue: (cubit, mth) => cubit.updateMotohours(mth),
     );
 
+    _oilController?.dispose();
     _oilController = EntryDoubleController(
+      context: context,
       focusNode: _oilFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.oil,
       updateValue: (cubit, oil) => cubit.updateOil(oil),
     );
 
-    _fuelFocusNodes = List.generate(
-      cubit.state.planeSpecification.weights.length,
-      (i) => FocusNode(debugLabel: 'fuel$i'),
-    ).readOnly;
+    _fuelControllers?.forEach((controller) => controller.dispose());
     _fuelControllers = cubit.state.planeSpecification.weights
-        .mapIndexed<EntryDoubleController>((i, weightSpecification) {
-      return EntryDoubleController(
-        focusNode: _fuelFocusNodes[i],
-        cubit: cubit,
-        mapValue: (state) => state.content.fuelBefore[i],
-        updateValue: (cubit, weight) => cubit.updateFuel(i, weight),
-      );
-    }).readOnly;
+        .mapIndexed<EntryDoubleController>(
+          (i, weightSpecification) => EntryDoubleController(
+            context: context,
+            focusNode: _fuelFocusNodes[i],
+            cubit: cubit,
+            mapValue: (state) => state.content.fuelBefore[i],
+            updateValue: (cubit, weight) => cubit.updateFuel(i, weight),
+          ),
+        )
+        .readOnly;
+  }
+
+  @override
+  void dispose() {
+    _fuelControllers?.forEach((controller) => controller.dispose());
+    _oilController?.dispose();
+    _mthController?.dispose();
+    _nameController?.dispose();
+
+    // ignore: avoid_function_literals_in_foreach_calls
+    _fuelFocusNodes.forEach((focusNode) => focusNode.dispose());
+    _oilFocusNode.dispose();
+    _mthFocusNode.dispose();
+    _nameFocusNode.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -138,7 +169,7 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
           (i, fuelTankSpecs) => Padding(
             padding: const EdgeInsets.only(top: 16),
             child: AWTextField(
-              controller: _fuelControllers[i],
+              controller: _fuelControllers?[i],
               focusNode: _fuelFocusNodes[i],
               readOnly: locked,
               icon: Icons.local_gas_station,

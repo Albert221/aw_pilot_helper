@@ -16,7 +16,7 @@ class AWTextField extends StatefulWidget {
     this.textAlign = TextAlign.start,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FocusNode focusNode;
   final bool readOnly;
   final IconData? icon;
@@ -48,15 +48,16 @@ class _AWTextFieldState extends State<AWTextField> {
   void _onFocus() {
     if (!widget.focusNode.hasFocus) return;
 
-    widget.controller.selection = TextSelection.collapsed(
-      offset: widget.controller.text.characters.length,
+    final controller = widget.controller;
+    controller?.selection = TextSelection.collapsed(
+      offset: controller.text.characters.length,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: widget.controller,
+      animation: widget.controller ?? ValueNotifier(null),
       builder: (context, _) => TextField(
         controller: widget.controller,
         focusNode: widget.focusNode,

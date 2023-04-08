@@ -29,6 +29,14 @@ class _NotesTabState extends State<NotesTab> with DidInitMixin<NotesTab> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final locked = context.watch<EditLockCubit>().state;
 

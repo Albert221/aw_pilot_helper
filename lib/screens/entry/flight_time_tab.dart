@@ -5,7 +5,6 @@ import 'package:aw_pilot_helper/models/entry.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/edit_lock_cubit.dart';
 import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
 import 'package:aw_pilot_helper/utils/cubit_text_editing_controller.dart';
-import 'package:aw_pilot_helper/utils/did_init_mixin.dart';
 import 'package:aw_pilot_helper/utils/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,50 +18,74 @@ class FlightTimeTab extends StatefulWidget {
   State<FlightTimeTab> createState() => _FlightTimeTabState();
 }
 
-class _FlightTimeTabState extends State<FlightTimeTab>
-    with DidInitMixin<FlightTimeTab> {
+class _FlightTimeTabState extends State<FlightTimeTab> {
   final _startFocusNode = FocusNode(debugLabel: 'start');
-  late final _DateTimeController _startController;
+  _DateTimeController? _startController;
   final _takeoffFocusNode = FocusNode(debugLabel: 'takeoff');
-  late final _DateTimeController _takeoffController;
+  _DateTimeController? _takeoffController;
   final _landingFocusNode = FocusNode(debugLabel: 'landing');
-  late final _DateTimeController _landingController;
+  _DateTimeController? _landingController;
   final _stopFocusNode = FocusNode(debugLabel: 'stop');
-  late final _DateTimeController _stopController;
+  _DateTimeController? _stopController;
 
   DateTime get _now => DateTime.now().toUtc();
 
   @override
-  void didInitState() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     final cubit = context.read<EntryCubit>();
 
+    _startController?.dispose();
     _startController = _DateTimeController(
+      context: context,
       focusNode: _startFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.startTime,
       updateValue: (cubit, value) => cubit.updateStartTime(value),
     );
 
+    _takeoffController?.dispose();
     _takeoffController = _DateTimeController(
+      context: context,
       focusNode: _takeoffFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.takeoffTime,
       updateValue: (cubit, value) => cubit.updateTakeoffTime(value),
     );
 
+    _landingController?.dispose();
     _landingController = _DateTimeController(
+      context: context,
       focusNode: _landingFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.landingTime,
       updateValue: (cubit, value) => cubit.updateLandingTime(value),
     );
 
+    _stopController?.dispose();
     _stopController = _DateTimeController(
+      context: context,
       focusNode: _stopFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.stopTime,
       updateValue: (cubit, value) => cubit.updateStopTime(value),
     );
+  }
+
+  @override
+  void dispose() {
+    _stopController?.dispose();
+    _landingController?.dispose();
+    _takeoffController?.dispose();
+    _startController?.dispose();
+
+    _stopFocusNode.dispose();
+    _landingFocusNode.dispose();
+    _takeoffFocusNode.dispose();
+    _startFocusNode.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -129,7 +152,7 @@ class _Row extends StatelessWidget {
     required this.update,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FocusNode focusNode;
   final IconData icon;
   final String label;

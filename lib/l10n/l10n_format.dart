@@ -35,15 +35,20 @@ class _L10nFormat extends InheritedWidget {
 
 class _L10nFormats {
   _L10nFormats(String locale)
-      : _physicalValueFormat = NumberFormat.decimalPattern(locale)
+      : physicalValueFormat = NumberFormat.decimalPattern(locale)
           ..maximumFractionDigits = 3,
-        _integerFormat = NumberFormat.decimalPattern(locale);
+        integerFormat = NumberFormat.decimalPattern(locale),
+        hourMinuteFormat = DateFormat.Hm(locale);
 
-  final NumberFormat _physicalValueFormat;
-  final NumberFormat _integerFormat;
+  final NumberFormat physicalValueFormat;
+  final NumberFormat integerFormat;
 
-  String physicalValue(double value) => _physicalValueFormat.format(value);
-  String integer(int value) => _integerFormat.format(value);
+  final DateFormat hourMinuteFormat;
+
+  String physicalValue(double value) => physicalValueFormat.format(value);
+  String integer(int value) => integerFormat.format(value);
+
+  String hourMinute(DateTime value) => hourMinuteFormat.format(value);
 }
 
 extension L10nFormatBuildContextExtension on BuildContext {

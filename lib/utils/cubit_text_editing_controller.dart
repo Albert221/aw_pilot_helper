@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+
+typedef _FormatValue<T> = String Function(T);
+typedef _ParseText<T> = T Function(String);
 
 class CubitTextEditingController<T, C extends Cubit<S>, S>
     extends TextEditingController {
@@ -55,26 +58,28 @@ class CubitTextEditingController<T, C extends Cubit<S>, S>
 class DoubleTextEditingController<C extends Cubit<S>, S>
     extends CubitTextEditingController<double?, C, S> {
   DoubleTextEditingController({
+    required BuildContext context,
     required super.focusNode,
     required super.cubit,
     required super.mapValue,
     required super.updateValue,
   }) : super(
-          formatValue: _formatValue,
-          parseText: (text) {
-            try {
-              return _format.parse(text).toDouble();
-            } on FormatException {
-              return null;
-            }
-          },
+          formatValue: _formatValue(context),
+          parseText: _parseText(context),
         );
 
-  static final _format = NumberFormat.decimalPattern()
-    ..maximumFractionDigits = 3;
+  static _FormatValue<double?> _formatValue(BuildContext context) =>
+      (value) => value != null ? context.l10nFormat.physicalValue(value) : '';
 
-  static String _formatValue(double? value) =>
-      value != null ? _format.format(value) : '';
+  static _ParseText<double?> _parseText(BuildContext context) {
+    return (text) {
+      try {
+        return context.l10nFormat.physicalValueFormat.parse(text).toDouble();
+      } on FormatException {
+        return null;
+      }
+    };
+  }
 }
 
 class StringTextEditingController<C extends Cubit<S>, S>
@@ -90,20 +95,26 @@ class StringTextEditingController<C extends Cubit<S>, S>
 class DateTimeTextEditingController<C extends Cubit<S>, S>
     extends CubitTextEditingController<DateTime?, C, S> {
   DateTimeTextEditingController({
+    required BuildContext context,
     required super.focusNode,
     required super.cubit,
     required super.mapValue,
     required super.updateValue,
   }) : super(
-          formatValue: (value) => value != null ? _format.format(value) : '',
-          parseText: (text) {
-            try {
-              return _format.parseLoose(text);
-            } on FormatException {
-              return null;
-            }
-          },
+          formatValue: _formatValue(context),
+          parseText: _parseText(context),
         );
 
-  static final _format = DateFormat.Hm();
+  static _FormatValue<DateTime?> _formatValue(BuildContext context) =>
+      (value) => value != null ? context.l10nFormat.hourMinute(value) : '';
+
+  static _ParseText<DateTime?> _parseText(BuildContext context) {
+    return (text) {
+      try {
+        return context.l10nFormat.hourMinuteFormat.parseLoose(text);
+      } on FormatException {
+        return null;
+      }
+    };
+  }
 }
