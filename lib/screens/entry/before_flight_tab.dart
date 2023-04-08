@@ -29,6 +29,8 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
   late final List<FocusNode> _fuelFocusNodes;
   List<EntryDoubleController>? _fuelControllers;
 
+  var _previousLocale = '';
+
   @override
   void didInitState() {
     final cubit = context.read<EntryCubit>();
@@ -43,46 +45,50 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final cubit = context.read<EntryCubit>();
+    if (_previousLocale != context.locale) {
+      _previousLocale = context.locale;
 
-    _nameController?.dispose();
-    _nameController = StringTextEditingController<EntryCubit, Entry>(
-      focusNode: _nameFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.content.name,
-      updateValue: (cubit, name) => cubit.updateName(name),
-    );
+      final cubit = context.read<EntryCubit>();
 
-    _mthController?.dispose();
-    _mthController = EntryDoubleController(
-      context: context,
-      focusNode: _mthFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.content.motohours,
-      updateValue: (cubit, mth) => cubit.updateMotohours(mth),
-    );
+      _nameController?.dispose();
+      _nameController = StringTextEditingController<EntryCubit, Entry>(
+        focusNode: _nameFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.content.name,
+        updateValue: (cubit, name) => cubit.updateName(name),
+      );
 
-    _oilController?.dispose();
-    _oilController = EntryDoubleController(
-      context: context,
-      focusNode: _oilFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.content.oil,
-      updateValue: (cubit, oil) => cubit.updateOil(oil),
-    );
+      _mthController?.dispose();
+      _mthController = EntryDoubleController(
+        context: context,
+        focusNode: _mthFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.content.motohours,
+        updateValue: (cubit, mth) => cubit.updateMotohours(mth),
+      );
 
-    _fuelControllers?.forEach((controller) => controller.dispose());
-    _fuelControllers = cubit.state.planeSpecification.weights
-        .mapIndexed<EntryDoubleController>(
-          (i, weightSpecification) => EntryDoubleController(
-            context: context,
-            focusNode: _fuelFocusNodes[i],
-            cubit: cubit,
-            mapValue: (state) => state.content.fuelBefore[i],
-            updateValue: (cubit, weight) => cubit.updateFuel(i, weight),
-          ),
-        )
-        .readOnly;
+      _oilController?.dispose();
+      _oilController = EntryDoubleController(
+        context: context,
+        focusNode: _oilFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.content.oil,
+        updateValue: (cubit, oil) => cubit.updateOil(oil),
+      );
+
+      _fuelControllers?.forEach((controller) => controller.dispose());
+      _fuelControllers = cubit.state.planeSpecification.weights
+          .mapIndexed<EntryDoubleController>(
+            (i, weightSpecification) => EntryDoubleController(
+              context: context,
+              focusNode: _fuelFocusNodes[i],
+              cubit: cubit,
+              mapValue: (state) => state.content.fuelBefore[i],
+              updateValue: (cubit, weight) => cubit.updateFuel(i, weight),
+            ),
+          )
+          .readOnly;
+    }
   }
 
   @override

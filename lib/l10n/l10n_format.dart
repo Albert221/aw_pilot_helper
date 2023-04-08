@@ -1,3 +1,4 @@
+import 'package:aw_pilot_helper/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,9 +13,7 @@ class L10nFormat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _L10nFormat(
-      formatters: _L10nFormats(
-        Localizations.localeOf(context).toLanguageTag(),
-      ),
+      formatters: _L10nFormats(context.locale),
       child: child,
     );
   }

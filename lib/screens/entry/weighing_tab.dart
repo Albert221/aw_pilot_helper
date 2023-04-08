@@ -26,6 +26,8 @@ class _WeighingTabState extends State<WeighingTab>
   late final List<FocusNode> _fuelWeightFocusNodes;
   List<EntryDoubleController>? _fuelWeightControllers;
 
+  var _previousLocale = '';
+
   @override
   void didInitState() {
     final cubit = context.read<EntryCubit>();
@@ -45,45 +47,49 @@ class _WeighingTabState extends State<WeighingTab>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final cubit = context.read<EntryCubit>();
+    if (_previousLocale != context.locale) {
+      _previousLocale = context.locale;
 
-    _planeWeightController?.dispose();
-    _planeWeightController = EntryDoubleController(
-      context: context,
-      focusNode: _planeWeightFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.planeSpecification.planeWeight,
-      updateValue: (_, __) {},
-    );
+      final cubit = context.read<EntryCubit>();
 
-    _weightControllers?.forEach((controller) => controller.dispose());
-    _weightControllers = cubit.state.planeSpecification.weights
-        .mapIndexed<EntryDoubleController>(
-          (i, weightSpecification) => EntryDoubleController(
-            context: context,
-            focusNode: _weightFocusNodes[i],
-            cubit: cubit,
-            mapValue: (state) => state.content.weight[i],
-            updateValue: (cubit, weight) => cubit.updateWeight(i, weight),
-          ),
-        )
-        .readOnly;
+      _planeWeightController?.dispose();
+      _planeWeightController = EntryDoubleController(
+        context: context,
+        focusNode: _planeWeightFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.planeSpecification.planeWeight,
+        updateValue: (_, __) {},
+      );
 
-    _fuelWeightControllers?.forEach((controller) => controller.dispose());
-    _fuelWeightControllers = cubit.state.planeSpecification.fuelTanks
-        .mapIndexed<EntryDoubleController>(
-          (i, fuelTankSpecification) => EntryDoubleController(
-            context: context,
-            focusNode: _fuelWeightFocusNodes[i],
-            cubit: cubit,
-            mapValue: (state) {
-              final fuel = state.content.fuelBefore[i];
-              return fuel != null ? fuel * fuelDensity : null;
-            },
-            updateValue: (_, __) {},
-          ),
-        )
-        .readOnly;
+      _weightControllers?.forEach((controller) => controller.dispose());
+      _weightControllers = cubit.state.planeSpecification.weights
+          .mapIndexed<EntryDoubleController>(
+            (i, weightSpecification) => EntryDoubleController(
+              context: context,
+              focusNode: _weightFocusNodes[i],
+              cubit: cubit,
+              mapValue: (state) => state.content.weight[i],
+              updateValue: (cubit, weight) => cubit.updateWeight(i, weight),
+            ),
+          )
+          .readOnly;
+
+      _fuelWeightControllers?.forEach((controller) => controller.dispose());
+      _fuelWeightControllers = cubit.state.planeSpecification.fuelTanks
+          .mapIndexed<EntryDoubleController>(
+            (i, fuelTankSpecification) => EntryDoubleController(
+              context: context,
+              focusNode: _fuelWeightFocusNodes[i],
+              cubit: cubit,
+              mapValue: (state) {
+                final fuel = state.content.fuelBefore[i];
+                return fuel != null ? fuel * fuelDensity : null;
+              },
+              updateValue: (_, __) {},
+            ),
+          )
+          .readOnly;
+    }
   }
 
   @override

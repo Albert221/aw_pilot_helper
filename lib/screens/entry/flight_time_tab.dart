@@ -28,49 +28,55 @@ class _FlightTimeTabState extends State<FlightTimeTab> {
   final _stopFocusNode = FocusNode(debugLabel: 'stop');
   _DateTimeController? _stopController;
 
+  var _previousLocale = '';
+
   DateTime get _now => DateTime.now().toUtc();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final cubit = context.read<EntryCubit>();
+    if (_previousLocale != context.locale) {
+      _previousLocale = context.locale;
 
-    _startController?.dispose();
-    _startController = _DateTimeController(
-      context: context,
-      focusNode: _startFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.content.startTime,
-      updateValue: (cubit, value) => cubit.updateStartTime(value),
-    );
+      final cubit = context.read<EntryCubit>();
 
-    _takeoffController?.dispose();
-    _takeoffController = _DateTimeController(
-      context: context,
-      focusNode: _takeoffFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.content.takeoffTime,
-      updateValue: (cubit, value) => cubit.updateTakeoffTime(value),
-    );
+      _startController?.dispose();
+      _startController = _DateTimeController(
+        context: context,
+        focusNode: _startFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.content.startTime,
+        updateValue: (cubit, value) => cubit.updateStartTime(value),
+      );
 
-    _landingController?.dispose();
-    _landingController = _DateTimeController(
-      context: context,
-      focusNode: _landingFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.content.landingTime,
-      updateValue: (cubit, value) => cubit.updateLandingTime(value),
-    );
+      _takeoffController?.dispose();
+      _takeoffController = _DateTimeController(
+        context: context,
+        focusNode: _takeoffFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.content.takeoffTime,
+        updateValue: (cubit, value) => cubit.updateTakeoffTime(value),
+      );
 
-    _stopController?.dispose();
-    _stopController = _DateTimeController(
-      context: context,
-      focusNode: _stopFocusNode,
-      cubit: cubit,
-      mapValue: (state) => state.content.stopTime,
-      updateValue: (cubit, value) => cubit.updateStopTime(value),
-    );
+      _landingController?.dispose();
+      _landingController = _DateTimeController(
+        context: context,
+        focusNode: _landingFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.content.landingTime,
+        updateValue: (cubit, value) => cubit.updateLandingTime(value),
+      );
+
+      _stopController?.dispose();
+      _stopController = _DateTimeController(
+        context: context,
+        focusNode: _stopFocusNode,
+        cubit: cubit,
+        mapValue: (state) => state.content.stopTime,
+        updateValue: (cubit, value) => cubit.updateStopTime(value),
+      );
+    }
   }
 
   @override
