@@ -95,224 +95,224 @@ abstract class L10n {
 
   /// No description provided for @appName.
   ///
-  /// In pl, this message translates to:
-  /// **'AW Pomocnik Pilota'**
+  /// In en, this message translates to:
+  /// **'AW Pilot Helper'**
   String get appName;
 
   /// No description provided for @kilogramsShort.
   ///
-  /// In pl, this message translates to:
+  /// In en, this message translates to:
   /// **'kg'**
   String get kilogramsShort;
 
   /// No description provided for @literesShort.
   ///
-  /// In pl, this message translates to:
+  /// In en, this message translates to:
   /// **'l'**
   String get literesShort;
 
   /// No description provided for @motohoursShort.
   ///
-  /// In pl, this message translates to:
+  /// In en, this message translates to:
   /// **'mth'**
   String get motohoursShort;
 
   /// No description provided for @home_aboutApp.
   ///
-  /// In pl, this message translates to:
-  /// **'O aplikacji'**
+  /// In en, this message translates to:
+  /// **'About app'**
   String get home_aboutApp;
 
   /// No description provided for @home_newEntry.
   ///
-  /// In pl, this message translates to:
-  /// **'Nowy wpis'**
+  /// In en, this message translates to:
+  /// **'New entry'**
   String get home_newEntry;
 
   /// No description provided for @home_planeSpecsNoInternet.
   ///
-  /// In pl, this message translates to:
-  /// **'Brak internetu lub połączenia z serwerem.'**
+  /// In en, this message translates to:
+  /// **'No internet or no server connection.'**
   String get home_planeSpecsNoInternet;
 
   /// No description provided for @home_planeSpecsOtherError.
   ///
-  /// In pl, this message translates to:
-  /// **'Wystąpił błąd'**
+  /// In en, this message translates to:
+  /// **'An error occurred.'**
   String get home_planeSpecsOtherError;
 
   /// No description provided for @about_title.
   ///
-  /// In pl, this message translates to:
-  /// **'O aplikacji'**
+  /// In en, this message translates to:
+  /// **'About app'**
   String get about_title;
 
   /// No description provided for @about_licenses.
   ///
-  /// In pl, this message translates to:
-  /// **'Licencje'**
+  /// In en, this message translates to:
+  /// **'Licenses'**
   String get about_licenses;
 
   /// No description provided for @previousEntriesTile_title.
   ///
-  /// In pl, this message translates to:
-  /// **'Poprzednie wpisy ({count})'**
-  String previousEntriesTile_title(Object count);
+  /// In en, this message translates to:
+  /// **'Previous entries ({count})'**
+  String previousEntriesTile_title(int count);
 
   /// No description provided for @previousEntries_title.
   ///
-  /// In pl, this message translates to:
-  /// **'Poprzednie wpisy'**
+  /// In en, this message translates to:
+  /// **'Previous entries'**
   String get previousEntries_title;
 
   /// No description provided for @previousEntries_noEntries.
   ///
-  /// In pl, this message translates to:
-  /// **'Nie masz żadnego wpisu.'**
+  /// In en, this message translates to:
+  /// **'You have no entries.'**
   String get previousEntries_noEntries;
 
   /// No description provided for @entry_titleCreate.
   ///
-  /// In pl, this message translates to:
-  /// **'Nowy wpis'**
+  /// In en, this message translates to:
+  /// **'New entry'**
   String get entry_titleCreate;
 
   /// No description provided for @entry_titleEdit.
   ///
-  /// In pl, this message translates to:
-  /// **'Edytuj wpis'**
+  /// In en, this message translates to:
+  /// **'Edit entry'**
   String get entry_titleEdit;
 
   /// No description provided for @entry_subtitle.
   ///
-  /// In pl, this message translates to:
+  /// In en, this message translates to:
   /// **'{name} • {type}'**
-  String entry_subtitle(Object name, Object type);
+  String entry_subtitle(String name, String type);
 
   /// No description provided for @entry_beforeFlight.
   ///
-  /// In pl, this message translates to:
-  /// **'Przed lotem'**
+  /// In en, this message translates to:
+  /// **'Before flight'**
   String get entry_beforeFlight;
 
   /// No description provided for @entry_weighting.
   ///
-  /// In pl, this message translates to:
-  /// **'Wyważenie'**
+  /// In en, this message translates to:
+  /// **'Weighting'**
   String get entry_weighting;
 
   /// No description provided for @entry_flightTime.
   ///
-  /// In pl, this message translates to:
-  /// **'Czas lotu'**
+  /// In en, this message translates to:
+  /// **'Flight time'**
   String get entry_flightTime;
 
   /// No description provided for @entry_notes.
   ///
-  /// In pl, this message translates to:
-  /// **'Notatki'**
+  /// In en, this message translates to:
+  /// **'Notes'**
   String get entry_notes;
 
   /// No description provided for @entry_name.
   ///
-  /// In pl, this message translates to:
-  /// **'Nazwa wpisu'**
+  /// In en, this message translates to:
+  /// **'Entry name'**
   String get entry_name;
 
   /// No description provided for @entry_oil.
   ///
-  /// In pl, this message translates to:
-  /// **'Olej'**
+  /// In en, this message translates to:
+  /// **'Oil'**
   String get entry_oil;
 
   /// No description provided for @entry_oilCalculations.
   ///
-  /// In pl, this message translates to:
+  /// In en, this message translates to:
   /// **'Min {min} l • Max {max} l'**
-  String entry_oilCalculations(Object max, Object min);
+  String entry_oilCalculations(String min, String max);
 
   /// No description provided for @entry_fuelTankName.
   ///
-  /// In pl, this message translates to:
-  /// **'Paliwo ({tankName})'**
-  String entry_fuelTankName(Object tankName);
+  /// In en, this message translates to:
+  /// **'Fuel ({tankName})'**
+  String entry_fuelTankName(String tankName);
 
   /// No description provided for @entry_fuelTankCapacity.
   ///
-  /// In pl, this message translates to:
-  /// **'Pojemność {capacity} l'**
-  String entry_fuelTankCapacity(Object capacity);
+  /// In en, this message translates to:
+  /// **'Capacity {capacity} l'**
+  String entry_fuelTankCapacity(String capacity);
 
   /// No description provided for @entry_emptyPlane.
   ///
-  /// In pl, this message translates to:
-  /// **'Pusty samolot'**
+  /// In en, this message translates to:
+  /// **'Empty plane'**
   String get entry_emptyPlane;
 
   /// No description provided for @entry_planeCalculations.
   ///
-  /// In pl, this message translates to:
+  /// In en, this message translates to:
   /// **'Moment {planeMoment} kgm'**
-  String entry_planeCalculations(Object planeMoment);
+  String entry_planeCalculations(String planeMoment);
 
   /// No description provided for @entry_weightCalculations.
   ///
-  /// In pl, this message translates to:
-  /// **'Ramię {arm} • Moment {moment} kgm'**
-  String entry_weightCalculations(Object arm, Object moment);
+  /// In en, this message translates to:
+  /// **'Arm {arm} • Moment {moment} kgm'**
+  String entry_weightCalculations(String arm, String moment);
 
   /// No description provided for @entry_drawbar.
   ///
-  /// In pl, this message translates to:
-  /// **'Dyszel ({weight} kg)'**
-  String entry_drawbar(Object weight);
+  /// In en, this message translates to:
+  /// **'Drawbar ({weight} kg)'**
+  String entry_drawbar(String weight);
 
   /// No description provided for @entry_summary.
   ///
-  /// In pl, this message translates to:
-  /// **'Ciężar {weight} kg • Moment {moment} kgm'**
-  String entry_summary(Object moment, Object weight);
+  /// In en, this message translates to:
+  /// **'Weight {weight} kg • Moment {moment} kgm'**
+  String entry_summary(String weight, String moment);
 
   /// No description provided for @entry_timeZulu.
   ///
-  /// In pl, this message translates to:
-  /// **'Czas ZULU: {time}'**
-  String entry_timeZulu(Object time);
+  /// In en, this message translates to:
+  /// **'ZULU time: {time}'**
+  String entry_timeZulu(DateTime time);
 
   /// No description provided for @entry_timeNow.
   ///
-  /// In pl, this message translates to:
-  /// **'Teraz'**
+  /// In en, this message translates to:
+  /// **'Now'**
   String get entry_timeNow;
 
   /// No description provided for @entry_startTime.
   ///
-  /// In pl, this message translates to:
-  /// **'Godzina uruchomienia'**
+  /// In en, this message translates to:
+  /// **'Start time'**
   String get entry_startTime;
 
   /// No description provided for @entry_takeoffTime.
   ///
-  /// In pl, this message translates to:
-  /// **'Godzina startu'**
+  /// In en, this message translates to:
+  /// **'Take-off time'**
   String get entry_takeoffTime;
 
   /// No description provided for @entry_landTime.
   ///
-  /// In pl, this message translates to:
-  /// **'Godzina lądowania'**
+  /// In en, this message translates to:
+  /// **'Landing time'**
   String get entry_landTime;
 
   /// No description provided for @entry_stopTime.
   ///
-  /// In pl, this message translates to:
-  /// **'Godzina wyłączenia'**
+  /// In en, this message translates to:
+  /// **'Stop time'**
   String get entry_stopTime;
 
   /// No description provided for @entry_notesHint.
   ///
-  /// In pl, this message translates to:
-  /// **'Wpisz tutaj notatki...'**
+  /// In en, this message translates to:
+  /// **'Write your notes here...'**
   String get entry_notesHint;
 }
 
