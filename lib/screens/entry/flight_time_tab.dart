@@ -179,6 +179,7 @@ class _Row extends StatelessWidget {
             child: AWTextField(
               controller: controller,
               focusNode: focusNode,
+              readOnly: locked,
               icon: icon,
               label: label,
             ),
