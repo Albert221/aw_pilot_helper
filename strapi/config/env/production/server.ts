@@ -1,6 +1,6 @@
 export default ({ env }) => ({
   proxy: true,
-  url: env('HEROKU_URL'),
+  url: env('APP_URL'),
   app: {
     keys: env.array('APP_KEYS')
   },

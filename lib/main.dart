@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'screens/previous_entries/bloc/previous_entries_cubit.dart';
 
-const _apiUrl = 'https://aw-pilot-helper.herokuapp.com/api';
+const _apiUrl = 'https://aw-pilot-helper.fly.dev/api';
 const _apiToken =
     'secret';
 
