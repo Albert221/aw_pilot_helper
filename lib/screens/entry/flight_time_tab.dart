@@ -20,9 +20,13 @@ class FlightTimeTab extends StatefulWidget {
 
 class _FlightTimeTabState extends State<FlightTimeTab>
     with DidInitMixin<FlightTimeTab> {
+  final _startFocusNode = FocusNode(debugLabel: 'start');
   late final _DateTimeController _startController;
+  final _takeoffFocusNode = FocusNode(debugLabel: 'takeoff');
   late final _DateTimeController _takeoffController;
+  final _landingFocusNode = FocusNode(debugLabel: 'landing');
   late final _DateTimeController _landingController;
+  final _stopFocusNode = FocusNode(debugLabel: 'stop');
   late final _DateTimeController _stopController;
 
   DateTime get _now => DateTime.now().toUtc();
@@ -32,24 +36,28 @@ class _FlightTimeTabState extends State<FlightTimeTab>
     final cubit = context.read<EntryCubit>();
 
     _startController = _DateTimeController(
+      focusNode: _startFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.startTime,
       updateValue: (cubit, value) => cubit.updateStartTime(value),
     );
 
     _takeoffController = _DateTimeController(
+      focusNode: _takeoffFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.takeoffTime,
       updateValue: (cubit, value) => cubit.updateTakeoffTime(value),
     );
 
     _landingController = _DateTimeController(
+      focusNode: _landingFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.landingTime,
       updateValue: (cubit, value) => cubit.updateLandingTime(value),
     );
 
     _stopController = _DateTimeController(
+      focusNode: _stopFocusNode,
       cubit: cubit,
       mapValue: (state) => state.content.stopTime,
       updateValue: (cubit, value) => cubit.updateStopTime(value),
@@ -58,8 +66,6 @@ class _FlightTimeTabState extends State<FlightTimeTab>
 
   @override
   Widget build(BuildContext context) {
-    final locked = context.watch<EditLockCubit>().state;
-
     return ListView(
       padding: const EdgeInsets.all(24),
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -78,67 +84,35 @@ class _FlightTimeTabState extends State<FlightTimeTab>
         ),
         const SizedBox(height: 24),
         _Row(
-          input: TextField(
-            controller: _startController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.bolt),
-              labelText: context.l10n.entry_startTime,
-            ),
-          ),
-          button: ElevatedButton(
-            onPressed: locked
-                ? null
-                : () => context.read<EntryCubit>().updateStartTime(_now),
-            child: Text(context.l10n.entry_timeNow),
-          ),
+          controller: _startController,
+          focusNode: _startFocusNode,
+          icon: Icons.bolt,
+          label: context.l10n.entry_startTime,
+          update: context.read<EntryCubit>().updateStartTime,
         ),
         const SizedBox(height: 16),
         _Row(
-          input: TextField(
-            controller: _takeoffController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.flight_takeoff),
-              labelText: context.l10n.entry_takeoffTime,
-            ),
-          ),
-          button: ElevatedButton(
-            onPressed: locked
-                ? null
-                : () => context.read<EntryCubit>().updateTakeoffTime(_now),
-            child: Text(context.l10n.entry_timeNow),
-          ),
+          controller: _takeoffController,
+          focusNode: _takeoffFocusNode,
+          icon: Icons.flight_takeoff,
+          label: context.l10n.entry_takeoffTime,
+          update: context.read<EntryCubit>().updateTakeoffTime,
         ),
         const SizedBox(height: 16),
         _Row(
-          input: TextField(
-            controller: _landingController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.flight_land),
-              labelText: context.l10n.entry_landTime,
-            ),
-          ),
-          button: ElevatedButton(
-            onPressed: locked
-                ? null
-                : () => context.read<EntryCubit>().updateLandingTime(_now),
-            child: Text(context.l10n.entry_timeNow),
-          ),
+          controller: _landingController,
+          focusNode: _landingFocusNode,
+          icon: Icons.flight_land,
+          label: context.l10n.entry_landTime,
+          update: context.read<EntryCubit>().updateLandingTime,
         ),
         const SizedBox(height: 16),
         _Row(
-          input: TextField(
-            controller: _stopController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.power_settings_new),
-              labelText: context.l10n.entry_stopTime,
-            ),
-          ),
-          button: ElevatedButton(
-            onPressed: locked
-                ? null
-                : () => context.read<EntryCubit>().updateStopTime(_now),
-            child: Text(context.l10n.entry_timeNow),
-          ),
+          controller: _stopController,
+          focusNode: _stopFocusNode,
+          icon: Icons.power_settings_new,
+          label: context.l10n.entry_stopTime,
+          update: context.read<EntryCubit>().updateStopTime,
         ),
       ],
     );
@@ -147,22 +121,47 @@ class _FlightTimeTabState extends State<FlightTimeTab>
 
 class _Row extends StatelessWidget {
   const _Row({
-    required this.input,
-    required this.button,
+    required this.controller,
+    required this.focusNode,
+    required this.icon,
+    required this.label,
+    required this.update,
   });
 
-  final Widget input;
-  final Widget button;
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final IconData icon;
+  final String label;
+  final ValueChanged<DateTime> update;
+
+  DateTime get _now => DateTime.now().toUtc();
 
   @override
   Widget build(BuildContext context) {
+    final locked = context.watch<EditLockCubit>().state;
+
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(flex: 2, child: input),
+          Expanded(
+            flex: 2,
+            child: TextField(
+              controller: controller,
+              focusNode: focusNode,
+              decoration: InputDecoration(
+                prefixIcon: Icon(icon),
+                labelText: label,
+              ),
+            ),
+          ),
           const SizedBox(width: 16),
-          Expanded(child: button),
+          Expanded(
+            child: ElevatedButton(
+              onPressed: locked ? null : () => update(_now),
+              child: Text(context.l10n.entry_timeNow),
+            ),
+          ),
         ],
       ),
     );

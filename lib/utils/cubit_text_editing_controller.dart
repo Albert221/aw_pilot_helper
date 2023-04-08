@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 class CubitTextEditingController<T, C extends Cubit<S>, S>
     extends TextEditingController {
   CubitTextEditingController({
+    required this.focusNode,
     required this.formatValue,
     required this.parseText,
     required this.cubit,
@@ -14,12 +15,14 @@ class CubitTextEditingController<T, C extends Cubit<S>, S>
     required this.updateValue,
   }) : super(text: formatValue(mapValue(cubit.state))) {
     addListener(_onThisChange);
-    _cubitSubscription = cubit.stream.listen(_onCubitChange);
+    focusNode.addListener(_onCubitChange);
+    _cubitSubscription = cubit.stream.listen((_) => _onCubitChange());
   }
 
   final String Function(T) formatValue;
   final T Function(String) parseText;
 
+  final FocusNode focusNode;
   final C cubit;
   final T Function(S) mapValue;
   final void Function(C, T) updateValue;
@@ -31,6 +34,7 @@ class CubitTextEditingController<T, C extends Cubit<S>, S>
   @override
   void dispose() {
     _cubitSubscription.cancel();
+    focusNode.removeListener(_onCubitChange);
     super.dispose();
   }
 
@@ -42,8 +46,13 @@ class CubitTextEditingController<T, C extends Cubit<S>, S>
     updateValue(cubit, parseText(text));
   }
 
-  void _onCubitChange(S _) {
+  void _onCubitChange() {
     if (text == _cubitText) {
+      return;
+    }
+
+    if (focusNode.hasFocus) {
+      // Let user continue editing
       return;
     }
 
@@ -54,6 +63,7 @@ class CubitTextEditingController<T, C extends Cubit<S>, S>
 class DoubleTextEditingController<C extends Cubit<S>, S>
     extends CubitTextEditingController<double?, C, S> {
   DoubleTextEditingController({
+    required super.focusNode,
     required super.cubit,
     required super.mapValue,
     required super.updateValue,
@@ -78,6 +88,7 @@ class DoubleTextEditingController<C extends Cubit<S>, S>
 class StringTextEditingController<C extends Cubit<S>, S>
     extends CubitTextEditingController<String, C, S> {
   StringTextEditingController({
+    required super.focusNode,
     required super.cubit,
     required super.mapValue,
     required super.updateValue,
@@ -87,6 +98,7 @@ class StringTextEditingController<C extends Cubit<S>, S>
 class DateTimeTextEditingController<C extends Cubit<S>, S>
     extends CubitTextEditingController<DateTime?, C, S> {
   DateTimeTextEditingController({
+    required super.focusNode,
     required super.cubit,
     required super.mapValue,
     required super.updateValue,

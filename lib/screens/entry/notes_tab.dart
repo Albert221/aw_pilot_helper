@@ -15,11 +15,13 @@ class NotesTab extends StatefulWidget {
 }
 
 class _NotesTabState extends State<NotesTab> with DidInitMixin<NotesTab> {
+  final _focusNode = FocusNode(debugLabel: 'notes');
   late final StringTextEditingController<EntryCubit, Entry> _controller;
 
   @override
   void didInitState() {
     _controller = StringTextEditingController(
+      focusNode: _focusNode,
       cubit: context.read<EntryCubit>(),
       mapValue: (state) => state.content.notes,
       updateValue: (cubit, notes) => cubit.updateNotes(notes),
@@ -32,6 +34,7 @@ class _NotesTabState extends State<NotesTab> with DidInitMixin<NotesTab> {
 
     return TextField(
       controller: _controller,
+      focusNode: _focusNode,
       readOnly: locked,
       maxLines: null,
       autofocus: true,
