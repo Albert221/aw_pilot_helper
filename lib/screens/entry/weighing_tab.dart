@@ -211,7 +211,7 @@ class _WeighingTabState extends State<WeighingTab>
               context.l10nFormat.physicalValue(weightSpecs.arm),
               context.l10nFormat.physicalValue(momentValue ?? 0),
             ),
-            keyboardType: TextInputType.number,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textAlign: TextAlign.end,
           );
         },
@@ -239,7 +239,7 @@ class _WeighingTabState extends State<WeighingTab>
               context.l10nFormat.physicalValue(fuelTankSpecs.arm),
               context.l10nFormat.physicalValue(momentValue ?? 0),
             ),
-            keyboardType: TextInputType.number,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textAlign: TextAlign.end,
           );
         },

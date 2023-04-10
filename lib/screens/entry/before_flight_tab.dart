@@ -165,7 +165,8 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
                   context.l10nFormat.physicalValue(planeSpecs.oilMin),
                   context.l10nFormat.physicalValue(planeSpecs.oilMax),
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 textAlign: TextAlign.end,
               ),
             ),
@@ -189,7 +190,8 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
               helperText: context.l10n.entry_fuelTankCapacity(
                 context.l10nFormat.physicalValue(fuelTankSpecs.capacity),
               ),
-              keyboardType: TextInputType.number,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               textAlign: TextAlign.end,
             ),
           ),
