@@ -24,8 +24,8 @@ class EntryScreenRoute extends MaterialPageRoute<void> {
       : super(
           builder: _builder(
             locked: false,
-            entry: Entry.empty(plane),
             target: EntryScreenTarget.create,
+            entry: (context) => Entry.empty(plane, context.locale),
           ),
         );
 
@@ -33,23 +33,23 @@ class EntryScreenRoute extends MaterialPageRoute<void> {
       : super(
           builder: _builder(
             locked: true,
-            entry: entry,
             target: EntryScreenTarget.edit,
+            entry: (context) => entry,
           ),
         );
 
   static WidgetBuilder _builder({
     required bool locked,
     required EntryScreenTarget target,
-    required Entry entry,
+    required Entry Function(BuildContext) entry,
   }) {
-    return (context) {
+    return (outerContext) {
       return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => EditLockCubit(locked)),
           BlocProvider(
             create: (context) => EntryCubit(
-              entry,
+              entry(outerContext),
               context.read(),
             ),
           ),

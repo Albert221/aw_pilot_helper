@@ -19,8 +19,8 @@ class Entry with _$Entry {
 
   const Entry._();
 
-  factory Entry.empty(PlaneSpecification specs) {
-    final format = DateFormat.yMd().add_Hm();
+  factory Entry.empty(PlaneSpecification specs, String locale) {
+    final format = DateFormat.yMd(locale).add_Hm();
     final nowText = format.format(DateTime.now().toUtc());
 
     return Entry(
