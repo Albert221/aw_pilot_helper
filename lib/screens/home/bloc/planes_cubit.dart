@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aw_pilot_helper/data/plane_specification_repository.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
+import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
@@ -10,7 +11,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'planes_cubit.freezed.dart';
 
-class PlanesCubit extends Cubit<PlanesState> {
+class PlanesCubit extends Cubit<PlanesState> with BlocPresentationMixin {
   PlanesCubit(this._repository) : super(const PlanesState.loadInProgress()) {
     _subscription = _repository.getAll().listen(_listen);
   }
@@ -45,13 +46,26 @@ class PlanesCubit extends Cubit<PlanesState> {
             ),
           );
         } else {
-          // no-op; keep already loaded stuff.
-          // todo: show snackbar that could not load stuff.
+          // state no-op; keep already loaded stuff.
+          emitPresentation(
+            error is DioError &&
+                    error.error.runtimeType.toString() == 'SocketException'
+                ? const PlanesPresentationEvent.noInternet()
+                : const PlanesPresentationEvent.other(),
+          );
         }
       },
       (planes) => emit(PlanesState.loadSuccess(planes: planes)),
     );
   }
+}
+
+@freezed
+class PlanesPresentationEvent
+    with _$PlanesPresentationEvent
+    implements BlocPresentationEvent {
+  const factory PlanesPresentationEvent.noInternet() = _NoInternet;
+  const factory PlanesPresentationEvent.other() = _Other;
 }
 
 enum PlanesStateFailure { noInternet, other }

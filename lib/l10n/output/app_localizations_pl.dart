@@ -25,6 +25,11 @@ class L10nPl extends L10n {
   String get home_newEntry => 'Nowy wpis';
 
   @override
+  String home_planeSpecsErrorEvent(String error) {
+    return 'Nie można było załadować świeżych danych. $error';
+  }
+
+  @override
   String get home_planeSpecsNoInternet => 'Brak internetu lub połączenia z serwerem.';
 
   @override

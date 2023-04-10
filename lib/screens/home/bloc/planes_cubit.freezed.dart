@@ -15,6 +15,283 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+mixin _$PlanesPresentationEvent {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noInternet,
+    required TResult Function() other,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noInternet,
+    TResult? Function()? other,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noInternet,
+    TResult Function()? other,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoInternet value) noInternet,
+    required TResult Function(_Other value) other,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoInternet value)? noInternet,
+    TResult? Function(_Other value)? other,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoInternet value)? noInternet,
+    TResult Function(_Other value)? other,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PlanesPresentationEventCopyWith<$Res> {
+  factory $PlanesPresentationEventCopyWith(PlanesPresentationEvent value,
+          $Res Function(PlanesPresentationEvent) then) =
+      _$PlanesPresentationEventCopyWithImpl<$Res, PlanesPresentationEvent>;
+}
+
+/// @nodoc
+class _$PlanesPresentationEventCopyWithImpl<$Res,
+        $Val extends PlanesPresentationEvent>
+    implements $PlanesPresentationEventCopyWith<$Res> {
+  _$PlanesPresentationEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_NoInternetCopyWith<$Res> {
+  factory _$$_NoInternetCopyWith(
+          _$_NoInternet value, $Res Function(_$_NoInternet) then) =
+      __$$_NoInternetCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_NoInternetCopyWithImpl<$Res>
+    extends _$PlanesPresentationEventCopyWithImpl<$Res, _$_NoInternet>
+    implements _$$_NoInternetCopyWith<$Res> {
+  __$$_NoInternetCopyWithImpl(
+      _$_NoInternet _value, $Res Function(_$_NoInternet) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_NoInternet with DiagnosticableTreeMixin implements _NoInternet {
+  const _$_NoInternet();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PlanesPresentationEvent.noInternet()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'PlanesPresentationEvent.noInternet'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_NoInternet);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noInternet,
+    required TResult Function() other,
+  }) {
+    return noInternet();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noInternet,
+    TResult? Function()? other,
+  }) {
+    return noInternet?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noInternet,
+    TResult Function()? other,
+    required TResult orElse(),
+  }) {
+    if (noInternet != null) {
+      return noInternet();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoInternet value) noInternet,
+    required TResult Function(_Other value) other,
+  }) {
+    return noInternet(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoInternet value)? noInternet,
+    TResult? Function(_Other value)? other,
+  }) {
+    return noInternet?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoInternet value)? noInternet,
+    TResult Function(_Other value)? other,
+    required TResult orElse(),
+  }) {
+    if (noInternet != null) {
+      return noInternet(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NoInternet implements PlanesPresentationEvent {
+  const factory _NoInternet() = _$_NoInternet;
+}
+
+/// @nodoc
+abstract class _$$_OtherCopyWith<$Res> {
+  factory _$$_OtherCopyWith(_$_Other value, $Res Function(_$_Other) then) =
+      __$$_OtherCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_OtherCopyWithImpl<$Res>
+    extends _$PlanesPresentationEventCopyWithImpl<$Res, _$_Other>
+    implements _$$_OtherCopyWith<$Res> {
+  __$$_OtherCopyWithImpl(_$_Other _value, $Res Function(_$_Other) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Other with DiagnosticableTreeMixin implements _Other {
+  const _$_Other();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PlanesPresentationEvent.other()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'PlanesPresentationEvent.other'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Other);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noInternet,
+    required TResult Function() other,
+  }) {
+    return other();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noInternet,
+    TResult? Function()? other,
+  }) {
+    return other?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noInternet,
+    TResult Function()? other,
+    required TResult orElse(),
+  }) {
+    if (other != null) {
+      return other();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoInternet value) noInternet,
+    required TResult Function(_Other value) other,
+  }) {
+    return other(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoInternet value)? noInternet,
+    TResult? Function(_Other value)? other,
+  }) {
+    return other?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoInternet value)? noInternet,
+    TResult Function(_Other value)? other,
+    required TResult orElse(),
+  }) {
+    if (other != null) {
+      return other(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Other implements PlanesPresentationEvent {
+  const factory _Other() = _$_Other;
+}
+
+/// @nodoc
 mixin _$PlanesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({

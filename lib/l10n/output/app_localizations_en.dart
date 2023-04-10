@@ -25,6 +25,11 @@ class L10nEn extends L10n {
   String get home_newEntry => 'New entry';
 
   @override
+  String home_planeSpecsErrorEvent(String error) {
+    return 'Could not load fresh data. $error';
+  }
+
+  @override
   String get home_planeSpecsNoInternet => 'No internet or no server connection.';
 
   @override

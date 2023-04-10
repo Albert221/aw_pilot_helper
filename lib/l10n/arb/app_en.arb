@@ -6,6 +6,14 @@
     "motohoursShort": "mth",
     "home_aboutApp": "About app",
     "home_newEntry": "New entry",
+    "home_planeSpecsErrorEvent": "Could not load fresh data. {error}",
+    "@home_planeSpecsErrorEvent": {
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
     "home_planeSpecsNoInternet": "No internet or no server connection.",
     "home_planeSpecsOtherError": "An error occurred.",
     "about_title": "About app",

@@ -6,6 +6,7 @@ environment:
   sdk: ^2.17.0
 
 dependencies:
+  bloc_presentation: ^0.2.1
   collection: ^1.17.0
   dio: ^5.1.1
   either_dart: ^0.3.0

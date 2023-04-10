@@ -6,6 +6,7 @@
     "motohoursShort": "mth",
     "home_aboutApp": "O aplikacji",
     "home_newEntry": "Nowy wpis",
+    "home_planeSpecsErrorEvent": "Nie można było załadować świeżych danych. {error}",
     "home_planeSpecsNoInternet": "Brak internetu lub połączenia z serwerem.",
     "home_planeSpecsOtherError": "Wystąpił błąd",
     "about_title": "O aplikacji",

@@ -129,6 +129,12 @@ abstract class L10n {
   /// **'New entry'**
   String get home_newEntry;
 
+  /// No description provided for @home_planeSpecsErrorEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load fresh data. {error}'**
+  String home_planeSpecsErrorEvent(String error);
+
   /// No description provided for @home_planeSpecsNoInternet.
   ///
   /// In en, this message translates to:
