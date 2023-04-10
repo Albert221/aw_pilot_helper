@@ -5,6 +5,7 @@ import 'package:aw_pilot_helper/data/api/response_model.dart' as api;
 import 'package:aw_pilot_helper/data/storage/plane_specification_storage.dart';
 import 'package:aw_pilot_helper/models/plane_specification.dart';
 import 'package:aw_pilot_helper/utils/list_read_only.dart';
+import 'package:collection/collection.dart';
 import 'package:either_dart/either.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -47,6 +48,8 @@ class PlaneSpecificationRepository {
 
         planeSpecs.addAll(_mapPlaneSpecificationsResponse(response));
       } while (planeSpecs.length < count);
+
+      planeSpecs.sortBy((plane) => plane.name);
 
       await _storage.save(planeSpecs);
 
