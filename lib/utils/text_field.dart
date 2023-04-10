@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 class AWTextField extends StatefulWidget {
   const AWTextField({
     super.key,
+    this.doubleOnly = false,
     required this.controller,
     required this.focusNode,
     this.readOnly = false,
@@ -18,6 +19,8 @@ class AWTextField extends StatefulWidget {
     this.inputFormatters = const [],
   });
 
+  // fixme: this is quick fix.
+  final bool doubleOnly;
   final TextEditingController? controller;
   final FocusNode focusNode;
   final bool readOnly;
@@ -85,7 +88,7 @@ class _AWTextFieldState extends State<AWTextField> {
             textAlign: widget.textAlign,
             inputFormatters: [
               ...widget.inputFormatters,
-              if (widget.keyboardType.index == TextInputType.number.index) ...[
+              if (widget.doubleOnly) ...[
                 TextInputFormatter.withFunction(
                   (oldValue, newValue) => newValue.copyWith(
                     text: newValue.text.replaceAll(',', '.'),

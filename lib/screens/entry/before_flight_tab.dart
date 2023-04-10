@@ -128,6 +128,7 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
           children: [
             Expanded(
               child: AWTextField(
+                doubleOnly: true,
                 controller: _mthController,
                 focusNode: _mthFocusNode,
                 readOnly: locked,
@@ -147,6 +148,7 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
             const SizedBox(width: 16),
             Expanded(
               child: AWTextField(
+                doubleOnly: true,
                 controller: _oilController,
                 focusNode: _oilFocusNode,
                 readOnly: locked,
@@ -173,6 +175,7 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
           (i, fuelTankSpecs) => Padding(
             padding: const EdgeInsets.only(top: 16),
             child: AWTextField(
+              doubleOnly: true,
               controller: _fuelControllers?[i],
               focusNode: _fuelFocusNodes[i],
               readOnly: locked,

@@ -194,6 +194,7 @@ class _WeighingTabState extends State<WeighingTab>
           final momentValue = weight != null ? weightSpecs.arm * weight : null;
 
           return AWTextField(
+            doubleOnly: true,
             controller: _weightControllers?[i],
             focusNode: _weightFocusNodes[i],
             readOnly: locked,
