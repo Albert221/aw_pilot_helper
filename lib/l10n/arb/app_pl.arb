@@ -13,6 +13,7 @@
     "previousEntriesTile_title": "Poprzednie wpisy ({count})",
     "previousEntries_title": "Poprzednie wpisy",
     "previousEntries_noEntries": "Nie masz żadnego wpisu.",
+    "entry_titlePreview": "Przeglądaj wpis",
     "entry_titleCreate": "Nowy wpis",
     "entry_titleEdit": "Edytuj wpis",
     "entry_subtitle": "{name} • {type}",

@@ -59,27 +59,42 @@ class _AWTextFieldState extends State<AWTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: widget.controller ?? ValueNotifier(null),
-      builder: (context, _) => TextField(
-        controller: widget.controller,
-        focusNode: widget.focusNode,
-        readOnly: widget.readOnly,
-        onTapOutside: (_) => FocusScope.of(context).unfocus(),
-        decoration: InputDecoration(
-          prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
-          labelText: widget.label,
-          hintText: widget.hintText,
-          errorText: widget.error?.call(context) ?? false
-              ? widget.helperText ?? ''
-              : null,
-          helperText: widget.helperText,
-          suffixText: widget.suffixText,
+    final helperText = widget.helperText;
+
+    return Stack(
+      fit: StackFit.passthrough,
+      children: [
+        AnimatedBuilder(
+          animation: widget.controller ?? ValueNotifier(null),
+          builder: (context, _) => TextField(
+            controller: widget.controller,
+            focusNode: widget.focusNode,
+            readOnly: widget.readOnly,
+            onTapOutside: (_) => FocusScope.of(context).unfocus(),
+            decoration: InputDecoration(
+              prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+              labelText: widget.label,
+              hintText: widget.hintText,
+              errorText: widget.error?.call(context) ?? false ? '' : null,
+              suffixText: widget.suffixText,
+            ),
+            style: TextStyle(
+              color: widget.readOnly ? Theme.of(context).hintColor : null,
+            ),
+            keyboardType: widget.keyboardType,
+            textAlign: widget.textAlign,
+            inputFormatters: widget.inputFormatters,
+          ),
         ),
-        keyboardType: widget.keyboardType,
-        textAlign: widget.textAlign,
-        inputFormatters: widget.inputFormatters,
-      ),
+        if (helperText != null && !false)
+          Padding(
+            padding: const EdgeInsets.only(top: 67),
+            child: Text(
+              helperText,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+      ],
     );
   }
 }

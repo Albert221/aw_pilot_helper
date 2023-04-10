@@ -171,6 +171,12 @@ abstract class L10n {
   /// **'You have no entries.'**
   String get previousEntries_noEntries;
 
+  /// No description provided for @entry_titlePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview entry'**
+  String get entry_titlePreview;
+
   /// No description provided for @entry_titleCreate.
   ///
   /// In en, this message translates to:

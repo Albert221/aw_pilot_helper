@@ -51,6 +51,9 @@ class L10nEn extends L10n {
   String get previousEntries_noEntries => 'You have no entries.';
 
   @override
+  String get entry_titlePreview => 'Preview entry';
+
+  @override
   String get entry_titleCreate => 'New entry';
 
   @override

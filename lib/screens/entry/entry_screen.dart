@@ -7,6 +7,7 @@ import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
 import 'package:aw_pilot_helper/screens/entry/flight_time_tab.dart';
 import 'package:aw_pilot_helper/screens/entry/notes_tab.dart';
 import 'package:aw_pilot_helper/screens/entry/weighing_tab.dart';
+import 'package:aw_pilot_helper/utils/hct_color_tween.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -91,64 +92,31 @@ class _EntryScreenState extends State<EntryScreen>
     super.dispose();
   }
 
+  // Unfocuses focused text field when back button is pressed instead of
+  // navigating back.
+  Future<bool> _onWillPop() async {
+    final locked = context.read<EditLockCubit>().state;
+    if (!locked && _bodyFocusNode.hasFocus) {
+      FocusScope.of(context).unfocus();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final title = widget.target.isCreate
-        ? context.l10n.entry_titleCreate
-        : context.l10n.entry_titleEdit;
+    final locked = context.watch<EditLockCubit>().state;
 
     return WillPopScope(
-      onWillPop: () {
-        final locked = context.read<EditLockCubit>().state;
-        if (!locked && _bodyFocusNode.hasFocus) {
-          FocusScope.of(context).unfocus();
-          return Future.value(false);
-        } else {
-          return Future.value(true);
-        }
-      },
+      onWillPop: _onWillPop,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          centerTitle: false,
-          leading: const TextFieldTapRegion(
-            child: BackButton(),
-          ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title),
-              const SizedBox(height: 2),
-              BlocBuilder<EntryCubit, Entry>(
-                builder: (context, state) {
-                  final plane = state.planeSpecification;
-
-                  return Text(
-                    context.l10n.entry_subtitle(plane.name, plane.type),
-                    style: Theme.of(context).textTheme.labelMedium?.apply(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                  );
-                },
-              ),
-            ],
-          ),
-          actions: [
-            BlocBuilder<EditLockCubit, bool>(
-              builder: (context, locked) => TextFieldTapRegion(
-                child: IconButton(
-                  icon: Icon(locked ? Icons.lock : Icons.lock_open),
-                  onPressed: locked
-                      ? () => context.read<EditLockCubit>().unlock()
-                      : () => context.read<EditLockCubit>().lock(),
-                ),
-              ),
-            ),
-          ],
-        ),
+        appBar: _AppBar(target: widget.target),
         body: Focus(
           focusNode: _bodyFocusNode,
           canRequestFocus: false,
+          descendantsAreFocusable: !locked,
           child: TabBarView(
             controller: _tabController,
             children: const [
@@ -189,6 +157,94 @@ class _EntryScreenState extends State<EntryScreen>
           ),
         ),
       ),
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBar({required this.target});
+
+  final EntryScreenTarget target;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    final locked = context.watch<EditLockCubit>().state;
+
+    return TweenAnimationBuilder<Color?>(
+      tween: HctColorTween(
+        end: locked ? Theme.of(context).colorScheme.primary : Colors.green,
+      ),
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.ease,
+      builder: (context, color, child) => Material(
+        color: color,
+        elevation: 4,
+        child: child,
+      ),
+      child: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        centerTitle: false,
+        leading: const TextFieldTapRegion(
+          child: BackButton(),
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _Title(target: target),
+            const SizedBox(height: 2),
+            BlocBuilder<EntryCubit, Entry>(
+              builder: (context, state) => Text(
+                context.l10n.entry_subtitle(
+                  state.planeSpecification.name,
+                  state.planeSpecification.type,
+                ),
+                style: Theme.of(context).textTheme.labelMedium?.apply(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          BlocBuilder<EditLockCubit, bool>(
+            builder: (context, locked) => IconButton(
+              icon: Icon(locked ? Icons.edit : Icons.save),
+              onPressed: locked
+                  ? () => context.read<EditLockCubit>().unlock()
+                  : () => context.read<EditLockCubit>().lock(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title({required this.target});
+
+  final EntryScreenTarget target;
+
+  @override
+  Widget build(BuildContext context) {
+    final title = target.isCreate
+        ? context.l10n.entry_titleCreate
+        : context.l10n.entry_titleEdit;
+
+    final locked = context.watch<EditLockCubit>().state;
+
+    return AnimatedCrossFade(
+      duration: const Duration(milliseconds: 200),
+      firstCurve: const Interval(0, 2 / 3),
+      secondCurve: const Interval(1 / 3, 1),
+      crossFadeState:
+          locked ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      firstChild: Text(context.l10n.entry_titlePreview),
+      secondChild: Text(title),
     );
   }
 }

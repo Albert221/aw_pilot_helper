@@ -21,6 +21,7 @@
     },
     "previousEntries_title": "Previous entries",
     "previousEntries_noEntries": "You have no entries.",
+    "entry_titlePreview": "Preview entry",
     "entry_titleCreate": "New entry",
     "entry_titleEdit": "Edit entry",
     "entry_subtitle": "{name} • {type}",
