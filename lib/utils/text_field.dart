@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AWTextField extends StatefulWidget {
   const AWTextField({
@@ -14,6 +15,7 @@ class AWTextField extends StatefulWidget {
     this.suffixText,
     this.keyboardType = TextInputType.text,
     this.textAlign = TextAlign.start,
+    this.inputFormatters = const [],
   });
 
   final TextEditingController? controller;
@@ -27,6 +29,7 @@ class AWTextField extends StatefulWidget {
   final String? suffixText;
   final TextInputType keyboardType;
   final TextAlign textAlign;
+  final List<TextInputFormatter> inputFormatters;
 
   @override
   State<AWTextField> createState() => _AWTextFieldState();
@@ -75,6 +78,7 @@ class _AWTextFieldState extends State<AWTextField> {
         ),
         keyboardType: widget.keyboardType,
         textAlign: widget.textAlign,
+        inputFormatters: widget.inputFormatters,
       ),
     );
   }

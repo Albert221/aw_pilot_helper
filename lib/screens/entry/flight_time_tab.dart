@@ -8,6 +8,7 @@ import 'package:aw_pilot_helper/utils/cubit_text_editing_controller.dart';
 import 'package:aw_pilot_helper/utils/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 typedef _DateTimeController = DateTimeTextEditingController<EntryCubit, Entry>;
 
@@ -149,7 +150,7 @@ class _FlightTimeTabState extends State<FlightTimeTab> {
   }
 }
 
-class _Row extends StatelessWidget {
+class _Row extends StatefulWidget {
   const _Row({
     required this.controller,
     required this.focusNode,
@@ -164,6 +165,13 @@ class _Row extends StatelessWidget {
   final String label;
   final ValueChanged<DateTime> update;
 
+  @override
+  State<_Row> createState() => _RowState();
+}
+
+class _RowState extends State<_Row> {
+  final maskFormatter = MaskTextInputFormatter(mask: '##:##');
+
   DateTime get _now => DateTime.now().toUtc();
 
   @override
@@ -177,17 +185,19 @@ class _Row extends StatelessWidget {
           Expanded(
             flex: 2,
             child: AWTextField(
-              controller: controller,
-              focusNode: focusNode,
+              controller: widget.controller,
+              focusNode: widget.focusNode,
               readOnly: locked,
-              icon: icon,
-              label: label,
+              icon: widget.icon,
+              label: widget.label,
+              keyboardType: TextInputType.number,
+              inputFormatters: [maskFormatter],
             ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: ElevatedButton(
-              onPressed: locked ? null : () => update(_now),
+              onPressed: locked ? null : () => widget.update(_now),
               child: Text(context.l10n.entry_timeNow),
             ),
           ),
