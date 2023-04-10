@@ -73,6 +73,7 @@ class EntryScreen extends StatefulWidget {
 
 class _EntryScreenState extends State<EntryScreen>
     with SingleTickerProviderStateMixin {
+  final _bodyFocusNode = FocusNode(debugLabel: 'Entry screen body');
   late final TabController _tabController;
 
   @override
@@ -85,6 +86,7 @@ class _EntryScreenState extends State<EntryScreen>
   @override
   void dispose() {
     _tabController.dispose();
+    _bodyFocusNode.dispose();
 
     super.dispose();
   }
@@ -95,77 +97,95 @@ class _EntryScreenState extends State<EntryScreen>
         ? context.l10n.entry_titleCreate
         : context.l10n.entry_titleEdit;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title),
-            const SizedBox(height: 2),
-            BlocBuilder<EntryCubit, Entry>(
-              builder: (context, state) {
-                final plane = state.planeSpecification;
+    return WillPopScope(
+      onWillPop: () {
+        final locked = context.read<EditLockCubit>().state;
+        if (!locked && _bodyFocusNode.hasFocus) {
+          FocusScope.of(context).unfocus();
+          return Future.value(false);
+        } else {
+          return Future.value(true);
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          centerTitle: false,
+          leading: const TextFieldTapRegion(
+            child: BackButton(),
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title),
+              const SizedBox(height: 2),
+              BlocBuilder<EntryCubit, Entry>(
+                builder: (context, state) {
+                  final plane = state.planeSpecification;
 
-                return Text(
-                  context.l10n.entry_subtitle(plane.name, plane.type),
-                  style: Theme.of(context).textTheme.labelMedium?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                );
-              },
+                  return Text(
+                    context.l10n.entry_subtitle(plane.name, plane.type),
+                    style: Theme.of(context).textTheme.labelMedium?.apply(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  );
+                },
+              ),
+            ],
+          ),
+          actions: [
+            BlocBuilder<EditLockCubit, bool>(
+              builder: (context, locked) => TextFieldTapRegion(
+                child: IconButton(
+                  icon: Icon(locked ? Icons.lock : Icons.lock_open),
+                  onPressed: locked
+                      ? () => context.read<EditLockCubit>().unlock()
+                      : () => context.read<EditLockCubit>().lock(),
+                ),
+              ),
             ),
           ],
         ),
-        actions: [
-          BlocBuilder<EditLockCubit, bool>(
-            builder: (context, locked) => TextFieldTapRegion(
-              child: IconButton(
-                icon: Icon(locked ? Icons.lock : Icons.lock_open),
-                onPressed: locked
-                    ? () => context.read<EditLockCubit>().unlock()
-                    : () => context.read<EditLockCubit>().lock(),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          BeforeFlightTab(),
-          WeighingTab(),
-          FlightTimeTab(),
-          NotesTab(),
-        ],
-      ),
-      bottomNavigationBar: Builder(
-        builder: (context) => AnimatedBuilder(
-          animation: _tabController,
-          builder: (context, _) => BottomNavigationBar(
-            currentIndex: _tabController.index,
-            onTap: _tabController.animateTo,
-            type: BottomNavigationBarType.fixed,
-            selectedFontSize: 12,
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.flight_takeoff),
-                label: context.l10n.entry_beforeFlight,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.scale),
-                label: context.l10n.entry_weighting,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.timer),
-                label: context.l10n.entry_flightTime,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.notes),
-                label: context.l10n.entry_notes,
-              ),
+        body: Focus(
+          focusNode: _bodyFocusNode,
+          canRequestFocus: false,
+          child: TabBarView(
+            controller: _tabController,
+            children: const [
+              BeforeFlightTab(),
+              WeighingTab(),
+              FlightTimeTab(),
+              NotesTab(),
             ],
+          ),
+        ),
+        bottomNavigationBar: Builder(
+          builder: (context) => AnimatedBuilder(
+            animation: _tabController,
+            builder: (context, _) => BottomNavigationBar(
+              currentIndex: _tabController.index,
+              onTap: _tabController.animateTo,
+              type: BottomNavigationBarType.fixed,
+              selectedFontSize: 12,
+              items: [
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.flight_takeoff),
+                  label: context.l10n.entry_beforeFlight,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.scale),
+                  label: context.l10n.entry_weighting,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.timer),
+                  label: context.l10n.entry_flightTime,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.notes),
+                  label: context.l10n.entry_notes,
+                ),
+              ],
+            ),
           ),
         ),
       ),
