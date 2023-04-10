@@ -34,7 +34,7 @@ class _L10nFormat extends InheritedWidget {
 
 class _L10nFormats {
   _L10nFormats(String locale)
-      : physicalValueFormat = NumberFormat.decimalPattern(locale)
+      : physicalValueFormat = NumberFormat.decimalPattern('en')
           ..maximumFractionDigits = 3,
         integerFormat = NumberFormat.decimalPattern(locale),
         hourMinuteFormat = DateFormat.Hm(locale);

@@ -24,7 +24,7 @@ class _WeighingTabState extends State<WeighingTab>
   late final List<FocusNode> _weightFocusNodes;
   List<EntryDoubleController>? _weightControllers;
   late final List<FocusNode> _fuelWeightFocusNodes;
-  List<EntryDoubleController>? _fuelWeightControllers;
+  List<ROEntryDoubleController>? _fuelWeightControllers;
 
   var _previousLocale = '';
 
@@ -54,7 +54,6 @@ class _WeighingTabState extends State<WeighingTab>
 
       _planeWeightController?.dispose();
       _planeWeightController = EntryDoubleController(
-        context: context,
         focusNode: _planeWeightFocusNode,
         cubit: cubit,
         mapValue: (state) => state.planeSpecification.planeWeight,
@@ -65,7 +64,6 @@ class _WeighingTabState extends State<WeighingTab>
       _weightControllers = cubit.state.planeSpecification.weights
           .mapIndexed<EntryDoubleController>(
             (i, weightSpecification) => EntryDoubleController(
-              context: context,
               focusNode: _weightFocusNodes[i],
               cubit: cubit,
               mapValue: (state) => state.content.weight[i],
@@ -76,8 +74,8 @@ class _WeighingTabState extends State<WeighingTab>
 
       _fuelWeightControllers?.forEach((controller) => controller.dispose());
       _fuelWeightControllers = cubit.state.planeSpecification.fuelTanks
-          .mapIndexed<EntryDoubleController>(
-            (i, fuelTankSpecification) => EntryDoubleController(
+          .mapIndexed<ROEntryDoubleController>(
+            (i, fuelTankSpecification) => ROEntryDoubleController(
               context: context,
               focusNode: _fuelWeightFocusNodes[i],
               cubit: cubit,

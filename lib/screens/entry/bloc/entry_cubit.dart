@@ -5,6 +5,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 typedef EntryDoubleController = DoubleTextEditingController<EntryCubit, Entry>;
+typedef ROEntryDoubleController
+    = ReadOnlyDoubleTextEditingController<EntryCubit, Entry>;
 
 class EntryCubit extends Cubit<Entry> {
   EntryCubit(super.initialState, this._repository);

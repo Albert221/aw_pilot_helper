@@ -83,7 +83,17 @@ class _AWTextFieldState extends State<AWTextField> {
             ),
             keyboardType: widget.keyboardType,
             textAlign: widget.textAlign,
-            inputFormatters: widget.inputFormatters,
+            inputFormatters: [
+              ...widget.inputFormatters,
+              if (widget.keyboardType.index == TextInputType.number.index) ...[
+                TextInputFormatter.withFunction(
+                  (oldValue, newValue) => newValue.copyWith(
+                    text: newValue.text.replaceAll(',', '.'),
+                  ),
+                ),
+                FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+              ],
+            ],
           ),
         ),
         if (helperText != null && !false)

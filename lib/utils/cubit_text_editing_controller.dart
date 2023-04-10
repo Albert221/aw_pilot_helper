@@ -58,6 +58,25 @@ class CubitTextEditingController<T, C extends Cubit<S>, S>
 class DoubleTextEditingController<C extends Cubit<S>, S>
     extends CubitTextEditingController<double?, C, S> {
   DoubleTextEditingController({
+    required super.focusNode,
+    required super.cubit,
+    required super.mapValue,
+    required super.updateValue,
+  }) : super(
+          formatValue: _formatValue,
+          parseText: double.tryParse,
+        );
+
+  static String _formatValue(double? value) {
+    if (value == null) return '';
+    if (value == value.roundToDouble()) return value.round().toString();
+    return value.toString();
+  }
+}
+
+class ReadOnlyDoubleTextEditingController<C extends Cubit<S>, S>
+    extends CubitTextEditingController<double?, C, S> {
+  ReadOnlyDoubleTextEditingController({
     required BuildContext context,
     required super.focusNode,
     required super.cubit,
@@ -65,21 +84,11 @@ class DoubleTextEditingController<C extends Cubit<S>, S>
     required super.updateValue,
   }) : super(
           formatValue: _formatValue(context),
-          parseText: _parseText(context),
+          parseText: (_) => throw UnsupportedError('read only'),
         );
 
   static _FormatValue<double?> _formatValue(BuildContext context) =>
       (value) => value != null ? context.l10nFormat.physicalValue(value) : '';
-
-  static _ParseText<double?> _parseText(BuildContext context) {
-    return (text) {
-      try {
-        return context.l10nFormat.physicalValueFormat.parse(text).toDouble();
-      } on FormatException {
-        return null;
-      }
-    };
-  }
 }
 
 class StringTextEditingController<C extends Cubit<S>, S>

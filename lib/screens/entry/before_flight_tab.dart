@@ -60,7 +60,6 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
 
       _mthController?.dispose();
       _mthController = EntryDoubleController(
-        context: context,
         focusNode: _mthFocusNode,
         cubit: cubit,
         mapValue: (state) => state.content.motohours,
@@ -69,7 +68,6 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
 
       _oilController?.dispose();
       _oilController = EntryDoubleController(
-        context: context,
         focusNode: _oilFocusNode,
         cubit: cubit,
         mapValue: (state) => state.content.oil,
@@ -80,7 +78,6 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
       _fuelControllers = cubit.state.planeSpecification.weights
           .mapIndexed<EntryDoubleController>(
             (i, weightSpecification) => EntryDoubleController(
-              context: context,
               focusNode: _fuelFocusNodes[i],
               cubit: cubit,
               mapValue: (state) => state.content.fuelBefore[i],
