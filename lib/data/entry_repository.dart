@@ -29,7 +29,7 @@ class EntryRepository {
 
     final index = entries.indexWhere((anEntry) => anEntry.id == entry.id);
     if (index == -1) {
-      entries.add(entry);
+      entries.insert(0, entry);
     } else {
       entries[index] = entry;
     }
