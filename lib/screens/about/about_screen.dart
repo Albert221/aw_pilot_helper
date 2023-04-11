@@ -26,6 +26,7 @@ class AboutScren extends StatelessWidget {
             builder: (context, about) => Markdown(
               data: about.data ?? '',
               padding: const EdgeInsets.all(24),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               styleSheet: MarkdownStyleSheet(
                 p: const TextStyle(height: 1.5),
