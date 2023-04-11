@@ -33,6 +33,11 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-gems-
 
+      - name: Decrypt assets
+        run: ./decrypt-assets.sh $PASSWORD
+        env:
+          PASSWORD: ${{ secrets.ASSETS_DECRYPT_PASSWORD }}
+
       - name: Download bundle dependencies
         run: |
           gem install bundler:2.3.23

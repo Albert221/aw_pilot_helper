@@ -42,3 +42,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# License prevents me from redistributing this icon. Sorry.
+ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App.png
