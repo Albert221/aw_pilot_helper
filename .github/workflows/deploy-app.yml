@@ -34,7 +34,7 @@ jobs:
           restore-keys: ${{ runner.os }}-gems-
 
       - name: Decrypt assets
-        run: ./decrypt-assets.sh $PASSWORD
+        run: ../decrypt-assets.sh $PASSWORD
         env:
           PASSWORD: ${{ secrets.ASSETS_DECRYPT_PASSWORD }}
 
