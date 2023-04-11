@@ -19,13 +19,13 @@
     },
     "capacity": {
       "pluginOptions": {},
-      "type": "decimal",
+      "type": "float",
       "required": true,
       "min": 0
     },
     "arm": {
       "pluginOptions": {},
-      "type": "decimal",
+      "type": "float",
       "required": true
     },
     "previewName": {

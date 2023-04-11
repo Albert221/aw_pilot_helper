@@ -23,36 +23,36 @@
       "pluginOptions": {}
     },
     "oilMin": {
-      "type": "decimal",
+      "type": "float",
       "required": true,
       "min": 0,
       "pluginOptions": {}
     },
     "oilMax": {
-      "type": "decimal",
+      "type": "float",
       "min": 0,
       "required": true,
       "pluginOptions": {}
     },
     "planeWeight": {
-      "type": "decimal",
+      "type": "float",
       "required": true,
       "min": 0,
       "pluginOptions": {}
     },
     "planeMoment": {
-      "type": "decimal",
+      "type": "float",
       "min": 0,
       "required": true,
       "pluginOptions": {}
     },
     "drawbarWeight": {
-      "type": "decimal",
+      "type": "float",
       "min": 0,
       "pluginOptions": {}
     },
     "drawbarArm": {
-      "type": "decimal",
+      "type": "float",
       "min": 0,
       "pluginOptions": {}
     },

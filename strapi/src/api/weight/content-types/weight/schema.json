@@ -4,7 +4,8 @@
   "info": {
     "singularName": "weight",
     "pluralName": "weights",
-    "displayName": "Weight"
+    "displayName": "Weight",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -20,7 +21,7 @@
       "required": true
     },
     "arm": {
-      "type": "decimal",
+      "type": "float",
       "required": true
     }
   }
