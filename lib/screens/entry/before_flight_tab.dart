@@ -75,9 +75,9 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
       );
 
       _fuelControllers?.forEach((controller) => controller.dispose());
-      _fuelControllers = cubit.state.planeSpecification.weights
+      _fuelControllers = cubit.state.planeSpecification.fuelTanks
           .mapIndexed<EntryDoubleController>(
-            (i, weightSpecification) => EntryDoubleController(
+            (i, fuelTankSpecification) => EntryDoubleController(
               focusNode: _fuelFocusNodes[i],
               cubit: cubit,
               mapValue: (state) => state.content.fuelBefore[i],
