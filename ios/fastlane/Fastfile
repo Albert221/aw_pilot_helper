@@ -1,3 +1,7 @@
+# https://github.com/fastlane/fastlane/issues/21125#issuecomment-1473306222
+require 'spaceship'
+Spaceship::ConnectAPI::App.const_set('ESSENTIAL_INCLUDES', 'appStoreVersions')
+
 default_platform(:ios)
 
 platform :ios do
