@@ -1,4 +1,4 @@
-package com.example.aw_pilot_helper
+package me.wolszon.aw_pilot_helper
 
 import io.flutter.embedding.android.FlutterActivity
 
