@@ -11,6 +11,7 @@ platform :android do
       track: 'production',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
       json_key_data: ENV['PLAY_STORE_CONFIG_JSON'],
+      skip_upload_metadata: true,
     )
   end
 end
