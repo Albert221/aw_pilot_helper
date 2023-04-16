@@ -50,6 +50,7 @@ jobs:
         with:
           ruby-version: '3.0'
           bundler-cache: true
+          working-directory: android
 
       - name: Run fastlane
         env:
