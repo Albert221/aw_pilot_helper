@@ -50,7 +50,7 @@ android {
 
     defaultConfig {
         applicationId "me.wolszon.aw_pilot_helper"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 26
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

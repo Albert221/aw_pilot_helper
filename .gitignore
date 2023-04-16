@@ -45,3 +45,5 @@ app.*.map.json
 
 # License prevents me from redistributing this icon. Sorry.
 ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App.png
+android/app/src/main/ic_launcher-playstore.png
+android/app/src/main/res/drawable/ic_launcher_foreground.xml

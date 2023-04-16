@@ -34,7 +34,7 @@ jobs:
           restore-keys: ${{ runner.os }}-gems-
 
       - name: Decrypt assets
-        run: ../decrypt-assets.sh $PASSWORD
+        run: ../assets.sh decrypt $PASSWORD
         env:
           PASSWORD: ${{ secrets.ASSETS_DECRYPT_PASSWORD }}
 
@@ -90,6 +90,11 @@ jobs:
           echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> key.properties
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> key.properties
           echo "keyAlias=upload" >> key.properties
+
+      - name: Decrypt assets
+        run: ../assets.sh decrypt $PASSWORD
+        env:
+          PASSWORD: ${{ secrets.ASSETS_DECRYPT_PASSWORD }}
 
       - name: Download bundle dependencies
         run: |
