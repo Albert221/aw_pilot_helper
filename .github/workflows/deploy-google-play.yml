@@ -45,11 +45,11 @@ jobs:
         env:
           PASSWORD: ${{ secrets.ASSETS_DECRYPT_PASSWORD }}
 
-      - name: Download bundle dependencies
-        run: |
-          gem install bundler:2.3.23
-          bundle config path vendor/bundle
-          bundle install
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
 
       - name: Run fastlane
         env:
