@@ -88,6 +88,11 @@ class L10nPl extends L10n {
   String get entry_oil => 'Olej';
 
   @override
+  String entry_oilValueQt(String value) {
+    return '$value US qt';
+  }
+
+  @override
   String entry_oilCalculations(String min, String max) {
     return 'Min $min l • Max $max l';
   }
@@ -113,6 +118,11 @@ class L10nPl extends L10n {
   @override
   String entry_planeCalculations(String planeMoment) {
     return 'Moment $planeMoment kgm';
+  }
+
+  @override
+  String entry_weightValueLbs(String value) {
+    return '$value lb';
   }
 
   @override

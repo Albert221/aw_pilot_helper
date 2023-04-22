@@ -28,7 +28,7 @@ class AWTextField extends StatefulWidget {
   final IconData? icon;
   final String? label;
   final String? additionalValue;
-  final bool Function(BuildContext)? error;
+  final bool? error;
   final String? hintText;
   final String? helperText;
   final String? suffixText;
@@ -81,7 +81,7 @@ class _AWTextFieldState extends State<AWTextField> {
               prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
               labelText: widget.label,
               hintText: widget.hintText,
-              errorText: widget.error?.call(context) ?? false ? '' : null,
+              errorText: widget.error ?? false ? '' : null,
               suffixText: widget.suffixText,
             ),
             style: TextStyle(

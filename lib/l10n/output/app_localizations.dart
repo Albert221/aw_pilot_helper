@@ -237,6 +237,12 @@ abstract class L10n {
   /// **'Oil'**
   String get entry_oil;
 
+  /// No description provided for @entry_oilValueQt.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} US qt'**
+  String entry_oilValueQt(String value);
+
   /// No description provided for @entry_oilCalculations.
   ///
   /// In en, this message translates to:
@@ -272,6 +278,12 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Moment {planeMoment} kgm'**
   String entry_planeCalculations(String planeMoment);
+
+  /// No description provided for @entry_weightValueLbs.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} lbs'**
+  String entry_weightValueLbs(String value);
 
   /// No description provided for @entry_weightCalculations.
   ///

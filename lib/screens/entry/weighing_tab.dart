@@ -164,9 +164,17 @@ class _WeighingTabState extends State<WeighingTab>
   Widget _mapWeights(int i, WeightSpecification weightSpecs, bool locked) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: BlocBuilder<EntryCubit, Entry>(
-        builder: (context, state) {
-          final weight = state.content.weight[i];
+      child: BlocSelector<EntryCubit, Entry, double?>(
+        selector: (state) => state.content.weight[i],
+        builder: (context, weight) {
+          final additionalValue = weight != null
+              ? context.l10n.entry_weightValueLbs(
+                  context.l10nFormat.physicalValue(
+                    kilogramsToPounds(weight),
+                  ),
+                )
+              : null;
+
           final momentValue = weight != null ? weightSpecs.arm * weight : null;
 
           return AWTextField(
@@ -176,11 +184,8 @@ class _WeighingTabState extends State<WeighingTab>
             readOnly: locked,
             icon: Icons.monitor_weight_outlined,
             label: weightSpecs.name,
-            error: (context) => context.select<EntryCubit, bool>((c) {
-              final weight = c.state.content.weight[i];
-              if (weight == null) return false;
-              return weight < 0;
-            }),
+            additionalValue: additionalValue,
+            error: weight != null && weight < 0,
             suffixText: context.l10n.kilogramsShort,
             helperText: context.l10n.entry_weightCalculations(
               context.l10nFormat.physicalValue(weightSpecs.arm),
@@ -197,11 +202,20 @@ class _WeighingTabState extends State<WeighingTab>
   Widget _mapFuelTanks(int i, FuelTankSpecification fuelTankSpecs) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: BlocBuilder<EntryCubit, Entry>(
-        builder: (context, state) {
-          final weight = state.content.fuelBefore[i];
-          final momentValue =
-              weight != null ? fuelTankSpecs.arm * weight : null;
+      child: BlocSelector<EntryCubit, Entry, double?>(
+        selector: (state) => state.content.fuelBefore[i],
+        builder: (context, fuel) {
+          final fuelWeight = (fuel ?? 0) * fuelDensity;
+
+          final additionalValue = fuel != null
+              ? context.l10n.entry_weightValueLbs(
+                  context.l10nFormat.physicalValue(
+                    kilogramsToPounds(fuelWeight),
+                  ),
+                )
+              : null;
+
+          final momentValue = fuelTankSpecs.arm * fuelWeight;
 
           return AWTextField(
             controller: _fuelWeightControllers?[i],
@@ -209,10 +223,11 @@ class _WeighingTabState extends State<WeighingTab>
             readOnly: true,
             icon: Icons.local_gas_station,
             label: context.l10n.entry_fuelTankName(fuelTankSpecs.name),
+            additionalValue: additionalValue,
             suffixText: context.l10n.kilogramsShort,
             helperText: context.l10n.entry_weightCalculations(
               context.l10nFormat.physicalValue(fuelTankSpecs.arm),
-              context.l10nFormat.physicalValue(momentValue ?? 0),
+              context.l10nFormat.physicalValue(momentValue),
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textAlign: TextAlign.end,

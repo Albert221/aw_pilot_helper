@@ -128,46 +128,58 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: AWTextField(
-                doubleOnly: true,
-                controller: _mthController,
-                focusNode: _mthFocusNode,
-                readOnly: locked,
-                icon: Icons.schedule,
-                label: context.l10n.motohoursShort,
-                error: (context) => context.select<EntryCubit, bool>((c) {
-                  final mth = c.state.content.motohours;
-                  if (mth == null) return false;
-                  return mth < 0;
-                }),
-                suffixText: context.l10n.motohoursShort,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                textAlign: TextAlign.end,
+              child: BlocSelector<EntryCubit, Entry, double?>(
+                selector: (state) => state.content.motohours,
+                builder: (context, motohours) {
+                  return AWTextField(
+                    doubleOnly: true,
+                    controller: _mthController,
+                    focusNode: _mthFocusNode,
+                    readOnly: locked,
+                    icon: Icons.schedule,
+                    label: context.l10n.motohoursShort,
+                    error: motohours != null && motohours < 0,
+                    suffixText: context.l10n.motohoursShort,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    textAlign: TextAlign.end,
+                  );
+                },
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: AWTextField(
-                doubleOnly: true,
-                controller: _oilController,
-                focusNode: _oilFocusNode,
-                readOnly: locked,
-                icon: Icons.oil_barrel,
-                label: context.l10n.entry_oil,
-                error: (context) => context.select<EntryCubit, bool>((c) {
-                  final oil = c.state.content.oil;
-                  if (oil == null) return false;
-                  return oil < planeSpecs.oilMin || oil > planeSpecs.oilMax;
-                }),
-                suffixText: context.l10n.literesShort,
-                helperText: context.l10n.entry_oilCalculations(
-                  context.l10nFormat.physicalValue(planeSpecs.oilMin),
-                  context.l10nFormat.physicalValue(planeSpecs.oilMax),
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                textAlign: TextAlign.end,
+              child: BlocSelector<EntryCubit, Entry, double?>(
+                selector: (state) => state.content.oil,
+                builder: (context, oil) {
+                  final additionalValue = oil != null
+                      ? context.l10n.entry_oilValueQt(
+                          context.l10nFormat.physicalValue(
+                            litersToQuarts(oil),
+                          ),
+                        )
+                      : null;
+
+                  return AWTextField(
+                    doubleOnly: true,
+                    controller: _oilController,
+                    focusNode: _oilFocusNode,
+                    readOnly: locked,
+                    icon: Icons.oil_barrel,
+                    label: context.l10n.entry_oil,
+                    additionalValue: additionalValue,
+                    error: oil != null &&
+                        (oil < planeSpecs.oilMin || oil > planeSpecs.oilMax),
+                    suffixText: context.l10n.literesShort,
+                    helperText: context.l10n.entry_oilCalculations(
+                      context.l10nFormat.physicalValue(planeSpecs.oilMin),
+                      context.l10nFormat.physicalValue(planeSpecs.oilMax),
+                    ),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    textAlign: TextAlign.end,
+                  );
+                },
               ),
             ),
           ],
@@ -194,11 +206,8 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
                   icon: Icons.local_gas_station,
                   label: context.l10n.entry_fuelTankName(fuelTankSpecs.name),
                   additionalValue: additionalValue,
-                  error: (context) => context.select<EntryCubit, bool>((c) {
-                    final fuel = c.state.content.fuelBefore[i];
-                    if (fuel == null) return false;
-                    return fuel < 0 || fuel > fuelTankSpecs.capacity;
-                  }),
+                  error: fuel != null &&
+                      (fuel < 0 || fuel > fuelTankSpecs.capacity),
                   suffixText: context.l10n.literesShort,
                   helperText: context.l10n.entry_fuelTankCapacity(
                     context.l10nFormat.physicalValue(fuelTankSpecs.capacity),

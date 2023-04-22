@@ -49,6 +49,14 @@
     "entry_notes": "Notes",
     "entry_name": "Entry name",
     "entry_oil": "Oil",
+    "entry_oilValueQt": "{value} US qt",
+    "@entry_oilValueQt": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
     "entry_oilCalculations": "Min {min} l • Max {max} l",
     "@entry_oilCalculations": {
         "placeholders": {
@@ -89,6 +97,14 @@
     "@entry_planeCalculations": {
         "placeholders": {
             "planeMoment": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_weightValueLbs": "{value} lbs",
+    "@entry_weightValueLbs": {
+        "placeholders": {
+            "value": {
                 "type": "String"
             }
         }
