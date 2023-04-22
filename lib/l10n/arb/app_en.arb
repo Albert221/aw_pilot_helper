@@ -104,13 +104,39 @@
             }
         }
     },
-    "entry_summary": "Weight {weight} kg • Moment {moment} kgm",
-    "@entry_summary": {
+    "entry_summaryTitle": "Summary",
+    "entry_summaryWeight": "Weight",
+    "entry_summaryWeightValue": "{kilograms} kg\n{pounds} lbs",
+    "@entry_summaryWeightValue": {
         "placeholders": {
-            "weight": {
+            "kilograms": {
                 "type": "String"
             },
-            "moment": {
+            "pounds": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_summaryMoment": "Moment",
+    "entry_summaryMomentValue": "{kilogramMeters} kgm\n{poundInches} lb in",
+    "@entry_summaryMomentValue": {
+        "placeholders": {
+            "kilogramMeters": {
+                "type": "String"
+            },
+            "poundInches": {
+                "type": "String"
+            }
+        }
+    },
+    "entry_summaryCenterOfGravity": "Center of gravity",
+    "entry_summaryCenterOfGravityValue": "{meters} m\n{inches} in",
+    "@entry_summaryCenterOfGravityValue": {
+        "placeholders": {
+            "meters": {
+                "type": "String"
+            },
+            "inches": {
                 "type": "String"
             }
         }

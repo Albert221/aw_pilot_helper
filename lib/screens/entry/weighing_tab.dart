@@ -6,6 +6,7 @@ import 'package:aw_pilot_helper/screens/entry/bloc/entry_cubit.dart';
 import 'package:aw_pilot_helper/utils/did_init_mixin.dart';
 import 'package:aw_pilot_helper/utils/list_read_only.dart';
 import 'package:aw_pilot_helper/utils/text_field.dart';
+import 'package:aw_pilot_helper/utils/units.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -112,75 +113,50 @@ class _WeighingTabState extends State<WeighingTab>
       (cubit) => cubit.state.planeSpecification,
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(24),
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            children: [
-              AWTextField(
-                controller: _planeWeightController,
-                focusNode: _planeWeightFocusNode,
-                readOnly: true,
-                icon: Icons.flight,
-                label: context.l10n.entry_emptyPlane,
-                suffixText: context.l10n.kilogramsShort,
-                helperText: context.l10n.entry_planeCalculations(
-                  context.l10nFormat.physicalValue(planeSpecs.planeMoment),
-                ),
-                textAlign: TextAlign.end,
-              ),
-              ...planeSpecs.weights
-                  .mapIndexed((i, specs) => _mapWeights(i, specs, locked)),
-              ...planeSpecs.fuelTanks.mapIndexed(_mapFuelTanks),
-              if (planeSpecs.drawbarMoment != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: CheckboxListTile(
-                    value: context.select<EntryCubit, bool>(
-                      (c) => c.state.content.drawbar,
-                    ),
-                    onChanged: (value) =>
-                        context.read<EntryCubit>().updateDrawbar(value!),
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    title: Text(
-                      context.l10n.entry_drawbar(
-                        context.l10nFormat
-                            .physicalValue(planeSpecs.drawbarWeight!),
-                      ),
-                    ),
-                    subtitle: Text(
-                      context.l10n.entry_weightCalculations(
-                        context.l10nFormat
-                            .physicalValue(planeSpecs.drawbarArm!),
-                        context.l10nFormat
-                            .physicalValue(planeSpecs.drawbarMoment!),
-                      ),
-                    ),
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                ),
-            ],
+        AWTextField(
+          controller: _planeWeightController,
+          focusNode: _planeWeightFocusNode,
+          readOnly: true,
+          icon: Icons.flight,
+          label: context.l10n.entry_emptyPlane,
+          suffixText: context.l10n.kilogramsShort,
+          helperText: context.l10n.entry_planeCalculations(
+            context.l10nFormat.physicalValue(planeSpecs.planeMoment),
           ),
+          textAlign: TextAlign.end,
         ),
-        Material(
-          elevation: 8,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: BlocBuilder<EntryCubit, Entry>(
-              builder: (context, state) => Text(
-                context.l10n.entry_summary(
-                  context.l10nFormat.physicalValue(state.weight),
-                  context.l10nFormat.physicalValue(state.moment),
-                ),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall,
+        ...planeSpecs.weights
+            .mapIndexed((i, specs) => _mapWeights(i, specs, locked)),
+        ...planeSpecs.fuelTanks.mapIndexed(_mapFuelTanks),
+        if (planeSpecs.drawbarMoment != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: CheckboxListTile(
+              value: context.select<EntryCubit, bool>(
+                (c) => c.state.content.drawbar,
               ),
+              onChanged: (value) =>
+                  context.read<EntryCubit>().updateDrawbar(value!),
+              controlAffinity: ListTileControlAffinity.trailing,
+              title: Text(
+                context.l10n.entry_drawbar(
+                  context.l10nFormat.physicalValue(planeSpecs.drawbarWeight!),
+                ),
+              ),
+              subtitle: Text(
+                context.l10n.entry_weightCalculations(
+                  context.l10nFormat.physicalValue(planeSpecs.drawbarArm!),
+                  context.l10nFormat.physicalValue(planeSpecs.drawbarMoment!),
+                ),
+              ),
+              contentPadding: EdgeInsets.zero,
             ),
           ),
-        ),
+        const _Summary(),
       ],
     );
   }
@@ -242,6 +218,80 @@ class _WeighingTabState extends State<WeighingTab>
             textAlign: TextAlign.end,
           );
         },
+      ),
+    );
+  }
+}
+
+class _Summary extends StatelessWidget {
+  const _Summary();
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<EntryCubit>().state;
+
+    final weightKg = state.weight;
+    final weightLbs = kilogramsToPounds(weightKg);
+
+    final momentKgm = state.moment;
+    final momentInchLbs = kilogramMetersToPoundInches(momentKgm);
+
+    final centerOfGravityM = momentKgm / weightKg;
+    final centerOfGravityIn = momentInchLbs / weightLbs;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 32),
+        Text(
+          context.l10n.entry_summaryTitle,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 16),
+        _SummaryTab(
+          title: context.l10n.entry_summaryWeight,
+          value: context.l10n.entry_summaryWeightValue(
+            context.l10nFormat.physicalValue(weightKg),
+            context.l10nFormat.physicalValue(weightLbs),
+          ),
+        ),
+        _SummaryTab(
+          title: context.l10n.entry_summaryMoment,
+          value: context.l10n.entry_summaryMomentValue(
+            context.l10nFormat.physicalValue(momentKgm),
+            context.l10nFormat.physicalValue(momentInchLbs),
+          ),
+        ),
+        _SummaryTab(
+          title: context.l10n.entry_summaryCenterOfGravity,
+          value: context.l10n.entry_summaryCenterOfGravityValue(
+            context.l10nFormat.physicalValue(centerOfGravityM),
+            context.l10nFormat.physicalValue(centerOfGravityIn),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SummaryTab extends StatelessWidget {
+  const _SummaryTab({
+    required this.title,
+    required this.value,
+  });
+
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(title),
+      trailing: Text(
+        value,
+        style: Theme.of(context).textTheme.titleSmall,
+        textAlign: TextAlign.end,
       ),
     );
   }

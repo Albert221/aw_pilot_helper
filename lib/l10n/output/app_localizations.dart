@@ -279,11 +279,47 @@ abstract class L10n {
   /// **'Drawbar ({weight} kg)'**
   String entry_drawbar(String weight);
 
-  /// No description provided for @entry_summary.
+  /// No description provided for @entry_summaryTitle.
   ///
   /// In en, this message translates to:
-  /// **'Weight {weight} kg • Moment {moment} kgm'**
-  String entry_summary(String weight, String moment);
+  /// **'Summary'**
+  String get entry_summaryTitle;
+
+  /// No description provided for @entry_summaryWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get entry_summaryWeight;
+
+  /// No description provided for @entry_summaryWeightValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{kilograms} kg\n{pounds} lbs'**
+  String entry_summaryWeightValue(String kilograms, String pounds);
+
+  /// No description provided for @entry_summaryMoment.
+  ///
+  /// In en, this message translates to:
+  /// **'Moment'**
+  String get entry_summaryMoment;
+
+  /// No description provided for @entry_summaryMomentValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{kilogramMeters} kgm\n{poundInches} lb in'**
+  String entry_summaryMomentValue(String kilogramMeters, String poundInches);
+
+  /// No description provided for @entry_summaryCenterOfGravity.
+  ///
+  /// In en, this message translates to:
+  /// **'Center of gravity'**
+  String get entry_summaryCenterOfGravity;
+
+  /// No description provided for @entry_summaryCenterOfGravityValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters} m\n{inches} in'**
+  String entry_summaryCenterOfGravityValue(String meters, String inches);
 
   /// No description provided for @entry_timeZulu.
   ///

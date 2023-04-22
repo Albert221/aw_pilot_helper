@@ -121,8 +121,30 @@ class L10nPl extends L10n {
   }
 
   @override
-  String entry_summary(String weight, String moment) {
-    return 'Ciężar $weight kg • Moment $moment kgm';
+  String get entry_summaryTitle => 'Podsumowanie';
+
+  @override
+  String get entry_summaryWeight => 'Ciężar';
+
+  @override
+  String entry_summaryWeightValue(String kilograms, String pounds) {
+    return '$kilograms kg\n$pounds lb';
+  }
+
+  @override
+  String get entry_summaryMoment => 'Moment';
+
+  @override
+  String entry_summaryMomentValue(String kilogramMeters, String poundInches) {
+    return '$kilogramMeters kgm\n$poundInches lb in';
+  }
+
+  @override
+  String get entry_summaryCenterOfGravity => 'Środek ciężkości';
+
+  @override
+  String entry_summaryCenterOfGravityValue(String meters, String inches) {
+    return '$meters m\n$inches in';
   }
 
   @override
