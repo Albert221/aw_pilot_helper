@@ -7,6 +7,7 @@ import 'package:aw_pilot_helper/utils/cubit_text_editing_controller.dart';
 import 'package:aw_pilot_helper/utils/did_init_mixin.dart';
 import 'package:aw_pilot_helper/utils/list_read_only.dart';
 import 'package:aw_pilot_helper/utils/text_field.dart';
+import 'package:aw_pilot_helper/utils/units.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -174,25 +175,39 @@ class _BeforeFlightTabState extends State<BeforeFlightTab>
         ...planeSpecs.fuelTanks.mapIndexed(
           (i, fuelTankSpecs) => Padding(
             padding: const EdgeInsets.only(top: 16),
-            child: AWTextField(
-              doubleOnly: true,
-              controller: _fuelControllers?[i],
-              focusNode: _fuelFocusNodes[i],
-              readOnly: locked,
-              icon: Icons.local_gas_station,
-              label: context.l10n.entry_fuelTankName(fuelTankSpecs.name),
-              error: (context) => context.select<EntryCubit, bool>((c) {
-                final fuel = c.state.content.fuelBefore[i];
-                if (fuel == null) return false;
-                return fuel < 0 || fuel > fuelTankSpecs.capacity;
-              }),
-              suffixText: context.l10n.literesShort,
-              helperText: context.l10n.entry_fuelTankCapacity(
-                context.l10nFormat.physicalValue(fuelTankSpecs.capacity),
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              textAlign: TextAlign.end,
+            child: BlocSelector<EntryCubit, Entry, double?>(
+              selector: (state) => state.content.fuelBefore[i],
+              builder: (context, fuel) {
+                final additionalValue = fuel != null
+                    ? context.l10n.entry_fuelTankValueGal(
+                        context.l10nFormat.physicalValue(
+                          litersToGallons(fuel),
+                        ),
+                      )
+                    : null;
+
+                return AWTextField(
+                  doubleOnly: true,
+                  controller: _fuelControllers?[i],
+                  focusNode: _fuelFocusNodes[i],
+                  readOnly: locked,
+                  icon: Icons.local_gas_station,
+                  label: context.l10n.entry_fuelTankName(fuelTankSpecs.name),
+                  additionalValue: additionalValue,
+                  error: (context) => context.select<EntryCubit, bool>((c) {
+                    final fuel = c.state.content.fuelBefore[i];
+                    if (fuel == null) return false;
+                    return fuel < 0 || fuel > fuelTankSpecs.capacity;
+                  }),
+                  suffixText: context.l10n.literesShort,
+                  helperText: context.l10n.entry_fuelTankCapacity(
+                    context.l10nFormat.physicalValue(fuelTankSpecs.capacity),
+                  ),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  textAlign: TextAlign.end,
+                );
+              },
             ),
           ),
         ),

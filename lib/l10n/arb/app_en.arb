@@ -68,6 +68,14 @@
             }
         }
     },
+    "entry_fuelTankValueGal": "{value} US gal",
+    "@entry_fuelTankValueGal": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
     "entry_fuelTankCapacity": "Capacity {capacity} l",
     "@entry_fuelTankCapacity": {
         "placeholders": {

@@ -249,6 +249,12 @@ abstract class L10n {
   /// **'Fuel ({tankName})'**
   String entry_fuelTankName(String tankName);
 
+  /// No description provided for @entry_fuelTankValueGal.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} US gal'**
+  String entry_fuelTankValueGal(String value);
+
   /// No description provided for @entry_fuelTankCapacity.
   ///
   /// In en, this message translates to:

@@ -98,6 +98,11 @@ class L10nPl extends L10n {
   }
 
   @override
+  String entry_fuelTankValueGal(String value) {
+    return '$value US gal';
+  }
+
+  @override
   String entry_fuelTankCapacity(String capacity) {
     return 'Pojemność $capacity l';
   }

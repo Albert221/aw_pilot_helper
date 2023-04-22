@@ -10,6 +10,7 @@ class AWTextField extends StatefulWidget {
     this.readOnly = false,
     this.icon,
     this.label,
+    this.additionalValue,
     this.error,
     this.hintText,
     this.helperText,
@@ -26,6 +27,7 @@ class AWTextField extends StatefulWidget {
   final bool readOnly;
   final IconData? icon;
   final String? label;
+  final String? additionalValue;
   final bool Function(BuildContext)? error;
   final String? hintText;
   final String? helperText;
@@ -62,6 +64,7 @@ class _AWTextFieldState extends State<AWTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final additionalValue = widget.additionalValue;
     final helperText = widget.helperText;
 
     return Stack(
@@ -99,11 +102,20 @@ class _AWTextFieldState extends State<AWTextField> {
             ],
           ),
         ),
-        if (helperText != null && !false)
+        if (helperText != null)
           Padding(
             padding: const EdgeInsets.only(top: 67),
             child: Text(
               helperText,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+        if (additionalValue != null)
+          Positioned(
+            right: 12,
+            top: 39,
+            child: Text(
+              additionalValue,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
