@@ -114,9 +114,11 @@ class _AWTextFieldState extends State<AWTextField> {
           Positioned(
             right: 12,
             top: 39,
-            child: Text(
-              additionalValue,
-              style: Theme.of(context).textTheme.bodySmall,
+            child: IgnorePointer(
+              child: Text(
+                additionalValue,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
           ),
       ],

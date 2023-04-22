@@ -305,7 +305,7 @@ class _SummaryTab extends StatelessWidget {
       title: Text(title),
       trailing: Text(
         value,
-        style: Theme.of(context).textTheme.titleSmall,
+        style: Theme.of(context).textTheme.bodyMedium,
         textAlign: TextAlign.end,
       ),
     );
