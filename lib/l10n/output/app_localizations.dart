@@ -147,6 +147,18 @@ abstract class L10n {
   /// **'An error occurred.'**
   String get home_planeSpecsOtherError;
 
+  /// No description provided for @home_planeSpecsTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get home_planeSpecsTryAgain;
+
+  /// Just like home_planeSpecsTryAgain, but shorter, so it will fit in snack bar action.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get home_planeSpecsRetry;
+
   /// No description provided for @about_title.
   ///
   /// In en, this message translates to:

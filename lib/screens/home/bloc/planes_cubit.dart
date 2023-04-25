@@ -58,6 +58,10 @@ class PlanesCubit extends Cubit<PlanesState> with BlocPresentationMixin {
       (planes) => emit(PlanesState.loadSuccess(planes: planes)),
     );
   }
+
+  Future<void> retry() async {
+    await _repository.update();
+  }
 }
 
 @freezed

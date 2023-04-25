@@ -31,10 +31,14 @@ class HomeScreen extends StatelessWidget {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(seconds: 10),
+        duration: const Duration(days: 1), // make it persistent
+        dismissDirection: DismissDirection.none,
         behavior: SnackBarBehavior.floating,
-        content: Text(
-          context.l10n.home_planeSpecsErrorEvent(errorText),
+        content: Text(context.l10n.home_planeSpecsErrorEvent(errorText)),
+        action: SnackBarAction(
+          label: context.l10n.home_planeSpecsRetry,
+          textColor: Theme.of(context).colorScheme.errorContainer,
+          onPressed: () => context.read<PlanesCubit>().retry(),
         ),
       ),
     );
@@ -52,6 +56,7 @@ class HomeScreen extends StatelessWidget {
         listener: (context, event) =>
             _onPresentationEvent(context, event as PlanesPresentationEvent),
         child: CustomScrollView(
+          physics: const ScrollPhysics(),
           slivers: [
             const SliverToBoxAdapter(
               child: PreviousEntriesTile(),
@@ -85,9 +90,15 @@ class HomeScreen extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Text(
-                      context.l10n.home_newEntry,
-                      style: Theme.of(context).textTheme.titleLarge,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            context.l10n.home_newEntry,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -133,10 +144,27 @@ class _Failure extends StatelessWidget {
             const Icon(Icons.signal_wifi_bad),
             const SizedBox(height: 16),
             Text(context.l10n.home_planeSpecsNoInternet),
+            const SizedBox(height: 24),
+            OutlinedButton(
+              onPressed: () => context.read<PlanesCubit>().retry(),
+              child: Text(context.l10n.home_planeSpecsTryAgain),
+            ),
           ],
         );
       case PlanesStateFailure.other:
-        return const Text('Wystąpił błąd');
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.error_outline),
+            const SizedBox(height: 16),
+            Text(context.l10n.home_planeSpecsOtherError),
+            const SizedBox(height: 24),
+            OutlinedButton(
+              onPressed: () => context.read<PlanesCubit>().retry(),
+              child: Text(context.l10n.home_planeSpecsTryAgain),
+            ),
+          ],
+        );
     }
   }
 }

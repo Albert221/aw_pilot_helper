@@ -33,7 +33,13 @@ class L10nPl extends L10n {
   String get home_planeSpecsNoInternet => 'Brak internetu lub połączenia z serwerem.';
 
   @override
-  String get home_planeSpecsOtherError => 'Wystąpił błąd';
+  String get home_planeSpecsOtherError => 'Wystąpił błąd.';
+
+  @override
+  String get home_planeSpecsTryAgain => 'Spróbuj ponownie';
+
+  @override
+  String get home_planeSpecsRetry => 'Ponów';
 
   @override
   String get about_title => 'O aplikacji';

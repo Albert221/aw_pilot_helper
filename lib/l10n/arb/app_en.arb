@@ -16,6 +16,11 @@
     },
     "home_planeSpecsNoInternet": "No internet or no server connection.",
     "home_planeSpecsOtherError": "An error occurred.",
+    "home_planeSpecsTryAgain": "Try again",
+    "home_planeSpecsRetry": "Retry",
+    "@home_planeSpecsRetry": {
+        "description": "Just like home_planeSpecsTryAgain, but shorter, so it will fit in snack bar action."
+    },
     "about_title": "About app",
     "about_licenses": "Licenses",
     "previousEntriesTile_title": "Previous entries ({count})",

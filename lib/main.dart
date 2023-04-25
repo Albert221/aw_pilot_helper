@@ -4,12 +4,11 @@ import 'package:aw_pilot_helper/data/entry_repository.dart';
 import 'package:aw_pilot_helper/data/plane_specification_repository.dart';
 import 'package:aw_pilot_helper/data/storage/entry_storage.dart';
 import 'package:aw_pilot_helper/data/storage/plane_specification_storage.dart';
+import 'package:aw_pilot_helper/screens/previous_entries/bloc/previous_entries_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-
-import 'screens/previous_entries/bloc/previous_entries_cubit.dart';
 
 const _apiUrl = 'https://aw-pilot-helper.fly.dev/api';
 const _apiToken =
@@ -26,6 +25,9 @@ void main() {
                 headers: <String, String>{
                   'Authorization': 'Bearer $_apiToken',
                 },
+                connectTimeout: const Duration(seconds: 5),
+                receiveTimeout: const Duration(seconds: 5),
+                sendTimeout: const Duration(seconds: 5),
               ),
             ),
             baseUrl: _apiUrl,

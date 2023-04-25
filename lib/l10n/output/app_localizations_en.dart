@@ -36,6 +36,12 @@ class L10nEn extends L10n {
   String get home_planeSpecsOtherError => 'An error occurred.';
 
   @override
+  String get home_planeSpecsTryAgain => 'Try again';
+
+  @override
+  String get home_planeSpecsRetry => 'Retry';
+
+  @override
   String get about_title => 'About app';
 
   @override
