@@ -2,6 +2,10 @@
 
 ![main branch test workflow status](https://img.shields.io/github/actions/workflow/status/Albert221/aw_pilot_helper/test.yml)
 
+| | | |
+|-|-|-|
+| ![](assets/readme/screenshot1.png) | ![](assets/readme/screenshot2.png) | ![](assets/readme/screenshot3.png) |
+
 ## Running app
 
 To run the application you need to provide two dart defines: `API_URL` and `API_TOKEN`. You may run the backend locally as well as use a remote backend.
