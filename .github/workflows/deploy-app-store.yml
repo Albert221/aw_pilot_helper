@@ -46,6 +46,8 @@ jobs:
 
       - name: Run fastlane
         env:
+          API_URL: ${{ vars.API_URL }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
           MATCH_GIT_URL: ${{ vars.MATCH_GIT_URL }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}

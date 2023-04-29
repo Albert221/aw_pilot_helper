@@ -20,7 +20,9 @@ platform :ios do
     match(type: "development") # Passed in Xcode
     match(type: "appstore")
 
-    sh "flutter build ipa --release #{build_number}"
+    sh "flutter build ipa --release #{build_number} " +
+      "--dart-define API_URL=#{ENV['API_URL']} --dart-define API_TOKEN=#{ENV['API_TOKEN']}"
+
     build_app(
       skip_build_archive: true,
       archive_path: "../build/ios/archive/Runner.xcarchive",

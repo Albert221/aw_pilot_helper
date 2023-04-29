@@ -5,7 +5,8 @@ platform :android do
   lane :production do
     build_number = ENV["BUILD_NUMBER"] != nil ? "--build-number #{ENV["BUILD_NUMBER"]}" : ''
 
-    sh "flutter build appbundle --release #{build_number}"
+    sh "flutter build appbundle --release #{build_number}" +
+      "--dart-define API_URL=#{ENV['API_URL']} --dart-define API_TOKEN=#{ENV['API_TOKEN']}"
 
     upload_to_play_store(
       track: 'production',

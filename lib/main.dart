@@ -10,9 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-const _apiUrl = 'https://aw-pilot-helper.fly.dev/api';
-const _apiToken =
-    'secret';
+const _apiUrl = String.fromEnvironment('API_URL');
+const _apiToken = String.fromEnvironment('API_TOKEN');
 
 void main() {
   runApp(
