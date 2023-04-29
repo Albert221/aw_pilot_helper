@@ -4,8 +4,13 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
   ios:
     runs-on: macos-latest
+
+    needs: [test]
 
     defaults:
       run:
