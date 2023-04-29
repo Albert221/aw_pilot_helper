@@ -7,19 +7,37 @@
         {
             "name": "aw_pilot_helper",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "API_URL=${env:AW_PILOT_HELPER_API_URL}",
+                "--dart-define",
+                "API_TOKEN=${env:AW_PILOT_HELPER_API_TOKEN}"
+            ]
         },
         {
             "name": "aw_pilot_helper (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "toolArgs": [
+                "--dart-define",
+                "API_URL=${env:AW_PILOT_HELPER_API_URL}",
+                "--dart-define",
+                "API_TOKEN=${env:AW_PILOT_HELPER_API_TOKEN}"
+            ]
         },
         {
             "name": "aw_pilot_helper (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "toolArgs": [
+                "--dart-define",
+                "API_URL=${env:AW_PILOT_HELPER_API_URL}",
+                "--dart-define",
+                "API_TOKEN=${env:AW_PILOT_HELPER_API_TOKEN}"
+            ]
         }
     ]
 }
