@@ -1,16 +1,15 @@
 # aw_pilot_helper
 
-A new Flutter project.
+![main branch test workflow status](https://img.shields.io/github/actions/workflow/status/Albert221/aw_pilot_helper/test.yml)
 
-## Getting Started
+## Running app
 
-This project is a starting point for a Flutter application.
+To run the application you need to provide two dart defines: `API_URL` and `API_TOKEN`. You may run the backend locally as well as use a remote backend.
 
-A few resources to get you started if this is your first Flutter project:
+### VS Code
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+VS Code launch configuration already provides those defines using your `AW_PILOT_HELPER_API_URL` and `AW_PILOT_HELPER_API_TOKEN` environment variables. Set them accordingly.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Running backend
+
+Backend uses Strapi. You can run it with `npm run strapi` inside the `strapi/` directory.
