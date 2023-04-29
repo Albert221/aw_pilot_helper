@@ -1,0 +1,6 @@
+languages(['en-US','pl'])
+
+release_notes({
+    'en-US' => "Stability improvements and bug fixes.",
+    'pl' => "Poprawienie stabilności i naprawy błędów.",
+})

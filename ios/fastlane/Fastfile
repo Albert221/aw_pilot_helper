@@ -36,7 +36,6 @@ platform :ios do
       force: true,
       submit_for_review: true,
       automatic_release: true,
-      skip_metadata: true,
       precheck_include_in_app_purchases: false,
     )
   end
