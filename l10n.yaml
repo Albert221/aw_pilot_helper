@@ -4,4 +4,5 @@ synthetic-package: false
 output-dir: lib/l10n/output
 output-class: L10n
 nullable-getter: false
-preferred-supported-locales: [ en ]
+preferred-supported-locales: [en]
+format: true

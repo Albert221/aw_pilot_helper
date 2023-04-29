@@ -30,7 +30,8 @@ class L10nPl extends L10n {
   }
 
   @override
-  String get home_planeSpecsNoInternet => 'Brak internetu lub połączenia z serwerem.';
+  String get home_planeSpecsNoInternet =>
+      'Brak internetu lub połączenia z serwerem.';
 
   @override
   String get home_planeSpecsOtherError => 'Wystąpił błąd.';
@@ -49,7 +50,8 @@ class L10nPl extends L10n {
 
   @override
   String previousEntriesTile_title(int count) {
-    final intl.NumberFormat countNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final intl.NumberFormat countNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
     final String countString = countNumberFormat.format(count);
 
     return 'Poprzednie wpisy ($countString)';
