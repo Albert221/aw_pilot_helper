@@ -28,6 +28,10 @@ platform :ios do
       archive_path: "../build/ios/archive/Runner.xcarchive",
     )
 
+    version_number = get_version_number()
+    build_number = get_build_number()
+    sh "echo built-version='#{version_number}+#{build_number}' >> $GITHUB_OUTPUT" if ENV["GITHUB_OUTPUT"]
+
     upload_to_app_store(
       force: true,
       submit_for_review: true,

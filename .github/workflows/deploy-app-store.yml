@@ -50,6 +50,7 @@ jobs:
           bundle install
 
       - name: Run fastlane
+        id: deploy
         env:
           API_URL: ${{ vars.API_URL }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
@@ -61,3 +62,8 @@ jobs:
           APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
           BUILD_NUMBER: ${{ github.run_number }}
         run: bundle exec fastlane production
+
+      - name: Push tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ios-${{ steps.deploy.outputs.built-version }}

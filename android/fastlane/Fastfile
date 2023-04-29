@@ -8,6 +8,10 @@ platform :android do
     sh "flutter build appbundle --release #{build_number} " +
       "--dart-define API_URL=#{ENV['API_URL']} --dart-define API_TOKEN=#{ENV['API_TOKEN']}"
 
+    version_number = android_get_version_name()
+    build_number = android_get_version_code()
+    sh "echo built-version='#{version_number}+#{build_number}' >> $GITHUB_OUTPUT" if ENV["GITHUB_OUTPUT"]
+
     upload_to_play_store(
       track: 'production',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
